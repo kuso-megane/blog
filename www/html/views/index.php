@@ -13,17 +13,18 @@
       <!--目次-->
       <div id="index-container">
         <ul id="index-ul">
-          <!--DBからカテゴリを表示、サブメニュー作りたい-->
+          <!--DBからカテゴリを表示、サブメニューも検討-->
           <li><a href="">考え事</a></li>
           <li><a href="">プログラミング</a></li>
           <li><a href="">読書</a></li>
           <li><a href="">ゲーム</a></li>
+          <li><a href="">カリンバ</a></li>
+          <li><a href="">その他</a></li>
         </ul>
       </div>
     </div>
 
     <div id="main">
-      <!--直近の投稿を並べたい-->
       <div id="main--left">
         <div id="breadcrumb">
         <!--暫定-->
@@ -73,7 +74,8 @@
         </div>
       </div>
     </div>
-    <div class="footer">
+    <div id="footer">
+      
     </div>
 　</body>
 </html>
