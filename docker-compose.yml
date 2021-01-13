@@ -7,7 +7,7 @@ services:
       - ./apache2/php.ini:/usr/local/etc/php/php.ini
       - ./www:/var/www
     ports:
-      - 8080:80 #http://localhost:8080
+      - 80:80 #http://localhost:8080
     env_file:
       - ./apache2/docker-apache2.env
     
