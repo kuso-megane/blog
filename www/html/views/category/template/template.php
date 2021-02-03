@@ -28,5 +28,3 @@ class Template
         require "templateView.php";
     }
 }
-
-?>
