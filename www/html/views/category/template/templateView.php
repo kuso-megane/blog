@@ -1,5 +1,6 @@
 <?php 
     $imgPath = "/asset/img/";
+    $styleSheetPath = "/asset/stylesheet/";
 ?>
 
 <!DOCTYPE html>
@@ -7,7 +8,7 @@
   <head>
     <meta charset="utf-8">
     <title>ブログサービス(仮)</title>
-    <link rel="stylesheet" type="text/css" href="/asset/stylesheet/template.css">
+    <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetPath. "template.css"; ?>>
   </head>
   <body>
     <div id="header">
