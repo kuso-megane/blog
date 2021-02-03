@@ -1,4 +1,7 @@
-<?php $imgPath = "/asset/img/"; ?>
+<?php 
+    $imgPath = "/asset/img/";
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -63,7 +66,7 @@
             </ul>
         </div>
         <div id="my-twitter">
-          <p>twitter紹介</p>
+          <p>自己紹介</p>
         </div>
       </div>
     </div>
