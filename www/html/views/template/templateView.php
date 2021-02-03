@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8">
     <title>ブログサービス(仮)</title>
-    <link rel="stylesheet" type="text/css" href="/asset/stylesheet/index.css">
+    <link rel="stylesheet" type="text/css" href="/asset/stylesheet/template.css">
   </head>
   <body>
     <div id="header">
