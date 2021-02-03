@@ -1,5 +1,6 @@
 <?php
 
+namespace myapp\category\template\template;
 
 class Template 
 {
