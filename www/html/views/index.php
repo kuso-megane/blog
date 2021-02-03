@@ -10,18 +10,6 @@
       <h1 id="title">
         <a href=index.php>ブログサービス(仮)</a>
       </h1>
-      <!--目次-->
-      <div id="index-container">
-        <ul id="index-ul">
-          <!--DBからカテゴリを表示、サブメニューも検討-->
-          <li><a href="">考え事</a></li>
-          <li><a href="">プログラミング</a></li>
-          <li><a href="">読書</a></li>
-          <li><a href="">ゲーム</a></li>
-          <li><a href="">カリンバ</a></li>
-          <li><a href="">その他</a></li>
-        </ul>
-      </div>
     </div>
 
     <div id="main">
@@ -63,11 +51,15 @@
       <div id="main--right">
         <!--トップページはいらない-->
         <div id="category-list-container">
-          <p>タグ検索</p>
-          <ul>
-            <li><a href="">#html</a></li>
-            <li><a href="">#PHP</a></li>
-          </ul>
+            <p>カテゴリ検索</p>
+            <ul>
+                <li><a href="">考え事()</a></li>
+                <li><a href="">プログラミング()</a></li>
+                <li><a href="">読書()</a></li>
+                <li><a href="">ゲーム()</a></li>
+                <li><a href="">カリンバ()</a></li>
+                <li><a href="">その他()</a></li>
+            </ul>
         </div>
         <div id="my-twitter">
           <p>twitter紹介</p>
