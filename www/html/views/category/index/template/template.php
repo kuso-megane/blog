@@ -1,6 +1,6 @@
 <?php
 
-namespace myapp\views\index\template;
+namespace myapp\views\category\index\template;
 
 class Template 
 {
