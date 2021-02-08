@@ -1,4 +1,4 @@
-<div id="main--right">
+<div id="main--sidebar">
     <div id="category-list-container">
         <p><a href="">記事検索</a></p>
         <p>カテゴリ検索</p>
