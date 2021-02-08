@@ -1,0 +1,13 @@
+/* header */
+
+#header {
+    height: 150px;
+    padding-bottom: 0px;
+    background-color: #444444;
+}
+
+#title {
+    color : white;
+    text-align: center; 
+    padding-top:50px;
+}

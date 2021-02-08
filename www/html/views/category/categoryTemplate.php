@@ -8,14 +8,10 @@
   <head>
     <meta charset="utf-8">
     <title>ブログサービス(仮)</title>
-    <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetPath. "template.css"; ?>>
+    <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetPath. "category/category.css"; ?>>
   </head>
   <body>
-    <div id="header">
-      <h1 id="title">
-        <a href=index.php>ブログサービス(仮)</a>
-      </h1>
-    </div>
+    <?php require '/parts/header.php';?>
 
     <div id="main">
       <div id="main--left">
@@ -53,23 +49,7 @@
           
       </div>
       <!--mainの右側に置く諸々-->
-      <div id="main--right">
-        <!--トップページはいらない-->
-        <div id="category-list-container">
-            <p>カテゴリ検索</p>
-            <ul>
-                <li><a href="">考え事()</a></li>
-                <li><a href="">プログラミング()</a></li>
-                <li><a href="">読書()</a></li>
-                <li><a href="">ゲーム()</a></li>
-                <li><a href="">カリンバ()</a></li>
-                <li><a href="">その他()</a></li>
-            </ul>
-        </div>
-        <div id="my-twitter">
-          <p>自己紹介</p>
-        </div>
-      </div>
+      <?php require 'parts/main-right.php';?>
     </div>
     <div id="footer">
       

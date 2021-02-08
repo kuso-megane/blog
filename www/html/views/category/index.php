@@ -1,3 +1,6 @@
-<?php
+<?php 
+    $imgPath = "/asset/img/";
+    $styleSheetPath = "/asset/stylesheet/";
+?>
 
-echo 'This is category/index.php';
+

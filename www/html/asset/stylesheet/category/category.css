@@ -1,0 +1,17 @@
+/*categoryページのcss*/
+
+@import url("../templateParts/app-common.css");
+
+@import url("../templateParts/header.css");
+
+
+/*main pc用*/
+#main{
+    font-size: 0px;
+}
+
+@import url("../templateParts/main-left.css");
+
+@import url("../templateParts/article-box.css");
+
+@import url("../templateParts/main-right.css");
