@@ -2,10 +2,10 @@
 
 namespace myapp\viewModel\templateParts;
 
-use myapp\viewModel\ViewPartsModelInterface;
+use myapp\viewModel\TemplatePartsModelInterface;
 
 
-class MainSidebarVM implements ViewPartsModelInterface
+class MainSidebarVM implements TemplatePartsModelInterface
 {
     /*
     array $artclNumOnCategories = ['programming' => int, 'books' => int, ...]
@@ -18,7 +18,7 @@ class MainSidebarVM implements ViewPartsModelInterface
     private $artclNumOnSubCategories;
 
 
-    public function getDataFromModel():ViewPartsModelInterface
+    public function getDataFromModel(): MainSidebarVM
     {
         //from model
         $artclNumOnCategories = ['sampleK' => 'sampleV'];

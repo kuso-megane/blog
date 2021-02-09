@@ -18,7 +18,7 @@ class CategoryIndexVM implements viewModelInterface
     /**
      * @inheritDoc
      */
-    public function getDataFromModel(?array $vars): viewModelInterface
+    public function getDataFromModel(?array $vars): CategoryIndexVM
     {
         
         //modelからdataを取得
