@@ -12,7 +12,7 @@
   </head>
   <body>
 
-    <?php require 'templateparts/header.php';?>
+    <?php require '/parts/header.php';?>
 
     <div id="main">
         <div id="main--left">  
@@ -23,7 +23,7 @@
 
         <div id="main--sidebar">
 
-            <?php require 'templateparts/main--sidebar.php';?>
+            <?php require '/parts/main--sidebar.php';?>
         
         </div>
     </div>
