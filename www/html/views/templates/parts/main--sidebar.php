@@ -1,3 +1,14 @@
+<?php
+use myapp\viewModel\templateParts\MainSidebarVM;
+
+$vm = (new MainSidebarVM())->getDataFromModel();
+
+$artclNumOnCategory = $vm->getArtclNumOnCategory();
+$artclNumOnSubCategory = $vm->getArtclNumOnSubCategory();
+?>
+
+
+
 <div id="category-list-container">
     <p><a href="">記事検索</a></p>
     <p>カテゴリ検索</p>
