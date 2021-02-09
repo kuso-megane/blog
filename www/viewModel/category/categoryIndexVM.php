@@ -15,15 +15,6 @@ class CategoryIndexVM implements viewModelInterface
     private $recentArtclInfos; 
 
 
-    // for main--side
-    
-
-    public function __construct(array $recentArtclInfos)
-    {
-        $this->recentArtclInfos = $recentArtclInfos;
-    }
-
-
     /**
      * @inheritDoc
      */
