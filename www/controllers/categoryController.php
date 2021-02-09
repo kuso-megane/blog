@@ -9,10 +9,10 @@ class CategoryController
 {
 
 
-    public function index()
+    public function index(?array $vars)
     {
         //modelから最新投稿を持ってくる
-        //$data = 
+        $data = 
 
         require VIEW_FILE_PATH.'category/index.php';
     }

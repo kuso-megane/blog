@@ -9,7 +9,7 @@ class BackyardController
 {
 
 
-    public function index ()
+    public function index (?array $vars)
     {
         //modelから記事一覧を持ってくる
         //$data = 
@@ -31,7 +31,7 @@ class BackyardController
     }
 
 
-    public function create ()
+    public function create (array $vars)
     {
         //modelから最新投稿を持ってくる
         //$data =

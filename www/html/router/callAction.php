@@ -18,7 +18,7 @@ function callAction (string $handler, ?array $vars = NULL)
     if ($handler == 'index') {
 
         $controller = new Category;
-        $controller->index();
+        $controller->index($vars);
         
     }
     elseif ($handler == 'categoryList') {
@@ -36,7 +36,7 @@ function callAction (string $handler, ?array $vars = NULL)
     elseif ($handler == 'backyardIndex') {
 
         $controller = new Backyard;
-        $controller->index();
+        $controller->index($vars);
 
     }
     elseif ($handler == 'backyardEdit') {
@@ -48,7 +48,7 @@ function callAction (string $handler, ?array $vars = NULL)
     elseif ($handler == 'backyardCreate') {
 
         $controller = new Backyard;
-        $controller->create();
+        $controller->create($vars);
 
     }
     elseif ($handler == 'backyardUpdate') {
