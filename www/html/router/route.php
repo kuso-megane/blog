@@ -5,7 +5,7 @@
  */
 
 require_once '../../vendor/autoload.php';
-require 'callAction.php';
+require '../../controllers/callAction/callAction.php';
 
 
 $base = '/';
