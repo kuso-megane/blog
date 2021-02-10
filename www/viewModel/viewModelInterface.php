@@ -4,13 +4,12 @@ namespace myapp\viewModel;
 
 interface ViewModelInterface
 {
-    // const VIEW_FILE = '{class}/{action}.php';
+    // These consts must be defined in concrete class except templateParts viewModel
+    /*
+    const TEMPLATE_FILE = 'template/{class}Template.php';
+    const CLASSNAME = {class};
+    const ACTION = {action};
+    */
 
-    /**
-     * get Data for views from Model
-     * @param array|NULL $vars
-     * 
-     * @return ViewModelInterface
-     */
-    public function getDataFromModel(?array $vars): ViewModelInterface;
+    public function __construct(array $data);
 }

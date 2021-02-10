@@ -1,10 +1,12 @@
 <?php
+/*
 use myapp\viewModel\templateParts\MainSidebarVM;
 
 $vm = (new MainSidebarVM())->getDataFromModel();
 
 $artclNumOnCategory = $vm->getArtclNumOnCategory();
 $artclNumOnSubCategory = $vm->getArtclNumOnSubCategory();
+*/
 ?>
 
 
