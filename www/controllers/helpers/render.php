@@ -15,11 +15,6 @@ const VIEW_FILE_PATH = '/var/www/html/views/';
  */
 function render(ViewModelInterface $vm, string $controller, string $action)
 {
-    /*
-    $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2)[1];
-    $controller = $trace['class'];
-    $action = $trace['fuction'];
-    */
     
     $mainView = VIEW_FILE_PATH. $controller. '/'. $action. '.php'; // path from template to mainView
     

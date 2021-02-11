@@ -4,3 +4,7 @@
 .DS_Store
 
 /www/vendor/
+
+
+# scssのキャッシュ
+/www/html/asset/stylesheet/.sass-cache
