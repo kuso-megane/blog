@@ -2,7 +2,10 @@
 
 namespace myapp\controllers;
 
-require 'viewFilePath.php';
+require __DIR__. '/viewFilePath.php';
+require __DIR__. '/helpers/render.php';
+
+use myapp\viewModel\category\CategoryIndexVM;
 
 
 class CategoryController
@@ -11,10 +14,20 @@ class CategoryController
 
     public function index(?array $vars)
     {
-        //modelから最新投稿を持ってくる
-        $data = 
+        //sample data
+        $recentArtclInfos = [['artclId' => 1, 'title' => 'sampleTitle', 'updateDate' => '2021-2-10',
+        'thumbnailImg' => '/asset/img/test_img.jpg']];
+        $categoryArtclCount = ['プログラミング' => 6, '読書' => 5];
+        $subCategoryArtclCount = ['プログラミング' => ['web' => 4, 'game' => 2], '読書' => ['マンガ' => 3, '小説' => 2]];
+        $data = [
+            'recentArtclInfos' => $recentArtclInfos,
+            'categoryArtclCount' => $categoryArtclCount,
+            'subCategoryArtclCount' => $subCategoryArtclCount
+        ];
 
-        require VIEW_FILE_PATH.'category/index.php';
+
+        $vm = new CategoryIndexVM($data);
+        render($vm, 'category', 'index');
     }
 
 

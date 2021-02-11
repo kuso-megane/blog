@@ -6,9 +6,7 @@ use myapp\viewModel\viewModelInterface;
 
 class CategoryIndexVM implements viewModelInterface
 {
-    const TEMPLATE_FILENAME = 'templates/categoryTemplate.php';
-    const MAIN_FILENAME = 'category/index.php';
-    
+
     /*
         $recentArtclInfos = [$artclInfo, ...], 
     $artclInfo = ['artclId' => int, 'title' => string, 'updateDate' => date, 'thumbnailImg' => ?]
@@ -17,13 +15,15 @@ class CategoryIndexVM implements viewModelInterface
 
     //for main--sidebar component
     /*
-        $categoryArtclCount = ['プログラミング' => int, '読書' => int, ...] (e.g.)
+        (e.g.)
+        $categoryArtclCount = ['プログラミング' => int, '読書' => int, ...] 
     */
     private $categoryArtclCount; 
 
     /*
+        (e.g.)
         $subCategoryArtclCount = ['プログラミング' => ['web' => int, 'game' => int,...] ,
-                                '読書' => ['マンガ' => int ,'小説' => int]] (e.g.)
+                                '読書' => ['マンガ' => int ,'小説' => int]] 
     */
     private $subCategoryArtclCount;
 
