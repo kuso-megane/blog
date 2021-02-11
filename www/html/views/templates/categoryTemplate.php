@@ -1,6 +1,6 @@
 <?php 
     $imgPath = "/asset/img/";
-    $styleSheetPath = "/asset/stylesheet/";
+    $styleSheetPath = "/asset/stylesheet/css/";
     $componentsPath = "/var/www/html/views/components/";
 ?>
 
@@ -16,15 +16,10 @@
     <?php require $componentsPath. 'header.php';?>
 
     <div id="main">
-        <div id="main--left">  
+          
+        <?php require $mainView;?>  
 
-            <?php require $mainView;?>  
-
-        </div>
-
-        <div id="main--sidebar">
-
-            <?php require $componentsPath. 'main--sidebar.php';?>
+        <?php require $componentsPath. 'main--sidebar.php';?>
         
         </div>
     </div>
