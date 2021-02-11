@@ -5,20 +5,33 @@ namespace myapp\components;
 
 class superGlobalVars
 {
+    private $get;
+    private $post;
+    private $server;
 
-    public function get_GET():array
+
+    public function __construct()
     {
-        return $_GET;
+        $this->get = $_GET;
+        $this->post = $_POST;
+        $this->server = $_SERVER;
     }
 
 
-    public function get_POST():array
+    public function getGet():array
     {
-        return $_POST;
+        return $this->get;
     }
 
 
-    public function get_SERVER():array{
-        return $_SERVER;
+    public function getPost():array
+    {
+        return $this->post;
+    }
+
+
+    public function getServer():array{
+
+        return $this->server;
     }
 }
