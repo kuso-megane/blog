@@ -12,7 +12,7 @@
   </head>
   <body>
 
-    <?php require '/parts/header.php';?>
+    <?php require __DIR__. '/parts/header.php';?>
 
     <div id="main">
         <div id="main--left">  
@@ -23,7 +23,7 @@
 
         <div id="main--sidebar">
 
-            <?php require '/parts/main--sidebar.php';?>
+            <?php require __DIR__. '/parts/main--sidebar.php';?>
         
         </div>
     </div>

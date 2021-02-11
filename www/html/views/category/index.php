@@ -9,16 +9,16 @@
     <p id="page-switch--next"><a href="">次の10件</a></p>
 </div>
 
-<?php for ($i = 0; $i < 10; ++$i): ?>
+<?php foreach ($vm->getRecentArtclInfos() as $artcls): ?>
 
 <div class="article-box">
     <div class="article-thumbnail-container">
         <img src=<?php echo ($imgPath."test2.jpg"); ?> alt="テスト画像" class="article-thumbnail">
     </div>
     <div class="article-main">
-        <p class="article-update-date">2020-8-13(sample date)</p>
-        <p class="article-title"><a href="xxx">テスト2</a></p>
+        <p class="article-update-date"><?php echo $artcls['updataDate']; ?></p>
+        <p class="article-title"><a href="xxx"><?php echo $artcls['title']; ?></a></p>
     </div>
 </div>
 
-<?php endfor;?>
+<?php endforeach;?>
