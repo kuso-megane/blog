@@ -8,3 +8,6 @@
 
 # scssのキャッシュ
 /www/html/asset/stylesheet/.sass-cache
+
+# コンパイル後のcss
+/www/html/asset/stylesheet/css
