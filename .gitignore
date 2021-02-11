@@ -1,8 +1,10 @@
 #todoリスト
 /todo.md
 
+# vscode関連
 .DS_Store
 
+# composer周りのvendor
 /www/vendor/
 
 

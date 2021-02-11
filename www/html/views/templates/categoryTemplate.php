@@ -5,12 +5,12 @@
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>ブログサービス(仮)</title>
-    <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetUrl. "category/category.css"; ?>>
-  </head>
-  <body>
+    <head>
+        <meta charset="utf-8">
+        <title>ブログサービス(仮)</title>
+        <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetUrl. "category/category.css"; ?>>
+    </head>
+    <body>
 
     <?php require $componentsPath. 'header.php';?>
 
@@ -20,7 +20,6 @@
 
         <?php require $componentsPath. 'main--sidebar.php';?>
         
-        </div>
     </div>
     <div id="footer">
       
