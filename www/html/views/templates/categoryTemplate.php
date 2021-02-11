@@ -1,6 +1,7 @@
 <?php 
     $imgPath = "/asset/img/";
     $styleSheetPath = "/asset/stylesheet/";
+    $componentsPath = "/var/www/html/views/components/";
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
   </head>
   <body>
 
-    <?php require __DIR__. '/parts/header.php';?>
+    <?php require $componentsPath. 'header.php';?>
 
     <div id="main">
         <div id="main--left">  
@@ -23,7 +24,7 @@
 
         <div id="main--sidebar">
 
-            <?php require __DIR__. '/parts/main--sidebar.php';?>
+            <?php require $componentsPath. 'main--sidebar.php';?>
         
         </div>
     </div>

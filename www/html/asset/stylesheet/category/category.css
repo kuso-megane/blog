@@ -1,14 +1,14 @@
 /*categoryページのcss*/
 
-@import url("../templateParts/app-common.css");
+@import url("../components/app-common.css");
 
-@import url("../templateParts/header.css");
-
-
+@import url("../components/header.css");
 
 
-@import url("../templateParts/main-left.css");
 
-@import url("../templateParts/article-box.css");
 
-@import url("../templateParts/main--sidebar.css");
+@import url("../components/main-left.css");
+
+@import url("../components/article-box.css");
+
+@import url("../components/main--sidebar.css");
