@@ -1,6 +1,5 @@
 <?php 
-    $imgPath = "/asset/img/";
-    $styleSheetPath = "/asset/stylesheet/css/";
+    $styleSheetUrl = "/asset/stylesheet/css/";
     $componentsPath = "/var/www/html/views/components/";
 ?>
 
@@ -9,7 +8,7 @@
   <head>
     <meta charset="utf-8">
     <title>ブログサービス(仮)</title>
-    <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetPath. "category/category.css"; ?>>
+    <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetUrl. "category/category.css"; ?>>
   </head>
   <body>
 
