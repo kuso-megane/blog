@@ -5,10 +5,7 @@
 @import url("../templateParts/header.css");
 
 
-/*main pc用*/
-#main{
-    font-size: 0px;
-}
+
 
 @import url("../templateParts/main-left.css");
 
