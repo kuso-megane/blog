@@ -16,7 +16,7 @@ const VIEW_FILE_PATH = '/var/www/html/views/';
 function render(ViewModelInterface $vm, string $controller, string $action)
 {
     
-    $mainView = VIEW_FILE_PATH. $controller. '/'. $action. '.php'; // path from template to mainView
+    $mainView = VIEW_FILE_PATH. $controller. '/'. $action. '.php'; // absolute path to main view file
     
     require VIEW_FILE_PATH. 'templates/'. $controller. 'Template.php';
 }
