@@ -7,7 +7,7 @@
     <div id="self-intro-box">
         <p>自己紹介</p>
         <p>→紹介記事は<a href="">コチラ</a></p>
-        <p>twitter垢 <a href="https://twitter.com/kusomeg61908444">@kusomeg61908444</a></p>
+        <p>twitter垢→ <a href="https://twitter.com/kusomeg61908444">@kusomeg61908444</a></p>
     </div>
     <div id="category-list-container">
         <p>カテゴリ一覧</p>

@@ -1,6 +1,7 @@
 <?php 
     $styleSheetUrl = "/asset/stylesheet/css/";
     $componentsPath = "/var/www/html/views/components/";
+    $imgUrl = "/asset/img/";
 ?>
 
 <!DOCTYPE html>
