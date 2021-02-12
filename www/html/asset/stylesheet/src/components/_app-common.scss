@@ -3,10 +3,6 @@
 a{
     text-decoration: none;
     color: inherit;
-
-    &:hover{
-        text-decoration: underline;
-    }
 }
 
 ul{
@@ -14,9 +10,34 @@ ul{
 }
 html {
     background-color: #CCCCCC;
+
+    //smartphone-vertical
+    @media screen and (max-width: 480) {
+        font-size: 12px;
+    }
+
+    //smartphone-horizonal
+    @media screen and (max-width: 896){
+        font-size: 16px;
+    }
+
+    //tablet-vertical
+    @media screen and (max-width: 1024) {
+        font-size: 18px;
+    }
+
+    //pc and tablet-horiozonal
+    @media screen {
+        font-size: 20px;
+    }
 }
 
 
-#main{
-    font-size: 0px;
+.linkbox {
+    display: inline-block;
+    top: 0;
+    left: 0;
+    height:100%;
+    width: 100%;
 }
+
