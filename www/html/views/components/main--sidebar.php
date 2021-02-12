@@ -20,12 +20,3 @@
         </ul>
     </div>
 </div>
-
-<!--
-    <li><a href="">考え事()</a></li>
-    <li><a href="">プログラミング()</a></li>
-    <li><a href="">読書()</a></li>
-    <li><a href="">ゲーム()</a></li>
-    <li><a href="">カリンバ()</a></li>
-    <li><a href="">その他()</a></li>
--->

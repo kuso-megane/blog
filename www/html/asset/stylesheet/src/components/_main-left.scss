@@ -8,9 +8,13 @@
     background-color: white;
     vertical-align: top;
 
+    #main-title {
+        font-size: 1.5rem;
+    }
+
     /*パンクズリスト*/
     #breadcrumb {
         margin: 1rem;
-        font-size: 1rem;
+        font-size: 0.8rem;
     }   
 }
