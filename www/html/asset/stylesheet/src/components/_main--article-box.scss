@@ -27,7 +27,9 @@
     padding: 1%;
 
     .article-thumbnail-container {
+        display: inline-block;
         width: 45%;
+        height: 100%;
         text-align: center;
 
         .article-thumbnail {
