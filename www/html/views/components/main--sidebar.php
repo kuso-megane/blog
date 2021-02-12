@@ -1,7 +1,10 @@
 
 <div id="main--sidebar">
     <div id="search-container">
-        <div id="search-box"><input type="search" placeholder="フリーワード検索"></div>
+
+        <form action="/search" method="get">
+            <input id="search-box" type="search" name="artclName" placeholder="フリーワード検索">
+        </form>
         <p>→詳細検索は<a href="">コチラ</a></p>
     </div>
     <div id="self-intro-box">

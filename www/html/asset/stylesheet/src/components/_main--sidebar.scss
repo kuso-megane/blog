@@ -10,10 +10,16 @@
     #search-container {
         height:5rem;
         background-color: white;
-        margin-bottom: 1vh;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+
+        #search-box {
+            height: 1.5rem;
+        }
 
         p {
             font-size: 0.8rem;
+            margin-block-end: 0;
         }
 
         a {
@@ -57,19 +63,3 @@
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
