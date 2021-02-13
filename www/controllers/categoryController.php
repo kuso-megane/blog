@@ -15,7 +15,7 @@ class CategoryController
     public function index(?array $vars)
     {
         //sample data
-        $recentArtclInfos = [['artclId' => 1, 'title' => 'sampleTitlekaorijgisoaighpaigjap', 'updateDate' => '2021-2-10',
+        $recentArtclInfos = [['artclId' => 1, 'title' => 'sampleTitleaaaaaaaaaaaaaaaaa', 'updateDate' => '2021-2-10',
         'thumbnailImg' => '/asset/img/test_img.jpg']];
         $categoryArtclCount = ['プログラミング' => 6, '読書' => 5];
         $subCategoryArtclCount = ['プログラミング' => ['web' => 4, 'game' => 2], '読書' => ['マンガ' => 3, '小説' => 2]];
