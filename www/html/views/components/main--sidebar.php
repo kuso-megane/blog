@@ -1,3 +1,8 @@
+<?php
+    $categoryArtclCount = $vm->getCategoryArtclCount();
+    $subCategoryArtclCount = $vm->getSubCategoryArtclCount();
+?>
+
 
 <div id="main--sidebar">
     <div id="search-container">
@@ -24,11 +29,22 @@
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
     <div id="category-list-container">
-        <p>カテゴリ一覧</p>
+        <p>&lt;カテゴリ検索&gt;</p>
         <ul>
-            <?php foreach($vm->getCategoryArtclCount() as $category => $count): ?>
+            <?php foreach($categoryArtclCount as $category => $count): ?>
 
-            <li><a href=""><?php echo "{$category}({$count})"; ?></a></li>
+            <li>
+                <a href=""><?php echo "{$category}({$count})"; ?></a>
+
+                <ul>
+                    <?php foreach($subCategoryArtclCount["{$category}"] as $subCategory => $subCount): ?>
+
+                    <li><a href=""><?php echo "- {$subCategory}({$subCount})"; ?></a></li>
+                    
+                    <?php endforeach; ?>
+                </ul>
+            </li>
+
             
             <?php endforeach; ?>
         </ul>

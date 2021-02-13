@@ -68,8 +68,21 @@ $boxPadding: 0.5rem;
 
             li {
                 font-size: 15px;
-                color: blue;
+                color: #191970;
                 margin: 10px;
+
+                
+
+                ul {
+                    height: 0;
+                    visibility: hidden;
+                }
+
+                &:hover ul {
+                    height: auto;
+                    visibility: visible;
+                    
+                }
             }
             
         }
