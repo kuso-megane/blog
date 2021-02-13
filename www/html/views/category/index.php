@@ -11,6 +11,6 @@
         <p id="page-switch--next"><a href="">次の10件</a></p>
     </div>
 
-    <?php require $componentsPath. 'article-box.php'; ?>
+    <?php require $componentsPath. 'main--article-box.php'; ?>
 
 </div>
