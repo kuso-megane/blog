@@ -1,0 +1,208 @@
+@charset "UTF-8";
+/* common */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style-type: none;
+}
+
+html {
+  background-color: #CCCCCC;
+}
+@media screen and (max-width: 480) {
+  html {
+    font-size: 12px;
+  }
+}
+@media screen and (max-width: 896) {
+  html {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 1024) {
+  html {
+    font-size: 18px;
+  }
+}
+@media screen {
+  html {
+    font-size: 20px;
+  }
+}
+
+.linkbox {
+  display: block;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.break-word {
+  overflow-wrap: break-word;
+}
+
+.img-to-circle {
+  border-radius: 50%;
+  /* 角丸半径を50%にする(=円形にする) */
+  width: 100%;
+  /* ※縦横を同値に */
+  height: 100%;
+  /* ※縦横を同値に */
+}
+
+/* header */
+#header {
+  height: 7rem;
+  background-color: #444444;
+  margin-bottom: 5rem;
+}
+
+#title {
+  color: white;
+  text-align: center;
+  font-size: 2rem;
+  padding-top: 2rem;
+}
+
+#main--left {
+  display: inline-block;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  padding: 1%;
+  width: 60vw;
+  background-color: white;
+  vertical-align: top;
+  /*パンクズリスト*/
+}
+#main--left #main-title {
+  font-size: 1.5rem;
+}
+#main--left #breadcrumb {
+  margin: 1rem;
+  font-size: 0.8rem;
+}
+
+/*記事本体、およびページ切替*/
+#main--title {
+  margin: 0px 20px;
+}
+
+#page-switch {
+  margin: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.7rem;
+  color: blue;
+}
+#page-switch--previous {
+  float: left;
+}
+#page-switch--next {
+  float: right;
+}
+
+.article-box {
+  display: inline-block;
+  width: 25%;
+  height: 20%;
+  border: 2px solid black;
+  margin: 1%;
+  padding: 1%;
+}
+.article-box .article-thumbnail-container {
+  width: 100%;
+  height: 50%;
+  text-align: center;
+}
+.article-box .article-thumbnail-container .article-thumbnail {
+  width: 100%;
+  height: 100%;
+}
+.article-box .article-main {
+  vertical-align: top;
+  width: 100%;
+}
+.article-box .article-main .article-title {
+  font-size: 1.2rem;
+}
+.article-box .article-main .article-update-date {
+  font-size: 0.7rem;
+}
+
+#main--sidebar {
+  display: inline-block;
+  width: 20vw;
+  vertical-align: top;
+}
+#main--sidebar a:hover {
+  text-decoration: underline;
+}
+#main--sidebar #search-container {
+  background-color: white;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+#main--sidebar #search-container #search-box {
+  height: 1.5rem;
+  width: 80%;
+}
+#main--sidebar #search-container p {
+  font-size: 0.8rem;
+  margin-block-end: 0;
+}
+#main--sidebar #search-container a {
+  color: blue;
+}
+#main--sidebar #category-list-container {
+  background-color: white;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+#main--sidebar #category-list-container p {
+  font-size: 20px;
+  margin-block-start: 0px;
+}
+#main--sidebar #category-list-container ul {
+  padding-inline-start: 10px;
+}
+#main--sidebar #category-list-container ul li {
+  font-size: 15px;
+  color: #191970;
+  margin: 10px;
+}
+#main--sidebar #category-list-container ul li ul {
+  height: 0;
+  visibility: hidden;
+}
+#main--sidebar #category-list-container ul li ul:hover {
+  height: auto;
+  visibility: visible;
+}
+#main--sidebar #category-list-container ul li:hover ul {
+  height: auto;
+  visibility: visible;
+}
+#main--sidebar #my-profile {
+  padding: 0.5rem;
+  background-color: white;
+}
+#main--sidebar #my-profile--img-container {
+  height: 5rem;
+  width: 5rem;
+  margin: 0 auto;
+}
+#main--sidebar #my-profile--name {
+  text-align: center;
+  margin-block-start: 0.5rem;
+  margin-block-end: 0.5rem;
+}
+#main--sidebar #my-profile--txt {
+  font-size: 0.7rem;
+}
+
+/*categoryページのcss*/
+
+/*# sourceMappingURL=category.css.map */

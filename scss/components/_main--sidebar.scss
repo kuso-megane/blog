@@ -32,30 +32,9 @@ $boxPadding: 0.5rem;
         }
     }
 
-    #my-profile {
-        padding: $boxPadding;
-        margin-bottom: $gapBtwnBoxes;
-        background-color: $bgColor;
-
-        &--img-container{
-            height: 5rem;
-            width: 5rem;
-            margin: 0 auto;
-        }
-
-        &--name {
-            text-align: center;
-            margin-block-start: 0.5rem;
-            margin-block-end: 0.5rem;
-        }
-
-        &--txt {
-            font-size: 0.7rem;
-        }
-    }
-
     #category-list-container {
         background-color: $bgColor;
+        margin-bottom: $gapBtwnBoxes;
         padding: $boxPadding;
 
         p {
@@ -76,6 +55,11 @@ $boxPadding: 0.5rem;
                 ul {
                     height: 0;
                     visibility: hidden;
+
+                    &:hover {
+                        height: auto;
+                        visibility: visible;
+                    }
                 }
 
                 &:hover ul {
@@ -85,6 +69,27 @@ $boxPadding: 0.5rem;
                 }
             }
             
+        }
+    }
+
+    #my-profile {
+        padding: $boxPadding;
+        background-color: $bgColor;
+
+        &--img-container{
+            height: 5rem;
+            width: 5rem;
+            margin: 0 auto;
+        }
+
+        &--name {
+            text-align: center;
+            margin-block-start: 0.5rem;
+            margin-block-end: 0.5rem;
+        }
+
+        &--txt {
+            font-size: 0.7rem;
         }
     }
 }

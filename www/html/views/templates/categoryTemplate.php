@@ -1,5 +1,5 @@
 <?php 
-    $styleSheetUrl = "/asset/stylesheet/css/";
+    $styleSheetUrl = "/asset/stylesheet/";
     $componentsPath = "/var/www/html/views/components/";
     $imgUrl = "/asset/img/";
 ?>
