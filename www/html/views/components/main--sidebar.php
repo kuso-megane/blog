@@ -15,13 +15,15 @@
     
     <nav id="category-list-container">
         <p>&lt;カテゴリ検索&gt;</p>
-        <ul>
+        <ul id="category-list">
             <?php foreach($categoryArtclCount as $category => $count): ?>
 
             <li>
-                <a href=""><?php echo "{$category}({$count})"; ?></a>
+                <input id="category-checkbox" type="checkbox">
+                <label for="category-checkbox"><?php echo "{$category}({$count})"; ?></label>
 
-                <ul>
+                <ul id="subCategory-list">
+                    <li><a href="">- このカテゴリすべて(<?php echo $count; ?>)</a></li>
                     <?php foreach($subCategoryArtclCount["{$category}"] as $subCategory => $subCount): ?>
 
                     <li><a href=""><?php echo "- {$subCategory}({$subCount})"; ?></a></li>

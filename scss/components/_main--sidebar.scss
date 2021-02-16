@@ -38,33 +38,34 @@ $boxPadding: 0.5rem;
         padding: $boxPadding;
 
         p {
-            font-size: 20px;
+            font-size: 1rem;
             margin-block-start: 0px;
         }
 
-        ul {
-            padding-inline-start: 10px;
+        ul#category-list {
+            padding-inline-start: 0;
 
             li {
-                font-size: 15px;
+                font-size: 18px;
                 color: #191970;
-                margin: 10px;
+                margin: 0.7rem;
 
                 
 
-                ul {
+                ul#subCategory-list {
                     height: 0;
+                    padding-inline-start: 1rem;
                     visibility: hidden;
 
-                    &:hover {
-                        height: auto;
-                        visibility: visible;
-                    }
                 }
 
-                &:hover ul {
+                #category-checkbox:checked ~ ul#subCategory-list {
                     height: auto;
                     visibility: visible;
+
+                    li  {
+                        font-size: 0.8em;
+                    }
                     
                 }
             }
