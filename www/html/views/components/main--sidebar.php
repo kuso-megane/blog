@@ -13,7 +13,7 @@
         <p>→詳細検索は<a href="">コチラ</a></p>
     </div>
     
-    <div id="category-list-container">
+    <nav id="category-list-container">
         <p>&lt;カテゴリ検索&gt;</p>
         <ul>
             <?php foreach($categoryArtclCount as $category => $count): ?>
@@ -33,7 +33,7 @@
             
             <?php endforeach; ?>
         </ul>
-    </div>
+    </nav>
 
     <div id="my-profile">
         
