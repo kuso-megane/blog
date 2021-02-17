@@ -8,7 +8,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>ブログサービス(仮)bakpoborbsp</title>
+        <title>ブログサービス(仮)</title>
         <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetUrl. "category/category.css"; ?>>
     </head>
     <body>
