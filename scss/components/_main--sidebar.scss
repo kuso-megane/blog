@@ -59,7 +59,7 @@ $boxPadding: 0.5rem;
 
                 }
 
-                #category-checkbox:checked ~ ul#subCategory-list {
+                input.category-checkbox:checked ~ ul#subCategory-list {
                     height: auto;
                     visibility: visible;
 

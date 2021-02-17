@@ -1,5 +1,6 @@
 <?php
 
+// routerからcontrollerへ繋ぐ
 
 use myapp\controllers\categoryController as Category;
 use myapp\controllers\articleController as Article;

@@ -29,6 +29,8 @@ class CategoryController
         ];
         $categoryArtclCount = ['プログラミング' => 6, '読書' => 5];
         $subCategoryArtclCount = ['プログラミング' => ['web' => 4, 'game' => 2], '読書' => ['マンガ' => 3, '小説' => 2]];
+
+        // modelからdata作成
         $data = [
             'recentArtclInfos' => $recentArtclInfos,
             'categoryArtclCount' => $categoryArtclCount,

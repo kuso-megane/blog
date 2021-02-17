@@ -16,11 +16,14 @@
     <nav id="category-list-container">
         <p>&lt;カテゴリ検索&gt;</p>
         <ul id="category-list">
-            <?php foreach($categoryArtclCount as $category => $count): ?>
-
+            <?php 
+                $c = 0;
+                foreach($categoryArtclCount as $category => $count): 
+            ?>
+            
             <li>
-                <input id="category-checkbox" type="checkbox">
-                <label for="category-checkbox"><?php echo "{$category}({$count})"; ?></label>
+                <input id=<?php echo "category-checkbox{$c}"; ?> type="checkbox" class="category-checkbox">
+                <label for=<?php echo "category-checkbox{$c}"; ?> ><?php echo "{$category}({$count})"; ?></label>
 
                 <ul id="subCategory-list">
                     <li><a href="">- このカテゴリすべて(<?php echo $count; ?>)</a></li>
@@ -32,8 +35,10 @@
                 </ul>
             </li>
 
-            
-            <?php endforeach; ?>
+            <?php
+                $c++;
+                endforeach; 
+            ?>
         </ul>
     </nav>
 
