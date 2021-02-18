@@ -1,6 +1,6 @@
-drop database if exists dev;
-create database dev;
-use dev;
+drop database if exists app;
+create database app;
+use app;
 
 drop table if exists category; 
 create table category(
