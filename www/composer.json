@@ -4,7 +4,7 @@
             "myapp\\": "./",
             "domain\\": "./Models/domain",
             "infra\\": "./Models/infra/src",
-            "dbTest\\": "./Models/infra/tests"
+            "dbTest\\": "./Models/infra/spec"
         }
     },
     "require": {
