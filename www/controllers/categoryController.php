@@ -43,10 +43,11 @@ class CategoryController
     }
 
 
-    public function list(array $var)
+    //カテゴリ検索
+    public function searchResult(array $var)
     {
         //modelから該当カテゴリの最新投稿を持ってくる
         //$data =
-        require VIEW_FILE_PATH.'category/list.php';   
+        require '/var/www/html/views/category/searchResult.php';   
     }
 }

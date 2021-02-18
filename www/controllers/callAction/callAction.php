@@ -21,10 +21,10 @@ function callAction (string $handler, ?array $vars = NULL)
         $controller->index($vars);
         
     }
-    elseif ($handler == 'categoryList') {
+    elseif ($handler == 'categorySearchResult') {
 
         $controller = new Category;
-        $controller->list($vars);
+        $controller->searchResult($vars);
 
     }
     elseif ($handler == 'article') {

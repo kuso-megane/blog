@@ -12,7 +12,7 @@ $base = '/';
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) use ($base) {
     $r->addRoute('GET', $base.'index[/{page:\d+}]', 'index'); //index
 
-    $r->addRoute('GET', '/category/{c_id:\d+}[/{subc_id:\d+}/[{page:\d+}]]', 'categoryList');
+    $r->addRoute('GET', '/category/{c_id:\d+}[/{subc_id:\d+}/[{page:\d+}]]', 'categorySearchResult');
     
     $r->addRoute('GET', '/article/{artcl_id:\d+}', 'article');
 
