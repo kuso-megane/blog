@@ -18,7 +18,7 @@ class Container
     {
         try {
 
-            if ($className == 'CategorySearchListService') {
+            if ($className == CategorySearchListService::class) {
                 return new CategorySearchListService(new CategorySearchListRepository);
             }
             else {
