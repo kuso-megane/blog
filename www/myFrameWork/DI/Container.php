@@ -22,7 +22,7 @@ class Container
                 return new CategorySearchListService(new CategorySearchListRepository);
             }
             else {
-                throw new DIFailException();
+                throw new DIFailException($className);
             }
 
         } catch (DIFailException $e) {
