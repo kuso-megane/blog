@@ -1,11 +1,11 @@
 <?php
 
-namespace domain\category\index;
+namespace domain\category\index\data;
 
-use domain\ViewModelInterface;
+use domain\BaseViewModel;
 use domain\components\mainSidebar\data\OutputTrait as MainSidebar;
 
-class OutputData implements viewModelInterface
+class OutputData extends BaseViewModel
 {
 
     /*
@@ -20,12 +20,9 @@ class OutputData implements viewModelInterface
     
 
 
-    public function __construct(array $data)
+    public function __construct(array $recentArtclInfos, array $categoryArtclCount, array $subCategoryArtclCount)
     {
-        $this->recentArtclInfos = $data['recentArtclInfos'];
-        $categoryArtclCount = $data['categoryArtclCount'];
-        $subCategoryArtclCount = $data['subCategoryArtclCount'];
-
+        $this->recentArtclInfos = $recentArtclInfos;
         $this->mainSidebar__construct($categoryArtclCount, $subCategoryArtclCount);
     }
 
