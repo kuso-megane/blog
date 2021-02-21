@@ -7,14 +7,20 @@ use Exception;
 
 class ValidationFailException extends Exception
 {
-    public function __construct(string $target, string $expected, $given)
+    
+    /**
+     * @param string $targetName target of validation
+     * @param string $expected expected type or something of the target
+     * @param mixed $given actual given values
+     */
+    public function __construct(string $targetName, string $expected, $given)
     {
         if ($given == NULL)
         {
             $given = 'NULL';
         }
 
-        $message = "{$target} is expected to be {$expected}, {$given} is given\n";
+        $message = "{$targetName} is expected to be {$expected}, {$given} is given\n";
         parent::__construct($message);
     }
 }
