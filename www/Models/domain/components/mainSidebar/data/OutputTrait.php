@@ -1,8 +1,8 @@
 <?php
 
-namespace myapp\ViewModel\components;
+namespace domain\components\mainSideBar\data;
 
-trait mainSidebarVM
+trait OutputTrait
 {
     /*
         (e.g.)

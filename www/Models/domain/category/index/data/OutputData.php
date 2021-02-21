@@ -1,21 +1,21 @@
 <?php
 
-namespace myapp\viewModel\category;
+namespace domain\category\index;
 
-use myapp\viewModel\viewModelInterface;
-use myapp\ViewModel\components\mainSidebarVM;
+use domain\ViewModelInterface;
+use domain\components\mainSidebar\data\OutputTrait as MainSidebar;
 
-class CategoryIndexVM implements viewModelInterface
+class OutputData implements viewModelInterface
 {
 
     /*
         $recentArtclInfos = [$artclInfo, ...], 
-        $artclInfo = ['artclId' => int, 'title' => string, 'updateDate' => date, 'thumbnailImg' => ?]
+        $artclInfo = ['artclId' => int, 'title' => string, 'updateDate' => date, 'thumbnailImg' => string]
     */
     private $recentArtclInfos; 
 
-    use mainSidebarVM {
-        mainSidebarVM::__construct as mainSidebarVM__construct;
+    use MainSidebar {
+        MainSidebar::__construct as mainSidebar__construct;
     }
     
 
@@ -26,7 +26,7 @@ class CategoryIndexVM implements viewModelInterface
         $categoryArtclCount = $data['categoryArtclCount'];
         $subCategoryArtclCount = $data['subCategoryArtclCount'];
 
-        $this->mainSidebarVM__construct($categoryArtclCount, $subCategoryArtclCount);
+        $this->mainSidebar__construct($categoryArtclCount, $subCategoryArtclCount);
     }
 
 

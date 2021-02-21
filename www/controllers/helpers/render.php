@@ -1,6 +1,6 @@
 <?php 
 
-use myapp\viewModel\ViewModelInterface;
+use domain\ViewModelInterface;
 
 const VIEW_FILE_PATH = '/var/www/html/views/';
 

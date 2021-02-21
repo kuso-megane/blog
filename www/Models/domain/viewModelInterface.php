@@ -1,6 +1,6 @@
 <?php
 
-namespace myapp\viewModel;
+namespace domain;
 
 interface ViewModelInterface
 {
