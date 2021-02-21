@@ -26,7 +26,7 @@ create table article(
     c_id TINYINT,
     subc_id SMALLINT,
     title varchar(30) DEFAULT 'NO TITLE',
-    imgFileName varchar(30) DEFAULT 'default.jpg',
+    thumbnailName varchar(30) DEFAULT 'default.jpg',
     content TEXT,
     update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
