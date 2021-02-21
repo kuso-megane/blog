@@ -3,23 +3,25 @@
 namespace domain\category\index;
 
 use domain\category\index\RepositoryPort\RecentArtclInfosRepositoryPort;
-use domain\components\categorySearchList\RepositoryPort\CategorySearchListRepositoryPort;
+use domain\components\mainSidebar\RepositoryPort\CategorySearchListRepositoryPort;
 use domain\category\index\Presenter;
+use domain\category\index\validator\Validator;
 
 class Interactor
 {
+    const ARTCL_NUM = 9; //1ページあたりの記事数
 
     private $recentArtclInfosRepository;
-    private $categorySearchList;
+    private $categorySearchListRepository;
 
-    /*
+    
     public function __construct(RecentArtclInfosRepositoryPort $recentArtclInfosRepository,
-    CategorySearchListRepositoryPort $categorySearchList)
+    CategorySearchListRepositoryPort $categorySearchListRepository)
     {
         $this->recentArtclInfosRepository = $recentArtclInfosRepository;
-        $this->categorySearchList = $categorySearchList;
+        $this->categorySearchList = $categorySearchListRepository;
     }
-    */
+    
 
 
     /**
@@ -27,24 +29,17 @@ class Interactor
      * 
      * @return array
      */
-    public function interact(?array $var):array
+    public function interact(?array $vars):array
     {
-        //sample data
-        $recentArtclInfos = [
+        $input = (new Validator)->validate($vars);
+        $pageId = $input['pageId'];
 
-            ['artclId' => 1, 'title' => 'sampleTitle1ああああああああああ', 'updateDate' => '2021-2-10',
-                'thumbnailImg' => '/asset/img/test_img.jpg'],
+        $recentArtclInfos = $this->recentArtclInfosRepository->getRecentArtclInfos($pageId, $this::ARTCL_NUM);
+        $isLastPage = $this->recentArtclInfosRepository->getIsLastPage($pageId, $this::ARTCL_NUM);
 
-            ['artclId' => 2, 'title' => 'sampleTitle2いいいいいいいいいいいいい', 'updateDate' => '2021-2-10',
-            'thumbnailImg' => '/asset/img/test_img.jpg'],
+        $categoryArtclCount = $this->categorySearchListRepository->getCategoryArtclCount();
+        $subCategoryArtclCount = $this->categorySearchListRepository->getSubCategoryArtclCount();
 
-            ['artclId' => 3, 'title' => 'sampleTitle3ふぁ', 'updateDate' => '2021-2-10',
-            'thumbnailImg' => '/asset/img/test_img.jpg']
-            
-        ];
-        $categoryArtclCount = ['プログラミング' => 6, '読書' => 5];
-        $subCategoryArtclCount = ['プログラミング' => ['web' => 4, 'game' => 2], '読書' => ['マンガ' => 3, '小説' => 2]];
-
-        return (new Presenter())->present($recentArtclInfos, $categoryArtclCount, $subCategoryArtclCount);
+        return (new Presenter())->present($recentArtclInfos, $isLastPage, $categoryArtclCount, $subCategoryArtclCount);
     }
 }

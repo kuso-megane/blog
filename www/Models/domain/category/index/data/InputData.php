@@ -12,4 +12,11 @@ class InputData
     {
         $this->pageId = $pageId;
     }
+
+    public function toArray()
+    {
+        return [
+            'pageId' => $this->pageId
+        ];
+    }
 }

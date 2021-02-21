@@ -3,7 +3,6 @@
 namespace domain\category\index\validator;
 
 use domain\category\index\data\InputData;
-use domain\Exception\ValidationFailException;
 
 class validator
 {
@@ -15,11 +14,8 @@ class validator
     public function validate(array $vars):InputData
     {
         $pageId = $vars['pageId'];
-
-        if (is_int($pageId) == FALSE)
-        {
-            $e = new ValidationFailException('pageId', 'int', $pageId);
-            echo $e->getMessage();
+        if ($pageId == NULL) {
+            $pageId = 1;
         }
         
         return new InputData($pageId);

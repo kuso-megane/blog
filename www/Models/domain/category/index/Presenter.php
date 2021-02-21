@@ -2,33 +2,32 @@
 
 namespace domain\category\index;
 
+use myapp\myFrameWork\Formatter;
+
 class Presenter
 {
-    /*
-        $recentArtclInfos = [$artclInfo, ...], 
-        $artclInfo = ['artclId' => int, 'title' => string, 'updateDate' => date, 'thumbnailImg' => string]
-    */
 
     /**
-     * @param array $recentArtclInfos = [$artclInfo, ...], 
-     *      $artclInfo = ['artclId' => int, 'title' => string, 'updateDate' => date, 'thumbnailImg' => string]
+     * @param array $recentArtclInfos array of Data\ArtclInfo
+     * @param bool $isLastPage
      * 
      * refer to components/mainSidebar
      * @param array $categoryArtclCount 
      * @param array $subCategoryArtclCount 
      * 
-     * @return array [
-     *      'recentArtclInfos' => $recentArtclInfos,
-     *      'categoryArtclCount' => $categoryArtclCount,
-     *       'subCategoryArtclCount' => $subCategoryArtclCount
-      *  ]
+     * @return array 
+     *
      */
-    public function present(array $recentArtclInfos, array $categoryArtclCount, array $subCategoryArtclCount)
+    public function present(array $recentArtclInfos, bool $isLastPage, array $categoryArtclCount, array $subCategoryArtclCount)
     {
+        $f = new Formatter;
         return [
-            'recentArtclInfos' => $recentArtclInfos,
-            'categoryArtclCount' => $categoryArtclCount,
-            'subCategoryArtclCount' => $subCategoryArtclCount
+            'recentArtclInfos' => $f->objectsToArray($recentArtclInfos),
+            'isLastPage' => $isLastPage,
+            'categoryArtclCount' => $f->objectsToArray($categoryArtclCount),
+            'subCategoryArtclCount' => $f->objectsToArray($subCategoryArtclCount)
         ];
     }
 }
+
+
