@@ -4,7 +4,7 @@ namespace domain\category\index;
 
 use domain\category\index\RepositoryPort\RecentArtclInfosRepositoryPort;
 use domain\components\categorySearchList\RepositoryPort\CategorySearchListRepositoryPort;
-use domain\category\index\data\OutputData;
+use domain\category\index\Presenter;
 
 class Interactor
 {
@@ -25,9 +25,9 @@ class Interactor
     /**
      * @param array|NULL $var
      * 
-     * @return OutputData
+     * @return array
      */
-    public function interact(?array $var)
+    public function interact(?array $var):array
     {
         //sample data
         $recentArtclInfos = [
@@ -45,6 +45,6 @@ class Interactor
         $categoryArtclCount = ['プログラミング' => 6, '読書' => 5];
         $subCategoryArtclCount = ['プログラミング' => ['web' => 4, 'game' => 2], '読書' => ['マンガ' => 3, '小説' => 2]];
 
-        return new OutputData($recentArtclInfos, $categoryArtclCount, $subCategoryArtclCount);
+        return (new Presenter())->present($recentArtclInfos, $categoryArtclCount, $subCategoryArtclCount);
     }
 }

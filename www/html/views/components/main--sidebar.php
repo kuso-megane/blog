@@ -1,6 +1,6 @@
 <?php
-    $categoryArtclCount = $vm->getCategoryArtclCount();
-    $subCategoryArtclCount = $vm->getSubCategoryArtclCount();
+    $categoryArtclCount = $vm['categoryArtclCount'];
+    $subCategoryArtclCount = $vm['subCategoryArtclCount'];
 ?>
 
 

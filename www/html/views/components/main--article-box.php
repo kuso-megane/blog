@@ -1,6 +1,6 @@
 
 <div id="article-container">
-    <?php foreach ($vm->getRecentArtclInfos() as $artcls): ?>
+    <?php foreach($vm['recentArtclInfos'] as $artcls): ?>
 
     <div class="article-box">
         <a href="/xxx" class="linkbox">
