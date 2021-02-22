@@ -2,9 +2,12 @@
 
 namespace domain\category\index;
 
+use domain\components\mainSidebar\PresenterTrait as MainSidebarPresenter;
 
 class Presenter
 {
+
+    use MainSidebarPresenter;
 
     /**
      * @param int $currentPage
@@ -23,8 +26,8 @@ class Presenter
             'currentPage' => $currentPage,
             'recentArtclInfos' => $this->formatForRAI($recentArtclInfos),
             'isLastPage' => $isLastPage,
-            'categoryArtclCount' => $f->objectsArrTo2DArr($categoryArtclCount),
-            'subCategoryArtclCount' => $f->objectsArrTo2DArr($subCategoryArtclCount)
+            'categoryArtclCount' => $this->formatForCAC($categoryArtclCount),
+            'subCategoryArtclCount' => $this->formatForSCAC($subCategoryArtclCount)
         ];
     }
 
