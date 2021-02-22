@@ -2,7 +2,7 @@
 
 namespace domain\category\index;
 
-use myapp\myFrameWork\Formatter;
+use domain\helpers\Formatter;
 
 class Presenter
 {
@@ -22,10 +22,10 @@ class Presenter
     {
         $f = new Formatter;
         return [
-            'recentArtclInfos' => $f->objectsToArray($recentArtclInfos),
+            'recentArtclInfos' => $f->objectsArrTo2DArr($recentArtclInfos),
             'isLastPage' => $isLastPage,
-            'categoryArtclCount' => $f->objectsToArray($categoryArtclCount),
-            'subCategoryArtclCount' => $f->objectsToArray($subCategoryArtclCount)
+            'categoryArtclCount' => $f->objectsArrTo2DArr($categoryArtclCount),
+            'subCategoryArtclCount' => $f->objectsArrTo2DArr($subCategoryArtclCount)
         ];
     }
 }
