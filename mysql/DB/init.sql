@@ -1,6 +1,6 @@
-drop database if exists app;
-create database app;
-use app;
+drop database if exists test_db;
+create database test_db;
+use test_db;
 
 drop table if exists Category; 
 create table Category(
@@ -43,8 +43,5 @@ create table Article(
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-insert into Category VALUES(0, 'プログラミング', 0);
-insert into SubCategory VALUES(0, 'web', 1, 0);
-insert into Article VALUES(0, 1, 1, 'sampleTitle1', default, '<p>sample1-content</p>', default);
 
 
