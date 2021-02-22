@@ -7,7 +7,7 @@ use PDOException;
 
 class DBConnection
 {
-    const HOST_NAME = '62d9acf367e6';
+    const DB_HOST = 'db';
     const MAIN_DB = 'app';
     const TEST_DB = 'test_db';
     const DB_PASS = ['root' => 'root'];
@@ -21,9 +21,9 @@ class DBConnection
      * @param string $username db userName
      * 
      */
-    public function __construct(bool $is_test=false, string $username='root')
+    public function __construct(bool $is_test=FALSE, string $username='root')
     {
-        if ($is_test == 1) {
+        if ($is_test == TRUE) {
             $this->dbname = $this::TEST_DB;
         }
         else {
@@ -33,18 +33,19 @@ class DBConnection
     }
 
     /**
+     * return new PDO
      * @return PDO
      */
     public function connect():PDO
     {
-        $dsn = 'mysql:host=' . $this::HOST_NAME . ';dbname=' . $this->dbname;
+        $dsn = "mysql:dbname={$this->dbname};" . 'host=' . $this::DB_HOST;
         $pw = $this::DB_PASS[$this->username];
 
         try {
             $dbh = new PDO($dsn, $this->username, $pw);
         }
         catch (PDOException $e) {
-            echo 'Connection failed: ' . $e->getMessage();
+            echo "Connection failed:\n\t dsn = '{$dsn}'\n\t {$e->getMessage()}\n";
         }
 
         return $dbh;
