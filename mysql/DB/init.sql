@@ -4,17 +4,17 @@ use app;
 
 drop table if exists category; 
 create table category(
-    id TINYINT primary key auto_increment,
+    id TINYINT UNSIGNED primary key auto_increment,
     name varchar(20) NOT NULL unique,
-    num int NOT NULL default 0
+    num int UNSIGNED NOT NULL default 0
 );
 
 drop table if exists subCategory;
 create table subCategory(
-    id SMALLINT PRIMARY KEY AUTO_INCREMENT,
+    id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     name varchar(20) NOT NULL unique,
-    c_id tinyint,
-    num int NOT NULL default 0,
+    c_id tinyint UNSIGNED,
+    num int UNSIGNED NOT NULL default 0,
 
     CONSTRAINT fk_c_id_on_subCategory
         FOREIGN KEY (c_id)
@@ -24,13 +24,13 @@ create table subCategory(
 
 drop table if exists article;
 create table article(
-    id int PRIMARY KEY AUTO_INCREMENT,
-    c_id TINYINT,
-    subc_id SMALLINT,
+    id int UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    c_id TINYINT UNSIGNED,
+    subc_id SMALLINT UNSIGNED,
     title varchar(30) DEFAULT 'NO TITLE',
     thumbnailName varchar(30) DEFAULT 'default.jpg',
     content TEXT,
-    update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     CONSTRAINT fk_c_id_on_article
         FOREIGN KEY (c_id)
@@ -43,8 +43,8 @@ create table article(
         ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-insert into category VALUES(0, 'プログラミング');
-insert into subCategory VALUES(0, 'web', 1);
+insert into category VALUES(0, 'プログラミング', 0);
+insert into subCategory VALUES(0, 'web', 1, 0);
 insert into article VALUES(0, 1, 1, 'sampleTitle1', default, '<p>sample1-content</p>', default);
 
 
