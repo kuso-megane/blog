@@ -38,6 +38,7 @@ class Presenter
      * 
      * @return array [
      *      ['id' => int, 'title' => string, 'updateDate' => string, 'thumbnailName' => string, 'c_id' => int, 'subc_id' => int],
+     *      []
      * ]
      */ 
     private function formatForRAI(array $recentArtclInfos):array
