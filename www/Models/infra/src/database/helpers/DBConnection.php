@@ -43,6 +43,7 @@ class DBConnection
 
         try {
             $dbh = new PDO($dsn, $this->username, $pw);
+            $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         }
         catch (PDOException $e) {
             echo "Connection failed:\n\t dsn = '{$dsn}'\n\t {$e->getMessage()}\n";
