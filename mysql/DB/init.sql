@@ -5,7 +5,8 @@ use app;
 drop table if exists category; 
 create table category(
     id TINYINT primary key auto_increment,
-    name varchar(20) NOT NULL unique
+    name varchar(20) NOT NULL unique,
+    num int NOT NULL default 0
 );
 
 drop table if exists subCategory;
@@ -13,6 +14,7 @@ create table subCategory(
     id SMALLINT PRIMARY KEY AUTO_INCREMENT,
     name varchar(20) NOT NULL unique,
     c_id tinyint,
+    num int NOT NULL default 0,
 
     CONSTRAINT fk_c_id_on_subCategory
         FOREIGN KEY (c_id)
