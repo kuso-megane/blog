@@ -2,7 +2,6 @@
 
 namespace domain\category\index;
 
-use domain\helpers\Formatter;
 
 class Presenter
 {
@@ -20,13 +19,23 @@ class Presenter
      */
     public function present(array $recentArtclInfos, bool $isLastPage, array $categoryArtclCount, array $subCategoryArtclCount)
     {
-        $f = new Formatter;
         return [
-            'recentArtclInfos' => $f->objectsArrTo2DArr($recentArtclInfos),
+            'recentArtclInfos' => formatForRAI($recentArtclInfos),
             'isLastPage' => $isLastPage,
             'categoryArtclCount' => $f->objectsArrTo2DArr($categoryArtclCount),
             'subCategoryArtclCount' => $f->objectsArrTo2DArr($subCategoryArtclCount)
         ];
+    }
+
+
+    // formatter for recentArtclInfo
+    function formatForRAI(array $recentArtclInfos):array
+    {
+        foreach($recentArtclInfos as &$object) {
+            $object = $object->toArray();
+        }
+
+        return $recentArtclInfos;
     }
 }
 
