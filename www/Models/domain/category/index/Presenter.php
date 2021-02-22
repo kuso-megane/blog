@@ -7,6 +7,7 @@ class Presenter
 {
 
     /**
+     * @param int $currentPage
      * @param array $recentArtclInfos array of Data\ArtclInfo
      * @param bool $isLastPage
      * 
@@ -16,9 +17,10 @@ class Presenter
      * 
      * @return array 
      */
-    public function present(array $recentArtclInfos, bool $isLastPage, array $categoryArtclCount, array $subCategoryArtclCount)
+    public function present(int $currentPage, array $recentArtclInfos, bool $isLastPage, array $categoryArtclCount, array $subCategoryArtclCount)
     {
         return [
+            'currentPage' => $currentPage,
             'recentArtclInfos' => $this->formatForRAI($recentArtclInfos),
             'isLastPage' => $isLastPage,
             'categoryArtclCount' => $f->objectsArrTo2DArr($categoryArtclCount),
@@ -37,8 +39,8 @@ class Presenter
      */ 
     private function formatForRAI(array $recentArtclInfos):array
     {
-        foreach($recentArtclInfos as &$object) {
-            $object = $object->toArray();
+        foreach($recentArtclInfos as &$artclInfo) {
+            $artclInfo = $artclInfo->toArray();
         }
 
         return $recentArtclInfos;

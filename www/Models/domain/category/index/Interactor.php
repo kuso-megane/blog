@@ -40,6 +40,6 @@ class Interactor
         $categoryArtclCount = $this->categorySearchListRepository->getCategoryArtclCount();
         $subCategoryArtclCount = $this->categorySearchListRepository->getSubCategoryArtclCount();
 
-        return (new Presenter())->present($recentArtclInfos, $isLastPage, $categoryArtclCount, $subCategoryArtclCount);
+        return (new Presenter())->present($pageId, $recentArtclInfos, $isLastPage, $categoryArtclCount, $subCategoryArtclCount);
     }
 }
