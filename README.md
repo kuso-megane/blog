@@ -4,7 +4,7 @@
 
 # localでの構築
 - ```docker-compose up -d```
-- ```/www```にて、```./composer.sh```を実行。(初回はpermission deniedの可能性あり、その際は実行権限付与)
+- ```/www```にて、```composer install```を実行。
 
 # myFramework
 ## superGlobalVars
