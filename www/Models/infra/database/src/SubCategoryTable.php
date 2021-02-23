@@ -1,6 +1,6 @@
 <?php
 
-namespace infra\database;
+namespace infra\database\src;
 
 use infra\database\helpers\DBConnection;
 use PDO;

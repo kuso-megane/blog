@@ -3,8 +3,7 @@
         "psr-4": {
             "myapp\\": "./",
             "domain\\": "./Models/domain",
-            "infra\\": "./Models/infra/src",
-            "dbTest\\": "./Models/infra/spec"
+            "infra\\": "./Models/infra"
         }
     },
     "require": {

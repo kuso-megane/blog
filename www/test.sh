@@ -2,4 +2,5 @@
 
 # appコンテナ内の www/ で実行
 
-./vendor/bin/kahlan --reporter=verbose --spec=./Models/infra/spec/database
+reporter=dot
+./vendor/bin/kahlan --reporter=$reporter --spec=./Models/infra/database/spec
