@@ -5,9 +5,10 @@ namespace infra\database;
 use infra\database\helpers\DBConnection;
 use PDO;
 
-class CategoryTable
+class SubCategoryTable
 {
-    const TABLENAME = 'Category';
+
+    const TABLENAME = 'SubCategory';
     private $dbh;
 
 
@@ -20,7 +21,7 @@ class CategoryTable
     }
 
     /**
-     * @return array [['id' => int, 'name' => string, 'num' => int]]
+     * @return array [ ['id' => int, 'name' => string, 'c_id' => int, 'num' => int], [] ]
      */
     public function findAll():array
     {
