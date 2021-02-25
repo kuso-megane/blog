@@ -6,10 +6,10 @@ use domain\category\index\RepositoryPort\RecentArtclInfosRepositoryPort;
 use domain\components\mainSidebar\RepositoryPort\CategorySearchListRepositoryPort;
 use domain\category\index\Presenter;
 use domain\category\index\validator\Validator;
+use myapp\Models\Config;
 
 class Interactor
 {
-    const ARTCL_NUM = 9; //1ページあたりの記事数
 
     private $recentArtclInfosRepository;
     private $categorySearchListRepository;
@@ -31,11 +31,13 @@ class Interactor
      */
     public function interact(?array $vars):array
     {
-        $input = (new Validator)->validate($vars);
-        $pageId = $input['pageId'];
+        $artclNum = (new Config)::ARTCL_NUM;
 
-        $recentArtclInfos = $this->recentArtclInfosRepository->getRecentArtclInfos($pageId, $this::ARTCL_NUM);
-        $isLastPage = $this->recentArtclInfosRepository->getIsLastPage($pageId, $this::ARTCL_NUM);
+        $input = (new Validator)->validate($vars);
+        $pageId = $input->toArray()['pageId'];
+
+        $recentArtclInfos = $this->recentArtclInfosRepository->getRecentArtclInfos($pageId, $artclNum);
+        $isLastPage = $this->recentArtclInfosRepository->getIsLastPage($pageId, $artclNum);
 
         $categoryArtclCount = $this->categorySearchListRepository->getCategoryArtclCount();
         $subCategoryArtclCount = $this->categorySearchListRepository->getSubCategoryArtclCount();
