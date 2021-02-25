@@ -38,13 +38,13 @@ describe('CategoryTable:', function() {
             }
 
             for ($i = 1; $i < 3; ++$i) {
-                $sth->execute([':name' => "category{$i}", ':num' => $i]);
+                $sth->execute([':name' => "category{$i}", ':num' => 0]);
             }
 
 
             expect($this->table->findAll())->toBe([
-                ['id' => 1, 'name' => 'category1', 'num' => 1],
-                ['id' => 2, 'name' => 'category2', 'num' => 2]
+                ['id' => 1, 'name' => 'category1', 'num' => 0],
+                ['id' => 2, 'name' => 'category2', 'num' => 0]
             ]);
         });
     });

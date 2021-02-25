@@ -1,8 +1,8 @@
 <?php
 
-namespace myapp\Models;
+namespace myapp\config;
 
-class Config
+class AppConfig
 {
     const ARTCL_NUM = 9; //1ページあたりの記事数
 }

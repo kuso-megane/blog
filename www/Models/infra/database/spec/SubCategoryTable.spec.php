@@ -61,13 +61,13 @@ describe('SubCategoryTable:', function() {
             }
             
             for ($i = 1; $i < 3; ++$i) {
-                $sth->execute([':name' => "subCategory{$i}", ':c_id' => $i, ':num' => $i]);
+                $sth->execute([':name' => "subCategory{$i}", ':c_id' => $i, ':num' => 0]);
             }
 
 
             expect($this->table->findAll())->toBe([
-                ['id' => 1, 'name' => 'subCategory1', 'c_id' => 1, 'num' => 1],
-                ['id' => 2, 'name' => 'subCategory2', 'c_id' => 2, 'num' => 2]
+                ['id' => 1, 'name' => 'subCategory1', 'c_id' => 1, 'num' => 0],
+                ['id' => 2, 'name' => 'subCategory2', 'c_id' => 2, 'num' => 0]
             ]);
         });
     });
