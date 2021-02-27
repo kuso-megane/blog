@@ -39,7 +39,12 @@ class DBHMyLib
         try {
             $sth = $this->dbh->prepare($command);
         } catch (PDOException $e) {
-            echo "\nPDO::prepare() failed!\n given command: {$command};\n {$e->getMessage()}\n";
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+            $class = $trace[1]['class'];
+            $type = $trace[1]['type'];
+            $function = $trace[1]['function'];
+            $line = $trace[1]['line'];
+            echo "\nPDO::prepare() failed in {$class}{$type}{$function}() line:{$line}\n given command: {$command};\n {$e->getMessage()}\n";
         }
 
         return $sth;
