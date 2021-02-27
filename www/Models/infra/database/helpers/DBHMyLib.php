@@ -42,10 +42,4 @@ class DBHMyLib
 
         return $sth;
     }
-
-
-    public function transaction()
-    {
-        
-    }
 }
