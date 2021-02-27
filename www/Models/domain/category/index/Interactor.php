@@ -6,7 +6,7 @@ use domain\category\index\RepositoryPort\RecentArtclInfosRepositoryPort;
 use domain\components\mainSidebar\RepositoryPort\CategorySearchListRepositoryPort;
 use domain\category\index\Presenter;
 use domain\category\index\validator\Validator;
-use myapp\Models\Config;
+use myapp\config\AppConfig;
 
 class Interactor
 {
@@ -31,7 +31,7 @@ class Interactor
      */
     public function interact(?array $vars):array
     {
-        $artclNum = (new Config)::ARTCL_NUM;
+        $artclNum = (new AppConfig)::ARTCL_NUM;
 
         $input = (new Validator)->validate($vars);
         $pageId = $input->toArray()['pageId'];
