@@ -15,6 +15,7 @@ class DBHMyLib
     }
 
     /**
+     * truncate table by ignoring foreign key constrict
      * @param string $tablename
      * 
      * @return void
@@ -28,6 +29,7 @@ class DBHMyLib
 
 
     /**
+     * prepare sql statement. If preparing fails, echo error message.
      * @param string $command
      * 
      * @return PDOStatement
@@ -37,7 +39,7 @@ class DBHMyLib
         try {
             $sth = $this->dbh->prepare($command);
         } catch (PDOException $e) {
-            echo "\nPDO::prepare() failed!\n\t given command: {$command};\n\t {$e->getMessage()}\n";
+            echo "\nPDO::prepare() failed!\n given command: {$command};\n {$e->getMessage()}\n";
         }
 
         return $sth;
