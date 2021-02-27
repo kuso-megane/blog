@@ -38,7 +38,7 @@ describe('SubCategoryTable:', function() {
         }
 
         for ($i = 1; $i < 3; ++$i) {
-            $sth->execute([':name' => "category{$i}", ':num' => $i]);
+            $sth->execute([':name' => "category{$i}", ':num' => 0]);
         }
         
     });
