@@ -7,6 +7,7 @@ use infra\database\src\ArticleTable;
 use infra\database\helpers\DBConnection;
 use infra\database\helpers\DBHMyLib;
 use myapp\config\AppConfig;
+use phpDocumentor\Reflection\Types\Float_;
 
 class ArticleTableTest extends TestCase
 {
@@ -48,11 +49,11 @@ class ArticleTableTest extends TestCase
     /**
      * @dataProvider providerForFindRecentOnesInfos
      */
-    public function testFindRecentOnesInfos(int $pageId, ?int $c_id = NULL, ?int $subc_id = NULL, ?string $word = NULL)
+    public function testFindRecentOnesInfos(int $pageId, bool $isSetC_id, bool $isSetSubc_id, bool $isSetWord)
     {
         $isLastPage = (bool)NULL;
-        if ($word == NULL) {
-            if ($c_id == NULL && $subc_id == NULL) {
+        if ($isSetWord == FALSE) {
+            if ($isSetC_id == FALSE && $isSetSubc_id == FALSE) {
 
                 $c_id = 1;
                 $subc_id = 1;
@@ -108,19 +109,14 @@ class ArticleTableTest extends TestCase
                     $this->assertTrue($isLastPage);
                 }
             }
-            else if ($c_id != NULL && $subc_id == NULL) {
+            else if ($isSetC_id == TRUE && $isSetSubc_id == FALSE) {
 
-                $fake_c_id = ($c_id == 1) ? 2 : 1;
-                if ($c_id == 1) {
-                    $subc_id1 = 1;
-                    $subc_id2 = 2;
-                    $fake_subc_id = 3;
-                }
-                else if ($c_id == 2) {
-                    $subc_id1 = 3;
-                    $subc_id2 = 4;
-                    $fake_subc_id = 1;
-                }
+                $c_id = 1;
+                $fake_c_id = 2;
+                $subc_id1 = 1;
+                $subc_id2 = 2;
+                $fake_subc_id = 3;
+
 
                 $command = 'INSERT INTO ' . $this::TABLENAME . 
                 " VALUES(0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate)";
@@ -161,11 +157,47 @@ class ArticleTableTest extends TestCase
                 $this->assertTrue($isLastPage);
 
             }
-            else if ($c_id != NULL && $subc_id != NULL) {
+            else if ($isSetC_id == TRUE && $isSetSubc_id == TRUE) {
 
+                $c_id = 1;
+                $subc_id = 2;
+                $fake_subc_id = 1;
+
+                $command = 'INSERT INTO ' . $this::TABLENAME . 
+                " VALUES(0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate)";
+    
+                $sth = $this->dbhHelper->prepare($command);
+
+                //指定されたカテゴリ、サブカテゴリの記事を２つ作成
+                $this->dbh->beginTransaction();
+                $this->insertSampleArticle($sth, $c_id, $subc_id, 'sampleTitle', $this::SAMPLE_TIME);
+                $this->insertSampleArticle($sth, $c_id, $subc_id, 'sampleTitle', $this::SAMPLE_TIME);
+                $this->dbh->exec('UPDATE Category SET num = num + 2 WHERE id = ' . $c_id);
+                $this->dbh->exec('UPDATE SubCategory SET num = num + 2 WHERE id = ' . $subc_id);
+                $this->dbh->commit();
+
+                //指定されていないサブカテゴリの記事を１つ作成
+                $this->dbh->beginTransaction();
+                $this->insertSampleArticle($sth, $c_id, $fake_subc_id, 'sampleTitle', $this::SAMPLE_TIME);
+                $this->dbh->exec('UPDATE Category SET num = num + 1 WHERE id = ' . $c_id);
+                $this->dbh->exec('UPDATE SubCategory SET num = num + 1 WHERE id = ' . $fake_subc_id);
+                $this->dbh->commit();
+
+                $expected = [
+                    ['id' => 1, 'c_id' => $c_id, 'subc_id' => $subc_id, 'title' => 'sampleTitle',
+                    'thumbnailName' => 'sampleThumnail.jpg', 'updateDate' => $this::SAMPLE_TIME],
+                    ['id' => 2, 'c_id' => $c_id, 'subc_id' => $subc_id, 'title' => 'sampleTitle',
+                    'thumbnailName' => 'sampleThumnail.jpg', 'updateDate' => $this::SAMPLE_TIME]
+                ];
+
+                $this->assertSame($expected,
+                $this->table->findRecentOnesInfos($this->maxNum, $isLastPage, $pageId, $c_id, $subc_id));
+                
+                $this->assertTrue($isLastPage);
+                
             }
         }
-        else if ($word != NULL) {
+        else if ($isSetWord == TRUE) {
 
         }
         
@@ -180,9 +212,10 @@ class ArticleTableTest extends TestCase
     public function providerForFindRecentOnesInfos():array
     {
         return [
-            'when $pageId = 1, others NULL' => [1, NULL, NULL, NULL],
-            'when $pageId = 2, others NULL' => [2, NULL, NULL, NULL],
-            'when $c_id = 1, others NULL($pageId = default)' => [1, 1, NULL, NULL]
+            'when $pageId = 1, others not set' => [1, FALSE, FALSE, FALSE],
+            'when $pageId = 2, others not set' => [2, FALSE, FALSE, FALSE],
+            'when $c_id is set, others not set($pageId = 1)' => [1, TRUE, FALSE, FALSE],
+            'when $c_id and $subc_id are set, others not set($pageId = 1)' => [1, TRUE, TRUE, FALSE]
         ];
     }
 

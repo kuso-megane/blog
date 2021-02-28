@@ -69,8 +69,28 @@ class ArticleTable
                 $sth->execute([':start' => $rangeStart, ':num' => $maxNum, ':c_id' => $c_id]);
                 $articleInfos = $sth->fetchAll(PDO::FETCH_ASSOC);
 
-                $sth2 = $this->dbhHelper->prepare('SELECT num FROM Category WHERE id = :c_id');
+                $sth2 = $this->dbhHelper->prepare('SELECT num AS total FROM Category WHERE id = :c_id');
                 $sth2->execute([':c_id' => $c_id]);
+                $total = $sth2->fetch(PDO::FETCH_ASSOC)['total'];
+
+                if ($total <= $maxNum * $pageId) {
+                    $isLastPage = TRUE;
+                }else {
+                    $isLastPage = FALSE;
+                }
+
+                return $articleInfos;
+            }
+            elseif ($c_id != NULL && $subc_id != NULL) {
+
+                $command = 'SELECT id, c_id, subc_id, title, thumbnailName, updateDate FROM ' . $this::TABLENAME .
+                ' WHERE subc_id = :subc_id' . ' ORDER BY updateDate DESC' . " LIMIT :start,:num";
+                $sth = $this->dbhHelper->prepare($command);
+                $sth->execute([':start' => $rangeStart, ':num' => $maxNum, ':subc_id' => $subc_id]);
+                $articleInfos = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+                $sth2 = $this->dbhHelper->prepare('SELECT num AS total FROM SubCategory WHERE id = :subc_id');
+                $sth2->execute([':subc_id' => $subc_id]);
                 $total = $sth2->fetch(PDO::FETCH_ASSOC)['total'];
 
                 if ($total <= $maxNum * $pageId) {
@@ -95,6 +115,6 @@ class ArticleTable
      */
     public function findById(int $id):array
     {
-        
+        return [];
     }
 }
