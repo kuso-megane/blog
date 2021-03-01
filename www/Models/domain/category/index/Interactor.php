@@ -19,7 +19,7 @@ class Interactor
     CategorySearchListRepositoryPort $categorySearchListRepository)
     {
         $this->recentArtclInfosRepository = $recentArtclInfosRepository;
-        $this->categorySearchList = $categorySearchListRepository;
+        $this->categorySearchListRepository = $categorySearchListRepository;
     }
     
 

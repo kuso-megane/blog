@@ -9,14 +9,14 @@ interface CategorySearchListRepositoryPort
 {
 
     /**
-     * @return CategoryArtclCount
+     * @return array of CategoryArtclCount
      */
-    public function getCategoryArtclCount():CategoryArtclCount;
+    public function getCategoryArtclCount():array;
 
 
     /**
-     * @return SubCategoryArtclCount
+     * @return array of SubCategoryArtclCount
      */
-    public function getSubCategoryArtclCount():SubCategoryArtclCount;
+    public function getSubCategoryArtclCount():array;
 
 }

@@ -14,10 +14,12 @@ class CategoryController
 
     public function index(?array $vars)
     {
-        
+        $builder = new \DI\ContainerBuilder();
+        $builder->addDefinitions('/var/www/Models/diconfig.php');
+        $container = $builder->build();
 
-
-        $vm = (new Interactor())->interact($vars);
+        $interactor = $container->get('domain\category\index\Interactor');
+        $vm = $interactor->interact($vars);
         render($vm, 'category', 'index');
     }
 

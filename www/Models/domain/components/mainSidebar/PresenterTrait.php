@@ -6,14 +6,15 @@ trait PresenterTrait
 {
     /**
      * formatter for categoryArtclCount
-     * @param array $categoryArtclCount
+     * @param array of Data\CategoryArtclCount $categoryArtclCount
      * 
      * @return array ['category1' => int, 'category2' => int, ]
      */ 
     private function formatForCAC($categoryArtclCount):array
     {
         $arr = [];
-        foreach ($categoryArtclCount as $cac) {
+        foreach ($categoryArtclCount as $cacData) {
+            $cac = $cacData->toArray();
             $arr[$cac['category']] = $cac['count'];
         }
 
@@ -23,7 +24,7 @@ trait PresenterTrait
 
     /**
      * formatter for subCategoryArtclCount
-     * @param array $subCategoryArtclCount
+     * @param array of Data\SubCategoryArtclCount $subCategoryArtclCount
      * 
      * @return array [
      *      'category1' => ['subCategory1' => int, 'subCategory2' => int, ],
@@ -33,7 +34,8 @@ trait PresenterTrait
     private function formatForSCAC($subCategoryArtclCount):array
     {
         $arr = [];
-        foreach ($subCategoryArtclCount as $scac) {
+        foreach ($subCategoryArtclCount as $scacData) {
+            $scac = $scacData->toArray();
             if ($arr[$scac['category']] == NULL) {
                 $arr[$scac['category']] = [];
             }

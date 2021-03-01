@@ -14,11 +14,16 @@ class Presenter
      * @param array $recentArtclInfos array of Data\ArtclInfo
      * @param bool $isLastPage
      * 
-     * refer to components/mainSidebar
-     * @param array $categoryArtclCount 
-     * @param array $subCategoryArtclCount 
+     * @param array $categoryArtclCount of Data\CategoryArtclCount
+     * @param array $subCategoryArtclCount of Data\SubCategoryArtclCount
      * 
-     * @return array 
+     * @return array [
+     *      'pageId' => int,
+     *      'recentArtclInfos' => return of $this->formatForRAI(),
+     *      'isLastPage' => int,
+     *      'categoryArtclCount' => return of $this->formatForCAC(),
+     *      'subCategoryArtclCount' => return of $this->formatForSCAC()
+     * ]
      */
     public function present(int $pageId, array $recentArtclInfos, bool $isLastPage, array $categoryArtclCount, array $subCategoryArtclCount)
     {
@@ -34,7 +39,7 @@ class Presenter
 
     /**
      * formatter for recentArtclInfo
-     * @param array $recentArtclInfos
+     * @param array of Data\ArtclInfo $recentArtclInfos
      * 
      * @return array [
      *      ['id' => int, 'title' => string, 'updateDate' => string, 'thumbnailName' => string, 'c_id' => int, 'subc_id' => int],
