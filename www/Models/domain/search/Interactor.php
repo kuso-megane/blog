@@ -3,7 +3,8 @@
 namespace domain\search;
 
 use domain\search\RepositoryPort\RecentArtclInfosRepositoryPort;
-use domain\components\mainSidebar\RepositoryPort\CategorySearchListRepositoryPort;
+use domain\components\mainSidebar\RepositoryPort\CategoryArtclCountRepositoryPort;
+use domain\components\mainSidebar\RepositoryPort\SubCategoryArtclCountRepositoryPort;
 use domain\search\Presenter;
 use domain\search\validator\Validator;
 use myapp\config\AppConfig;
@@ -12,14 +13,17 @@ class Interactor
 {
 
     private $recentArtclInfosRepository;
-    private $categorySearchListRepository;
+    private $categoryArtclCountRepositoryPort;
+    private $subCategoryArtclCountRepositoryPort;
 
     
     public function __construct(RecentArtclInfosRepositoryPort $recentArtclInfosRepository,
-    CategorySearchListRepositoryPort $categorySearchListRepository)
+    CategoryArtclCountRepositoryPort $categoryArtclCountRepositoryPort,
+    SubCategoryArtclCountRepositoryPort $subCategoryArtclCountRepositoryPort)
     {
         $this->recentArtclInfosRepository = $recentArtclInfosRepository;
-        $this->categorySearchListRepository = $categorySearchListRepository;
+        $this->categoryArtclCountRepositoryPort = $categoryArtclCountRepositoryPort;
+        $this->subCategoryArtclCountRepositoryPort = $subCategoryArtclCountRepositoryPort;
     }
     
 
@@ -40,8 +44,8 @@ class Interactor
         $isLastPage = $isLastPageAndRecentArtclInfos[0];
         $recentArtclInfos = $isLastPageAndRecentArtclInfos[1];
 
-        $categoryArtclCount = $this->categorySearchListRepository->getCategoryArtclCount();
-        $subCategoryArtclCount = $this->categorySearchListRepository->getSubCategoryArtclCount();
+        $categoryArtclCount = $this->categoryArtclCountRepositoryPort->getCategoryArtclCount();
+        $subCategoryArtclCount = $this->subCategoryArtclCountRepositoryPort->getSubCategoryArtclCount();
 
         return (new Presenter())->present($input, $recentArtclInfos, $isLastPage, $categoryArtclCount, $subCategoryArtclCount);
     }
