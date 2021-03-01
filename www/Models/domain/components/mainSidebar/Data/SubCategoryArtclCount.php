@@ -4,14 +4,16 @@ namespace domain\components\mainSideBar\Data;
 
 class SubCategoryArtclCount
 {
-    private $category;
+    private $c_id;
+    private $id;
     private $subCategory;
     private $count;
 
 
-    public function __construct(string $category, string $subCategory, int $count)
+    public function __construct(int $c_id, int $id, string $subCategory, int $count)
     {
-        $this->category = $category;
+        $this->c_id = $c_id;
+        $this->id = $id;
         $this->subCategory = $subCategory;
         $this->count = $count;
     }
@@ -20,8 +22,9 @@ class SubCategoryArtclCount
     public function toArray():array
     {
         return [
-            'category' => $this->category,
-            'subCategory' => $this->subCategory,
+            'c_id' => $this->c_id,
+            'id' => $this->id,
+            'name' => $this->subCategory,
             'count' => $this->count
         ];
     }

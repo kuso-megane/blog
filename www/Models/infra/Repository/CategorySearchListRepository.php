@@ -20,9 +20,10 @@ class CategorySearchListRepository implements CategorySearchListRepositoryPort
 
         $datas = (new CategoryTable())->findAll();
         foreach($datas as $data) {
+            $id = $data['id'];
             $category = $data['name'];
             $count = $data['num'];
-            array_push($ans, new CategoryArtclCount($category, $count));
+            array_push($ans, new CategoryArtclCount($id,$category, $count));
         }
         
         return $ans;
@@ -39,10 +40,10 @@ class CategorySearchListRepository implements CategorySearchListRepositoryPort
         $datas = (new SubCategoryTable())->findAll();
         foreach($datas as $data) {
             $c_id = $data['c_id'];
-            $category = (new CategoryTable())->findById($c_id)['name'];
+            $id = $data['id'];
             $subCategory = $data['name'];
             $count = $data['num'];
-            array_push($ans, new SubCategoryArtclCount($category, $subCategory, $count));
+            array_push($ans, new SubCategoryArtclCount($c_id, $id, $subCategory, $count));
         }
 
         return $ans;

@@ -8,17 +8,18 @@ trait PresenterTrait
      * formatter for categoryArtclCount
      * @param array of Data\CategoryArtclCount $categoryArtclCount
      * 
-     * @return array ['category1' => int, 'category2' => int, ]
+     * @return array [
+     *      ['id' => int, 'name' => 'Category1', 'count' => int],
+     *      []
+     * ]
      */ 
     private function formatForCAC($categoryArtclCount):array
     {
-        $arr = [];
-        foreach ($categoryArtclCount as $cacData) {
-            $cac = $cacData->toArray();
-            $arr[$cac['category']] = $cac['count'];
+        foreach ($categoryArtclCount as &$cacData) {
+            $cacData = $cacData->toArray();
         }
 
-        return $arr;
+        return $categoryArtclCount;
     }
 
 
@@ -27,8 +28,11 @@ trait PresenterTrait
      * @param array of Data\SubCategoryArtclCount $subCategoryArtclCount
      * 
      * @return array [
-     *      'category1' => ['subCategory1' => int, 'subCategory2' => int, ],
-     *      'category2' => [], 
+     *      'c_id1' => [
+     *          ['id' => int, 'name' => 'SubCategory1', 'count' => int],
+     *          []
+     *      ],
+     *      'c_id2' => []
      * ]
      */
     private function formatForSCAC($subCategoryArtclCount):array
@@ -36,10 +40,10 @@ trait PresenterTrait
         $arr = [];
         foreach ($subCategoryArtclCount as $scacData) {
             $scac = $scacData->toArray();
-            if ($arr[$scac['category']] == NULL) {
-                $arr[$scac['category']] = [];
+            if ($arr[$scac['c_id']] == NULL) {
+                $arr[$scac['c_id']] = [];
             }
-            $arr[$scac['category']] += [$scac['subCategory'] => $scac['count']];
+            array_push($arr[$scac['c_id']], ['id' => $scac['id'], 'name' => $scac['name'], 'count' => $scac['count']]);
         }
 
         return $arr;

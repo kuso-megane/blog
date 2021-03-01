@@ -21,7 +21,7 @@
         </a>
         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
-    
+
     <div id="search-container">
 
         <form action="/search" method="get">
@@ -35,22 +35,38 @@
         <ul id="category-list">
             <?php 
                 $c = 0;
-                foreach($categoryArtclCount as $category => $count): 
+                foreach($categoryArtclCount as $cac):
+                    $c_id = $cac['id'];
+                    $c_name = $cac['name'];
+                    $c_count = $cac['count'];
             ?>
             
-            <li>
-                <input id=<?php echo "category-checkbox{$c}"; ?> type="checkbox" class="category-checkbox">
-                <label for=<?php echo "category-checkbox{$c}"; ?> ><?php echo "{$category}({$count})"; ?></label>
+                <li>
+                    <input id=<?php echo "category-checkbox{$c}"; ?> type="checkbox" class="category-checkbox">
+                    <label for=<?php echo "category-checkbox{$c}"; ?> ><?php echo "{$c_name}({$c_count})"; ?></label>
 
-                <ul id="subCategory-list">
-                    <li><a href="">- このカテゴリすべて(<?php echo $count; ?>)</a></li>
-                    <?php foreach($subCategoryArtclCount["{$category}"] as $subCategory => $subCount): ?>
+                    <ul id="subCategory-list">
+                        <li><a href=<?php echo "/category/{$c_id}"; ?> >- このカテゴリすべて(<?php echo $c_count; ?>)</a></li>
 
-                    <li><a href=""><?php echo "- {$subCategory}({$subCount})"; ?></a></li>
-                    
-                    <?php endforeach; ?>
-                </ul>
-            </li>
+                        <?php if($subCategoryArtclCount[$c_id] != NULL): ?>
+                            <?php
+                                foreach($subCategoryArtclCount[$c_id] as $scac):
+                                    if ($scac == NULL) {
+                                        break;
+                                    }
+                                    $subc_id = $scac['id'];
+                                    $subc_name = $scac['name'];
+                                    $subc_count = $scac['count'];
+                                    
+                            ?>
+                                
+                                <li><a href=<?php echo "/category/{$c_id}/{$subc_id}"; ?> ><?php echo "- {$subc_name}({$subc_count})"; ?></a></li>
+                                
+                            <?php endforeach; ?>
+
+                         <?php endif; ?>
+                    </ul>
+                </li>
 
             <?php
                 $c++;
