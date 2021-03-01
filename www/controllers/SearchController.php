@@ -15,7 +15,7 @@ class SearchController
         $builder->addDefinitions('/var/www/Models/diconfig.php');
         $container = $builder->build();
 
-        $interactor = $container->get('domain\search\index\Interactor');
+        $interactor = $container->get('domain\search\Interactor');
         $vm = $interactor->interact($vars);
         render($vm, 'search', 'index');
     }

@@ -2,8 +2,8 @@
 
 namespace infra\Repository;
 
-use domain\search\index\Data\ArtclInfo;
-use domain\search\index\RepositoryPort\RecentArtclInfosRepositoryPort;
+use domain\search\Data\ArtclInfo;
+use domain\search\RepositoryPort\RecentArtclInfosRepositoryPort;
 use infra\database\src\ArticleTable;
 
 class RecentArtclInfosRepository implements RecentArtclInfosRepositoryPort
@@ -12,13 +12,19 @@ class RecentArtclInfosRepository implements RecentArtclInfosRepositoryPort
     /**
      * @inheritdoc
      */
-    public function getIsLastPageAndRecentArtclInfos(int $pageId, int $artclNum):array
+    public function getIsLastPageAndRecentArtclInfos(array $input, int $artclNum):array
     {
         $ans = [];
         $ans[1] = [];
 
         $isLastPage = (bool)NULL;
-        $datas = (new ArticleTable())->findRecentOnesInfos($artclNum, $isLastPage, $pageId);
+        $pageId = $input['pageId'];
+        $input_c_id = $input['searched_c_id'];
+        $input_subc_id = $input['searched_subc_id'];
+        $word = $input['searched_word'];
+
+        $datas = (new ArticleTable())->findRecentOnesInfos($artclNum, $isLastPage, $pageId,
+        $input_c_id, $input_subc_id, $word);
 
         $ans[0] = $isLastPage;
 

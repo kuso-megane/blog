@@ -1,6 +1,6 @@
 <?php
 
-namespace domain\search\index\Data;
+namespace domain\search\Data;
 
 
 class ArtclInfo
