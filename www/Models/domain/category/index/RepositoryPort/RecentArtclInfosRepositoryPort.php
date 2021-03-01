@@ -9,17 +9,9 @@ interface RecentArtclInfosRepositoryPort
      * @param int $pageId
      * @param int $artclNum  max num of articles per page
      *  
-     * @return array  array of Data\ArtclInfo 
+     * @return array  [ bool $isLastPage, [array of Data\ArtclInfo] ] 
      * 
      */
-    public function getRecentArtclInfos(int $pageId, int $artclNum):array;
+    public function getIsLastPageAndRecentArtclInfos(int $pageId, int $artclNum):array;
 
-
-    /**
-     * @param int $pageId
-     * @param int $artclNum  max num of articles per page
-     * 
-     * @return bool
-     */
-    public function getIsLastPage(int $pageId, int $artclNum):bool;
 }

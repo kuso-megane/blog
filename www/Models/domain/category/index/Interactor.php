@@ -36,8 +36,9 @@ class Interactor
         $input = (new Validator)->validate($vars);
         $pageId = $input->toArray()['pageId'];
 
-        $recentArtclInfos = $this->recentArtclInfosRepository->getRecentArtclInfos($pageId, $artclNum);
-        $isLastPage = $this->recentArtclInfosRepository->getIsLastPage($pageId, $artclNum);
+        $isLastPageAndRecentArtclInfos = $this->recentArtclInfosRepository->getIsLastPageAndRecentArtclInfos($pageId, $artclNum);
+        $isLastPage = $isLastPageAndRecentArtclInfos[0];
+        $recentArtclInfos = $isLastPageAndRecentArtclInfos[1];
 
         $categoryArtclCount = $this->categorySearchListRepository->getCategoryArtclCount();
         $subCategoryArtclCount = $this->categorySearchListRepository->getSubCategoryArtclCount();
