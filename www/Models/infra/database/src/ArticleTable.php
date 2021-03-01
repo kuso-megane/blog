@@ -42,16 +42,19 @@ class ArticleTable
     public function findRecentOnesInfos(int $maxNum, bool &$isLastPage, int $pageId, ?int $c_id = NULL, ?int $subc_id = NULL, ?string $word = NULL):array
     {
         $rangeStart = $maxNum * ($pageId - 1);
+        $order = ' ORDER BY updateDate DESC';
+        $limit = ' LIMIT :start,:num';
+
         if ($word == NULL) {
             if ($c_id == NULL && $subc_id == NULL) {
 
                 $command = 'SELECT id, c_id, subc_id, title, thumbnailName, updateDate FROM ' . $this::TABLENAME .
-                ' ORDER BY updateDate DESC' . " LIMIT :start,:num";
+                $order . $limit;
                 $sth = $this->dbhHelper->prepare($command);
                 $sth->execute([':start' => $rangeStart, ':num' => $maxNum]);
                 $articleInfos = $sth->fetchAll(PDO::FETCH_ASSOC);
 
-                $total = $this->dbh->query('SELECT SUM(num) as total FROM Category')->fetch(PDO::FETCH_ASSOC)['total'];
+                $total = $this->dbh->query('SELECT COUNT(*) as total FROM Article')->fetch(PDO::FETCH_ASSOC)['total'];
                 if ($total <= $maxNum * $pageId) {
                     $isLastPage = TRUE;
                 }else {
@@ -63,8 +66,9 @@ class ArticleTable
             }
             elseif ($c_id != NULL && $subc_id == NULL) {
 
+                $where = ' WHERE c_id = :c_id';
                 $command = 'SELECT id, c_id, subc_id, title, thumbnailName, updateDate FROM ' . $this::TABLENAME .
-                ' WHERE c_id = :c_id' . ' ORDER BY updateDate DESC' . " LIMIT :start,:num";
+                $where . $order . $limit;
                 $sth = $this->dbhHelper->prepare($command);
                 $sth->execute([':start' => $rangeStart, ':num' => $maxNum, ':c_id' => $c_id]);
                 $articleInfos = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -83,8 +87,9 @@ class ArticleTable
             }
             elseif ($c_id != NULL && $subc_id != NULL) {
 
+                $where = ' WHERE subc_id = :subc_id';
                 $command = 'SELECT id, c_id, subc_id, title, thumbnailName, updateDate FROM ' . $this::TABLENAME .
-                ' WHERE subc_id = :subc_id' . ' ORDER BY updateDate DESC' . " LIMIT :start,:num";
+                $where . $order . $limit;
                 $sth = $this->dbhHelper->prepare($command);
                 $sth->execute([':start' => $rangeStart, ':num' => $maxNum, ':subc_id' => $subc_id]);
                 $articleInfos = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -102,7 +107,71 @@ class ArticleTable
                 return $articleInfos;
             }
         }
-        
+        elseif ($word != NULL) {
+            if ($c_id == NULL && $subc_id == NULL) {
+
+                $where = ' WHERE title LIKE :word';
+                $command = 'SELECT id, c_id, subc_id, title, thumbnailName, updateDate FROM ' . $this::TABLENAME .
+                $where . $order . $limit;
+                $sth = $this->dbhHelper->prepare($command);
+                $sth->execute([':start' => $rangeStart, ':num' => $maxNum, ':word' => "%{$word}%"]);
+                $articleInfos = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+                $sth2 = $this->dbhHelper->prepare('SELECT COUNT(*) AS total FROM Article' . $where);
+                $sth2->execute([':word' => "%{$word}%"]);
+                $total = $sth2->fetch(PDO::FETCH_ASSOC)['total'];
+
+                if ($total <= $maxNum * $pageId) {
+                    $isLastPage = TRUE;
+                }else {
+                    $isLastPage = FALSE;
+                }
+
+                return $articleInfos;
+            }
+            elseif($c_id != NULL && $subc_id == NULL) {
+
+                $where = ' WHERE c_id = :c_id AND title LIKE :word';
+                $command = 'SELECT id, c_id, subc_id, title, thumbnailName, updateDate FROM ' . $this::TABLENAME .
+                $where . $order . $limit;
+                $sth = $this->dbhHelper->prepare($command);
+                $sth->execute([':start' => $rangeStart, ':num' => $maxNum, ':word' => "%{$word}%", ':c_id' => $c_id]);
+                $articleInfos = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+                $sth2 = $this->dbhHelper->prepare('SELECT COUNT(*) AS total FROM Article' . $where);
+                $sth2->execute([':word' => "%{$word}%", ':c_id' => $c_id]);
+                $total = $sth2->fetch(PDO::FETCH_ASSOC)['total'];
+
+                if ($total <= $maxNum * $pageId) {
+                    $isLastPage = TRUE;
+                }else {
+                    $isLastPage = FALSE;
+                }
+
+                return $articleInfos;
+            }
+            elseif ($c_id != NULL && $subc_id != NULL) {
+
+                $where = ' WHERE subc_id = :subc_id AND title LIKE :word';
+                $command = 'SELECT id, c_id, subc_id, title, thumbnailName, updateDate FROM ' . $this::TABLENAME .
+                $where . $order . $limit;
+                $sth = $this->dbhHelper->prepare($command);
+                $sth->execute([':start' => $rangeStart, ':num' => $maxNum, ':word' => "%{$word}%", ':subc_id' => $subc_id]);
+                $articleInfos = $sth->fetchAll(PDO::FETCH_ASSOC);
+
+                $sth2 = $this->dbhHelper->prepare('SELECT COUNT(*) AS total FROM Article' . $where);
+                $sth2->execute([':word' => "%{$word}%", ':subc_id' => $subc_id]);
+                $total = $sth2->fetch(PDO::FETCH_ASSOC)['total'];
+
+                if ($total <= $maxNum * $pageId) {
+                    $isLastPage = TRUE;
+                }else {
+                    $isLastPage = FALSE;
+                }
+
+                return $articleInfos;
+            }
+        }
     }
 
 
