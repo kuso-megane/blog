@@ -1,0 +1,1 @@
+INSERT INTO Article VALUES(0, 1, 1, "サンプル記事", "default.jpg", "<p>サンプル記事です。</p>", NULL)

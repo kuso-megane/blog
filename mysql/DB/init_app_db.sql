@@ -27,7 +27,7 @@ create table Article(
     id int UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     c_id TINYINT UNSIGNED,
     subc_id SMALLINT UNSIGNED,
-    title varchar(30) DEFAULT 'NO TITLE',
+    title varchar(30) NOT NULL UNIQUE,
     thumbnailName varchar(30) DEFAULT 'default.jpg',
     content TEXT,
     updateDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
