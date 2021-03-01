@@ -1,6 +1,6 @@
-drop database if exists test_db;
-create database test_db;
-use test_db;
+drop database if exists app;
+create database app;
+use app;
 
 drop table if exists Category; 
 create table Category(
