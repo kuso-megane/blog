@@ -1,6 +1,6 @@
 <?php 
 
-namespace domain\category\index\data;
+namespace domain\category\index\Data;
 
 
 class InputData

@@ -35,7 +35,7 @@ class ArticleTable
      * @param string $word the search word
      * 
      * @return array [
-     *      ['id' => int, 'c_id' => int, 'subc_id' => int, 'title' => string, 'thumbnainName' => string, 'updataDate' => string],
+     *      ['id' => int, 'c_id' => int, 'subc_id' => int, 'title' => string, 'thumbnailName' => string, 'updataDate' => string],
      *      []
      * ]
      */

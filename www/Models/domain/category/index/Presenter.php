@@ -10,7 +10,7 @@ class Presenter
     use MainSidebarPresenter;
 
     /**
-     * @param int $currentPage
+     * @param int $pageId
      * @param array $recentArtclInfos array of Data\ArtclInfo
      * @param bool $isLastPage
      * 
@@ -20,10 +20,10 @@ class Presenter
      * 
      * @return array 
      */
-    public function present(int $currentPage, array $recentArtclInfos, bool $isLastPage, array $categoryArtclCount, array $subCategoryArtclCount)
+    public function present(int $pageId, array $recentArtclInfos, bool $isLastPage, array $categoryArtclCount, array $subCategoryArtclCount)
     {
         return [
-            'currentPage' => $currentPage,
+            'pageId' => $pageId,
             'recentArtclInfos' => $this->formatForRAI($recentArtclInfos),
             'isLastPage' => $isLastPage,
             'categoryArtclCount' => $this->formatForCAC($categoryArtclCount),
