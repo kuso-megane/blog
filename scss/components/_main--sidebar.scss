@@ -11,6 +11,28 @@ $boxPadding: 0.5rem;
         text-decoration: underline;
     }
 
+    #my-profile {
+        padding: $boxPadding;
+        margin-bottom: $gapBtwnBoxes;
+        background-color: $bgColor;
+
+        &--img-container{
+            height: 5rem;
+            width: 5rem;
+            margin: 0 auto;
+        }
+
+        &--name {
+            text-align: center;
+            margin-block-start: 0.5rem;
+            margin-block-end: 0.5rem;
+        }
+
+        &--txt {
+            font-size: 0.7rem;
+        }
+    }
+
     #search-container {
         //height:5rem;
         background-color: $bgColor;
@@ -34,7 +56,6 @@ $boxPadding: 0.5rem;
 
     #category-list-container {
         background-color: $bgColor;
-        margin-bottom: $gapBtwnBoxes;
         padding: $boxPadding;
 
         p {
@@ -46,7 +67,7 @@ $boxPadding: 0.5rem;
             padding-inline-start: 0;
 
             li {
-                font-size: 18px;
+                font-size: 16px;
                 color: #191970;
                 margin: 0.7rem;
 
@@ -70,27 +91,6 @@ $boxPadding: 0.5rem;
                 }
             }
             
-        }
-    }
-
-    #my-profile {
-        padding: $boxPadding;
-        background-color: $bgColor;
-
-        &--img-container{
-            height: 5rem;
-            width: 5rem;
-            margin: 0 auto;
-        }
-
-        &--name {
-            text-align: center;
-            margin-block-start: 0.5rem;
-            margin-block-end: 0.5rem;
-        }
-
-        &--txt {
-            font-size: 0.7rem;
         }
     }
 }
