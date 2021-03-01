@@ -5,7 +5,7 @@ namespace domain\search\index\Data;
 
 class InputData
 {
-    public  $pageId;
+    private  $pageId;
 
 
     public function __construct(int $pageId)
