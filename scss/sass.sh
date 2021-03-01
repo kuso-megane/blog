@@ -1,3 +1,3 @@
 #!/bin/sh
 
-sass category/category.scss ../www/html/asset/stylesheet/category/category.css
+sass search/search.scss ../www/html/asset/stylesheet/search/search.css

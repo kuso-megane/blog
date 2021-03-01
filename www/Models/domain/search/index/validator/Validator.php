@@ -1,8 +1,8 @@
 <?php
 
-namespace domain\category\index\validator;
+namespace domain\search\index\validator;
 
-use domain\category\index\data\InputData;
+use domain\search\index\data\InputData;
 
 class validator
 {

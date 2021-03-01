@@ -1,6 +1,6 @@
 <?php
 
-namespace domain\category\index;
+namespace domain\search\index;
 
 use domain\components\mainSidebar\PresenterTrait as MainSidebarPresenter;
 

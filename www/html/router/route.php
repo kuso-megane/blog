@@ -10,11 +10,12 @@ require '../../controllers/callAction/callAction.php';
 
 $base = '/';
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) use ($base) {
-    $r->addRoute('GET', $base.'index[/{page:\d+}]', 'index'); //index
+    $r->addRoute('GET', $base . 'index[/{page:\d+}]', 'index'); //index
 
-    $r->addRoute('GET', '/category/{c_id:\d+}[/{subc_id:\d+}/[{page:\d+}]]', 'categorySearchResult');
+    $r->addRoute('GET', $base . 'search/{c_id:\d+}[/{subc_id:\d+}/[{page:\d+}]]', 'searchResult');
+    $r->addRoute('GET', $base . 'search/{word:.+}[/{c_id:\d+}[/{subc_id:\d+}/[{page:\d+}]]]', 'searchResult');
     
-    $r->addRoute('GET', '/article/{artcl_id:\d+}', 'article');
+    $r->addRoute('GET', $base.'article/{artcl_id:\d+}', 'articleShow');
 
     $r->addGroup('/backyard', function (FastRoute\RouteCollector $r) {
         $r->addRoute('GET', '[/]', 'backyardIndex');

@@ -1,9 +1,9 @@
 {
     "autoload": {
         "psr-4": {
-            "myapp\\": "./",
-            "domain\\": "./Models/domain/",
-            "infra\\": "./Models/infra/"
+            "myapp\\": "/var/www/",
+            "domain\\": "/var/www/Models/domain/",
+            "infra\\": "/var/www/Models/infra/"
         }
     },
     "require": {

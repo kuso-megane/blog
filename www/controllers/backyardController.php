@@ -1,6 +1,6 @@
 <?php
 
-namespace myapp\controllers;
+namespace myapp\Controllers;
 
 require 'viewFilePath.php';
 

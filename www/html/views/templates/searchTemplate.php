@@ -9,7 +9,8 @@
     <head>
         <meta charset="utf-8">
         <title>ブログサービス(仮)</title>
-        <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetUrl. "category/category.css"; ?>>
+sass search/search.scss ../www/html/asset/stylesheet/.css
+        <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetUrl. "search/search.css"; ?>>
     </head>
     <body>
 

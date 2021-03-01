@@ -1,6 +1,6 @@
 <?php
 
-namespace domain\category\index\RepositoryPort;
+namespace domain\search\index\RepositoryPort;
 
 interface RecentArtclInfosRepositoryPort
 {

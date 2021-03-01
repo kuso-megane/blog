@@ -1,11 +1,11 @@
 <?php
 
-namespace domain\category\index;
+namespace domain\search\index;
 
-use domain\category\index\RepositoryPort\RecentArtclInfosRepositoryPort;
+use domain\search\index\RepositoryPort\RecentArtclInfosRepositoryPort;
 use domain\components\mainSidebar\RepositoryPort\CategorySearchListRepositoryPort;
-use domain\category\index\Presenter;
-use domain\category\index\validator\Validator;
+use domain\search\index\Presenter;
+use domain\search\index\validator\Validator;
 use myapp\config\AppConfig;
 
 class Interactor

@@ -1,6 +1,6 @@
 <?php
 
-use domain\category\index\RepositoryPort\RecentArtclInfosRepositoryPort;
+use domain\search\index\RepositoryPort\RecentArtclInfosRepositoryPort;
 use infra\Repository\RecentArtclInfosRepository;
 
 use domain\components\mainSidebar\RepositoryPort\CategorySearchListRepositoryPort;

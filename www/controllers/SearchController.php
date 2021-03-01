@@ -1,14 +1,11 @@
 <?php
 
-namespace myapp\controllers;
+namespace myapp\Controllers;
 
-require __DIR__. '/viewFilePath.php';
 require __DIR__. '/helpers/render.php';
 
-use domain\category\index\Interactor;
 
-
-class CategoryController
+class SearchController
 {
 
 
@@ -18,17 +15,17 @@ class CategoryController
         $builder->addDefinitions('/var/www/Models/diconfig.php');
         $container = $builder->build();
 
-        $interactor = $container->get('domain\category\index\Interactor');
+        $interactor = $container->get('domain\search\index\Interactor');
         $vm = $interactor->interact($vars);
-        render($vm, 'category', 'index');
+        render($vm, 'search', 'index');
     }
 
 
     //カテゴリ検索
-    public function searchResult(array $var)
+    public function result(array $var)
     {
         //modelから該当カテゴリの最新投稿を持ってくる
         //$data =
-        require '/var/www/html/views/category/searchResult.php';   
+        require '/var/www/html/views/search/result.php';   
     }
 }

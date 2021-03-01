@@ -2,8 +2,8 @@
 
 namespace infra\Repository;
 
-use domain\category\index\Data\ArtclInfo;
-use domain\category\index\RepositoryPort\RecentArtclInfosRepositoryPort;
+use domain\search\index\Data\ArtclInfo;
+use domain\search\index\RepositoryPort\RecentArtclInfosRepositoryPort;
 use infra\database\src\ArticleTable;
 
 class RecentArtclInfosRepository implements RecentArtclInfosRepositoryPort
