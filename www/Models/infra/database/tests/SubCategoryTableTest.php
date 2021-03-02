@@ -30,22 +30,31 @@ class SubCategoryTableTest extends TestCase
         for ($i = 1; $i < 3; ++$i) {
             $sth->execute([':name' => "category{$i}", ':num' => 0]);
         }
+
+        $command2 = 'INSERT INTO ' . $this::TABLENAME . ' VALUES(0, :name, :c_id, :num)'; 
+        $sth2 = $this->dbhHelper->prepare($command2);
+
+        for ($i = 1; $i < 3; ++$i) {
+            $sth2->execute([':name' => "subCategory{$i}", ':c_id' => $i, ':num' => 0]);
+        }
     }
 
 
     public function testFindAll()
     {
-        $command = 'INSERT INTO ' . $this::TABLENAME . ' VALUES(0, :name, :c_id, :num)';
-            
-        $sth = $this->dbhHelper->prepare($command);
-
-        for ($i = 1; $i < 3; ++$i) {
-            $sth->execute([':name' => "subCategory{$i}", ':c_id' => $i, ':num' => 0]);
-        }
-
         $this->assertSame([
             ['id' => 1, 'name' => 'subCategory1', 'c_id' => 1, 'num' => 0],
             ['id' => 2, 'name' => 'subCategory2', 'c_id' => 2, 'num' => 0]
         ], $this->table->findAll());
+    }
+
+
+    public function testFindById()
+    {
+        $subc_id = 1;
+
+        $this->assertSame([
+            'id' => 1, 'name' => 'subCategory1', 'c_id' => 1, 'num' => 0
+        ], $this->table->findById($subc_id));
     }
 }
