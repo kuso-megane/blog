@@ -13,7 +13,6 @@
     $searched_subc_id = $searched_subCategory['id'];
     $searched_subc_name = $searched_subCategory['name'];
 
-    var_dump($searched_subCategory);
 ?>
 
 <!DOCTYPE html>
