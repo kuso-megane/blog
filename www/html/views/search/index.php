@@ -19,10 +19,8 @@
             
             <div id="main--left">
 
-                <div id="breadcrumb">
-                    <p><a href="/index" class="breadcrumb-items">top</a></p>
-                </div>
-                
+                <?php require $componentsPath. 'breadcrumb.php'; ?>
+
                 <div id="main--title">
                     <p id="main-title">&lt;最近の投稿&gt;</p>
                 </div>
