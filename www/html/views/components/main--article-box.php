@@ -1,8 +1,12 @@
+<?php
+    $recentArtclInfos = $vm['recentArtclInfos'];
+?>
+
 
 <div id="article-container">
-    <?php if($vm['recentArtclInfos'] != NULL): ?>
+    <?php if($recentArtclInfos != NULL): ?>
 
-        <?php foreach($vm['recentArtclInfos'] as $artcls): ?>
+        <?php foreach($recentArtclInfos as $artcls): ?>
 
         <div class="article-box">
             <a href="/xxx" class="linkbox">

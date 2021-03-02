@@ -9,6 +9,12 @@ use infra\database\src\ArticleTable;
 class ArticleRepository implements RecentArtclInfosRepositoryPort
 {
 
+    private $table;
+
+    public function __construct()
+    {
+        $this->table = new ArticleTable();
+    }
     /**
      * @inheritdoc
      */
@@ -23,7 +29,7 @@ class ArticleRepository implements RecentArtclInfosRepositoryPort
         $input_subc_id = $input['searched_subc_id'];
         $word = $input['searched_word'];
 
-        $datas = (new ArticleTable())->findRecentOnesInfos($artclNum, $isLastPage, $pageId,
+        $datas = $this->table->findRecentOnesInfos($artclNum, $isLastPage, $pageId,
         $input_c_id, $input_subc_id, $word);
 
         $ans[0] = $isLastPage;

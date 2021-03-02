@@ -17,6 +17,10 @@
     /*パンクズリスト*/
     #breadcrumb {
         margin: 1rem;
-        font-size: 0.8rem;
+        font-size: 18px;
+
+        .breadcrumb-items {
+            color: blue;
+        }
     }   
 }

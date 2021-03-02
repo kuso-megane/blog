@@ -23,11 +23,10 @@
     </div>
 
     <div id="search-container">
-
+        <p>&lt;ワード検索&gt;</p>
         <form action="/search" method="get">
-            <input id="search-box" type="search" name="artclName" placeholder="記事フリーワード検索">
+            <input id="search-box" type="search" name="w" placeholder="記事フリーワード検索">
         </form>
-        <p>→詳細検索は<a href="">コチラ</a></p>
     </div>
     
     <nav id="category-list-container">
@@ -46,7 +45,7 @@
                     <label for=<?php echo "category-checkbox{$c}"; ?> ><?php echo "{$c_name}({$c_count})"; ?></label>
 
                     <ul id="subCategory-list">
-                        <li><a href=<?php echo "/category/{$c_id}"; ?> >- このカテゴリすべて(<?php echo $c_count; ?>)</a></li>
+                        <li><a href=<?php echo "/search/{$c_id}"; ?> >- このカテゴリすべて(<?php echo $c_count; ?>)</a></li>
 
                         <?php if($subCategoryArtclCount[$c_id] != NULL): ?>
                             <?php
@@ -60,7 +59,7 @@
                                     
                             ?>
                                 
-                                <li><a href=<?php echo "/category/{$c_id}/{$subc_id}"; ?> ><?php echo "- {$subc_name}({$subc_count})"; ?></a></li>
+                                <li><a href=<?php echo "/search/{$c_id}/{$subc_id}"; ?> ><?php echo "- {$subc_name}({$subc_count})"; ?></a></li>
                                 
                             <?php endforeach; ?>
 

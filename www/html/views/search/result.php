@@ -1,24 +1,56 @@
-<div id="breadcrumb">
-    <p><a href="/index">top</a> &gt; <a href="">categoryX</a> &gt; <a href="">subCategoryY</a></p>
-</div>
-<div id="main--title">
-    <p>このカテゴリの最近の投稿</p>
-</div>
-<div id="page-switch">
-    <p id="page-switch--previous"><a href="">前の10件</a> </p>
-    <p id="page-switch--next"><a href="">次の10件</a></p>
-</div>
 
-<?php for ($i = 0; $i < 10; ++$i): ?>
 
-<div class="article-box">
-    <div class="article-thumbnail-container">
-        <img src=<?php echo ($imgPath."test2.jpg"); ?> alt="テスト画像" class="article-thumbnail">
-    </div>
-    <div class="article-main">
-        <p class="article-update-date">2020-8-13(sample date)</p>
-        <p class="article-title"><a href="xxx">テスト2</a></p>
-    </div>
-</div>
+<?php 
+    $styleSheetUrl = "/asset/stylesheet/";
+    $componentsPath = "/var/www/html/views/components/";
+    $imgUrl = "/asset/img/";
+?>
 
-<?php endfor;?>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ブログサービス(仮)</title>
+        <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetUrl. "search/search.css"; ?>>
+    </head>
+    <body>
+
+    <?php require $componentsPath. 'header.php';?>
+
+        <div id="main">
+            
+            <div id="main--left">
+                <div id="breadcrumb">
+                    <p>
+                        <a href="/index" class="breadcrumb-items">top</a>
+                        &gt; 
+                        <a href=<?php echo"/search/"; ?> class="breadcrumb-items">categoryX</a>
+
+                        <?php if ($vm['searchedSubCategory'] != NULL):?>
+                        &gt; 
+                        <a href="" class="breadcrumb-items">subCategoryY</a>
+                        <?php endif; ?>
+
+                    </p>
+                </div>
+                <div id="main--title">
+                    <p id="main-title">&lt;このカテゴリの最近の投稿&gt;</p>
+                </div>
+                <div id="page-switch">
+                    <p id="page-switch--previous"><a href="">前の9件</a></p>
+                    <p id="page-switch--next"><a href="">次の9件</a></p>
+                </div>
+
+                <?php require $componentsPath. 'main--article-box.php'; ?>
+
+            </div>  
+
+            <?php require $componentsPath. 'main--sidebar.php';?>
+            
+        </div>
+        <div id="footer">
+        
+        </div>
+　  </body>
+</html>
+
