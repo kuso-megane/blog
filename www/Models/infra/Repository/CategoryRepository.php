@@ -2,12 +2,22 @@
 
 namespace infra\Repository;
 
+use domain\components\breadCrumb\Data\SearchedCategory;
+use domain\components\breadCrumb\RepositoryPort\SearchedCategoryRepositoryPort;
 use domain\components\mainSidebar\Data\CategoryArtclCount;
 use domain\components\mainSidebar\RepositoryPort\CategoryArtclCountRepositoryPort;
 use infra\database\src\CategoryTable;
 
-class CategoryRepository implements CategoryArtclCountRepositoryPort
+class CategoryRepository implements CategoryArtclCountRepositoryPort, SearchedCategoryRepositoryPort
 {
+
+    private $table;
+
+    public function __construct()
+    {
+        $this->table = new CategoryTable();
+    }
+
 
     /**
      * @inheritdoc
@@ -16,7 +26,7 @@ class CategoryRepository implements CategoryArtclCountRepositoryPort
     {
         $ans = [];
 
-        $datas = (new CategoryTable())->findAll();
+        $datas = $this->table->findAll();
         foreach($datas as $data) {
             $id = $data['id'];
             $category = $data['name'];
@@ -25,6 +35,23 @@ class CategoryRepository implements CategoryArtclCountRepositoryPort
         }
         
         return $ans;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getSearchedCategory(array $input): ?SearchedCategory
+    {
+        $searched_c_id = $input['searched_c_id'];
+        if ($searched_c_id == NULL) {
+            return NULL;
+        }
+        else {
+            $record = $this->table->findById($searched_c_id);
+            $name = $record['name'];
+            return new SearchedCategory($searched_c_id, $name);
+        }
     }
 
 }

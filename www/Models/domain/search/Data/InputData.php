@@ -19,7 +19,7 @@ class InputData
         $this->word = $word;
     }
 
-    public function toArray()
+    public function toArray():array
     {
         return [
             'pageId' => $this->pageId,

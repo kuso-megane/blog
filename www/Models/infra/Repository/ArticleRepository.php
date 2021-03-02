@@ -6,7 +6,7 @@ use domain\search\Data\ArtclInfo;
 use domain\search\RepositoryPort\RecentArtclInfosRepositoryPort;
 use infra\database\src\ArticleTable;
 
-class RecentArtclInfosRepository implements RecentArtclInfosRepositoryPort
+class ArticleRepository implements RecentArtclInfosRepositoryPort
 {
 
     /**

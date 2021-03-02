@@ -19,8 +19,8 @@ class Presenter
      * 
      * @return array [
      *      'pageId' => int,
-     *      'searched_c_id' => int | NULL,
-     *      'searched_subc_id' => int | NULL ,
+     *      'searched_category' =>  NULL|array ['id' => int, 'name' -> string],
+     *      'searched_subCategory' => NULL|array ['id' => int, 'name' -> string],
      *      'searched_word' => string | NULL,
      *      'recentArtclInfos' => return of $this->formatForRAI(),
      *      'isLastPage' => int,
@@ -29,22 +29,20 @@ class Presenter
      * ]
      */
     public function present(array $input, array $recentArtclInfos, bool $isLastPage,array $categoryArtclCount,
-    array $subCategoryArtclCount)
+    array $subCategoryArtclCount, ?array $searched_category, ?array $searched_subCategory)
     {
         $pageId = ['pageId'];
-        $searched_c_id = $input['searched_c_id'];
-        $searched_subc_id = $input['searched_subc_id'];
         $searched_word = $input['searched_word'];
 
         return [
             'pageId' => $pageId,
+            'searched_category' => $searched_category,
+            'searched_subCategory' => $searched_subCategory,
+            'searched_word' => $searched_word,
             'recentArtclInfos' => $this->formatForRAI($recentArtclInfos),
             'isLastPage' => $isLastPage,
             'categoryArtclCount' => $this->formatForCAC($categoryArtclCount),
-            'subCategoryArtclCount' => $this->formatForSCAC($subCategoryArtclCount),
-            'searched_c_id' => $searched_c_id,
-            'searched_subc_id' => $searched_subc_id,
-            'searched_word' => $searched_word
+            'subCategoryArtclCount' => $this->formatForSCAC($subCategoryArtclCount)
         ];
     }
 

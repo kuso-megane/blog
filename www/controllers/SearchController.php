@@ -22,10 +22,14 @@ class SearchController
 
 
     //カテゴリ検索
-    public function result(array $var)
+    public function result(array $vars)
     {
-        //modelから該当カテゴリの最新投稿を持ってくる
-        //$data =
-        require '/var/www/html/views/search/result.php';   
+        $builder = new \DI\ContainerBuilder();
+        $builder->addDefinitions('/var/www/Models/diconfig.php');
+        $container = $builder->build();
+
+        $interactor = $container->get('domain\search\Interactor');
+        $vm = $interactor->interact($vars);
+        render($vm, 'search', 'result');
     }
 }
