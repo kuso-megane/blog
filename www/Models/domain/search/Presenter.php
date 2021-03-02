@@ -47,9 +47,9 @@ class Presenter
         return [
             'currentUrl' => $currentUrl,
             'pageId' => $pageId,
-            'searched_category' => $searched_category,
-            'searched_subCategory' => $searched_subCategory,
-            'searched_word' => $searched_word,
+            'given_category' => $searched_category,
+            'given_subCategory' => $searched_subCategory,
+            'given_word' => $searched_word,
             'recentArtclInfos' => $this->formatForRAI($recentArtclInfos),
             'isLastPage' => $isLastPage,
             'categoryArtclCount' => $this->formatForCAC($categoryArtclCount),
