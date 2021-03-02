@@ -18,18 +18,20 @@
         <div id="main">
             
             <div id="main--left">
+
                 <div id="breadcrumb">
                     <p><a href="/index" class="breadcrumb-items">top</a></p>
                 </div>
+                
                 <div id="main--title">
                     <p id="main-title">&lt;最近の投稿&gt;</p>
                 </div>
-                <div id="page-switch">
-                    <p id="page-switch--previous"><a href="">前の9件</a></p>
-                    <p id="page-switch--next"><a href="">次の9件</a></p>
-                </div>
+                
+                <?php require $componentsPath . 'page-switch.php'; ?>
 
                 <?php require $componentsPath. 'main--article-box.php'; ?>
+
+                <?php require $componentsPath . 'page-switch.php'; ?>
 
             </div>
   

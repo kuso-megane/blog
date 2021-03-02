@@ -10,7 +10,7 @@ require '../../controllers/callAction/callAction.php';
 
 $base = '/';
 $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) use ($base) {
-    $r->addRoute('GET', $base . 'index[/{pageId:\d+}]', 'index'); //index
+    $r->addRoute('GET', $base . 'index', 'index'); //index
 
     $r->addRoute('GET', $base . 'search[/{c_id:\d+}[/{subc_id:\d+}]]', 'searchResult');
     

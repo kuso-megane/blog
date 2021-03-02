@@ -42,7 +42,7 @@ class SubCategoryRepository implements SubCategoryArtclCountRepositoryPort, Sear
      */
     public function getSearchedSubCategory(array $input): ?SearchedSubCategory
     {
-        $searched_c_id = $input['searched_c_id'];
+        $searched_c_id = $input['searched_subc_id'];
         if ($searched_c_id == NULL) {
             return NULL;
         }

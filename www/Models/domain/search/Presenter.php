@@ -3,6 +3,7 @@
 namespace domain\search;
 
 use domain\components\mainSidebar\PresenterTrait as MainSidebarPresenter;
+use myapp\myFrameWork\superGlobalVars as Gvars;
 
 class Presenter
 {
@@ -18,7 +19,8 @@ class Presenter
      * @param array $subCategoryArtclCount of Data\SubCategoryArtclCount
      * 
      * @return array [
-     *      'pageId' => int,
+     *      'currentUri' => string
+     *      'pageId' => int
      *      'searched_category' =>  NULL|array ['id' => int, 'name' -> string],
      *      'searched_subCategory' => NULL|array ['id' => int, 'name' -> string],
      *      'searched_word' => string | NULL,
@@ -31,10 +33,19 @@ class Presenter
     public function present(array $input, array $recentArtclInfos, bool $isLastPage,array $categoryArtclCount,
     array $subCategoryArtclCount, ?array $searched_category, ?array $searched_subCategory)
     {
-        $pageId = ['pageId'];
+        $server = (new Gvars)->getServer();
+
+        $uri = $server['REQUEST_URI'];
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
+        $currentUrl = rawurldecode($uri);
+
+        $pageId = $input['pageId'];
         $searched_word = $input['searched_word'];
 
         return [
+            'currentUrl' => $currentUrl,
             'pageId' => $pageId,
             'searched_category' => $searched_category,
             'searched_subCategory' => $searched_subCategory,
