@@ -49,7 +49,6 @@ class Interactor
 
         $input = (new Validator)->validate($vars)->toArray();
 
-
         $isLastPageAndRecentArtclInfos = $this->recentArtclInfosRepository->getIsLastPageAndRecentArtclInfos($input, $artclNum);
         $isLastPage = $isLastPageAndRecentArtclInfos[0];
         $recentArtclInfos = $isLastPageAndRecentArtclInfos[1];
