@@ -6,5 +6,9 @@
 
     .breadcrumb-items {
         color: blue;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }

@@ -7,9 +7,17 @@
 
     &--previous {
         float: left;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
     &--next {
         float: right;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
