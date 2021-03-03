@@ -6,8 +6,8 @@
 
     $currentUrl = $vm['currentUrl'];
 
-    $given_word = $vm['given_word'];
-    $wordQuery = ($given_word != NULL) ? "&w={$given_word}" : '';
+    $searched_word = $vm['searched_word'];
+    $wordQuery = ($searched_word != NULL) ? "&w={$searched_word}" : '';
 ?>
 
 <div id="page-switch">

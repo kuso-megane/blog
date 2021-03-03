@@ -1,28 +1,28 @@
 <?php
-    $given_category = $vm['given_category'];
-    $given_c_id = $given_category['id'];
-    $given_c_name = $given_category['name'];
+    $searched_category = $vm['searched_category'];
+    $searched_c_id = $searched_category['id'];
+    $searched_c_name = $searched_category['name'];
 
-    $given_subCategory = $vm['given_subCategory'];
-    $given_subc_id = $given_subCategory['id'];
-    $given_subc_name = $given_subCategory['name'];
+    $searched_subCategory = $vm['searched_subCategory'];
+    $searched_subc_id = $searched_subCategory['id'];
+    $searched_subc_name = $searched_subCategory['name'];
 ?>
 
 <div id="breadcrumb">
     <p>
         <a href="/index" class="breadcrumb-items">top</a>
 
-        <?php if ($given_category != NULL):?>
+        <?php if ($searched_category != NULL):?>
         &gt; 
-        <a href=<?php echo"/search/{$given_c_id}"; ?> class="breadcrumb-items">
-            <?php echo $given_c_name; ?>
+        <a href=<?php echo"/search/{$searched_c_id}"; ?> class="breadcrumb-items">
+            <?php echo $searched_c_name; ?>
         </a>
         <?php endif; ?>
 
-        <?php if ($given_subCategory != NULL):?>
+        <?php if ($searched_subCategory != NULL):?>
         &gt; 
-        <a href=<?php echo "/search/{$given_c_id}/{$given_subc_id}"; ?> class="breadcrumb-items">
-            <?php echo $given_subc_name; ?>
+        <a href=<?php echo "/search/{$searched_c_id}/{$searched_subc_id}"; ?> class="breadcrumb-items">
+            <?php echo $searched_subc_name; ?>
         </a>
         <?php endif; ?>
 

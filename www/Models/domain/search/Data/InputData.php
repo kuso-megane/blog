@@ -23,9 +23,9 @@ class InputData
     {
         return [
             'pageId' => $this->pageId,
-            'given_c_id' => $this->c_id,
-            'given_subc_id' => $this->subc_id,
-            'given_word' => $this->word
+            'searched_c_id' => $this->c_id,
+            'searched_subc_id' => $this->subc_id,
+            'searched_word' => $this->word
         ];
     }
 }

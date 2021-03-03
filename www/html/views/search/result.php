@@ -5,7 +5,7 @@
     $componentsPath = "/var/www/html/views/components/";
     $imgUrl = "/asset/img/";
 
-    $given_word = $vm['given_word'];
+    $searched_word = $vm['searched_word'];
 ?>
 
 <!DOCTYPE html>
@@ -25,10 +25,10 @@
                 <?php require $componentsPath. 'breadcrumb.php'; ?>
 
                 <div id="main--title">
-                    <?php if ($given_word == NULL): ?>
+                    <?php if ($searched_word == NULL): ?>
                         <p id="main-title">&lt;このカテゴリの最近の投稿&gt;</p>
                     <?php else: ?>
-                        <p id="main-title">&lt;"<?php echo $given_word; ?>"に該当する投稿&gt;</p>
+                        <p id="main-title">&lt;"<?php echo $searched_word; ?>"に該当する投稿&gt;</p>
                     <?php endif; ?>
                 </div>
                 
