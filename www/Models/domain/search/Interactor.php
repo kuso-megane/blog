@@ -53,6 +53,9 @@ class Interactor
         $isLastPage = $isLastPageAndRecentArtclInfos[0];
         $recentArtclInfos = $isLastPageAndRecentArtclInfos[1];
 
+        //cookie関連
+        //setcookie('word', $input['given_word'],);
+
         //カテゴリ検索
         $categoryArtclCount = $this->categoryArtclCountRepositoryPort->getCategoryArtclCount();
         $subCategoryArtclCount = $this->subCategoryArtclCountRepositoryPort->getSubCategoryArtclCount();

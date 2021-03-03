@@ -21,9 +21,9 @@ class Presenter
      * @return array [
      *      'currentUri' => string
      *      'pageId' => int
-     *      'searched_category' =>  NULL|array ['id' => int, 'name' -> string],
-     *      'searched_subCategory' => NULL|array ['id' => int, 'name' -> string],
-     *      'searched_word' => string | NULL,
+     *      'given_category' =>  NULL|array ['id' => int, 'name' -> string],
+     *      'given_subCategory' => NULL|array ['id' => int, 'name' -> string],
+     *      'given_word' => string | NULL,
      *      'recentArtclInfos' => return of $this->formatForRAI(),
      *      'isLastPage' => int,
      *      'categoryArtclCount' => return of $this->formatForCAC(),
@@ -31,7 +31,7 @@ class Presenter
      * ]
      */
     public function present(array $input, array $recentArtclInfos, bool $isLastPage,array $categoryArtclCount,
-    array $subCategoryArtclCount, ?array $searched_category, ?array $searched_subCategory)
+    array $subCategoryArtclCount, ?array $given_category, ?array $given_subCategory)
     {
         $server = (new Gvars)->getServer();
 
@@ -42,14 +42,14 @@ class Presenter
         $currentUrl = rawurldecode($uri);
 
         $pageId = $input['pageId'];
-        $searched_word = $input['searched_word'];
+        $given_word = $input['given_word'];
 
         return [
             'currentUrl' => $currentUrl,
             'pageId' => $pageId,
-            'given_category' => $searched_category,
-            'given_subCategory' => $searched_subCategory,
-            'given_word' => $searched_word,
+            'given_category' => $given_category,
+            'given_subCategory' => $given_subCategory,
+            'given_word' => $given_word,
             'recentArtclInfos' => $this->formatForRAI($recentArtclInfos),
             'isLastPage' => $isLastPage,
             'categoryArtclCount' => $this->formatForCAC($categoryArtclCount),

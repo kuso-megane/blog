@@ -25,9 +25,9 @@ class ArticleRepository implements RecentArtclInfosRepositoryPort
 
         $isLastPage = (bool)NULL;
         $pageId = $input['pageId'];
-        $input_c_id = $input['searched_c_id'];
-        $input_subc_id = $input['searched_subc_id'];
-        $word = $input['searched_word'];
+        $input_c_id = $input['given_c_id'];
+        $input_subc_id = $input['given_subc_id'];
+        $word = $input['given_word'];
 
         $datas = $this->table->findRecentOnesInfos($artclNum, $isLastPage, $pageId,
         $input_c_id, $input_subc_id, $word);
