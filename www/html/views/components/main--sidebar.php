@@ -30,7 +30,8 @@
     </div>
     
     <nav id="category-list-container">
-        <p>&lt;カテゴリ検索&gt;</p>
+        <p id="">&lt;カテゴリ検索&gt;</p>
+        <p id="category-list-container--intro">カテゴリ名をクリックするとメニューが展開します。</p>
         <ul id="category-list">
             <?php 
                 $c = 0;
