@@ -7,9 +7,11 @@ use domain\components\breadCrumb\RepositoryPort\SearchedSubCategoryRepositoryPor
 use domain\search\RepositoryPort\RecentArtclInfosRepositoryPort;
 use domain\components\mainSidebar\RepositoryPort\CategoryArtclCountRepositoryPort;
 use domain\components\mainSidebar\RepositoryPort\SubCategoryArtclCountRepositoryPort;
+use domain\search\helpers\CookieSetter;
 use domain\search\Presenter;
 use domain\search\validator\Validator;
 use myapp\config\AppConfig;
+use myapp\myFrameWork\SuperGlobalVars as GVars;
 
 class Interactor
 {
@@ -53,8 +55,8 @@ class Interactor
         $isLastPage = $isLastPageAndRecentArtclInfos[0];
         $recentArtclInfos = $isLastPageAndRecentArtclInfos[1];
 
-        //cookie関連
-        setcookie('word', $input['searched_word'],);
+        //cookieをセット
+        (new CookieSetter)->set($input);
 
         //カテゴリ検索
         $categoryArtclCount = $this->categoryArtclCountRepositoryPort->getCategoryArtclCount();
@@ -70,8 +72,17 @@ class Interactor
             $searchedSubCategory = $searchedSubCategory->toArray();
         }
 
+        //現在のurl
+        $server = (new Gvars)->getServer();
+
+        $uri = $server['REQUEST_URI'];
+        if (false !== $pos = strpos($uri, '?')) {
+            $uri = substr($uri, 0, $pos);
+        }
+        $currentUrl = rawurldecode($uri);
+
         return (new Presenter())
-        ->present($input, $recentArtclInfos, $isLastPage, $categoryArtclCount, $subCategoryArtclCount,
+        ->present($input, $currentUrl, $recentArtclInfos, $isLastPage, $categoryArtclCount, $subCategoryArtclCount,
         $searchedCategory, $searchedSubCategory);
     }
 }

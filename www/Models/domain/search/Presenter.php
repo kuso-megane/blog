@@ -27,22 +27,20 @@ class Presenter
      *      'recentArtclInfos' => return of $this->formatForRAI(),
      *      'isLastPage' => int,
      *      'categoryArtclCount' => return of $this->formatForCAC(),
-     *      'subCategoryArtclCount' => return of $this->formatForSCAC()   
-     * ]
+     *      'subCategoryArtclCount' => return of $this->formatForSCAC()   ,
+     *      'searchBoxValue' => string
+    * ]
      */
-    public function present(array $input, array $recentArtclInfos, bool $isLastPage,array $categoryArtclCount,
+    public function present(array $input, string $currentUrl, array $recentArtclInfos, bool $isLastPage,array $categoryArtclCount,
     array $subCategoryArtclCount, ?array $searched_category, ?array $searched_subCategory)
     {
-        $server = (new Gvars)->getServer();
-
-        $uri = $server['REQUEST_URI'];
-        if (false !== $pos = strpos($uri, '?')) {
-            $uri = substr($uri, 0, $pos);
-        }
-        $currentUrl = rawurldecode($uri);
+        
 
         $pageId = $input['pageId'];
         $searched_word = $input['searched_word'];
+
+        $cookie = (new Gvars)->getCookie();
+        $searchBoxValue = ($input['searched_word'] != NULL) ? $input['searched_word'] : $cookie['searched_word'];
 
         return [
             'currentUrl' => $currentUrl,
@@ -53,7 +51,8 @@ class Presenter
             'recentArtclInfos' => $this->formatForRAI($recentArtclInfos),
             'isLastPage' => $isLastPage,
             'categoryArtclCount' => $this->formatForCAC($categoryArtclCount),
-            'subCategoryArtclCount' => $this->formatForSCAC($subCategoryArtclCount)
+            'subCategoryArtclCount' => $this->formatForSCAC($subCategoryArtclCount),
+            'searchBoxValue' => $searchBoxValue
         ];
     }
 

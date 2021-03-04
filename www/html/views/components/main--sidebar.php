@@ -1,6 +1,7 @@
 <?php
     $categoryArtclCount = $vm['categoryArtclCount'];
     $subCategoryArtclCount = $vm['subCategoryArtclCount'];
+    $searchBoxValue = $vm['searchBoxValue'];  
 ?>
 
 
@@ -25,7 +26,8 @@
     <div id="search-container">
         <p>&lt;ワード検索&gt;</p>
         <form action="/search" method="get">
-            <input id="search-box" type="search" name="w" placeholder="記事フリーワード検索">
+            <input id="search-box" type="search" name="w" placeholder="記事フリーワード検索"
+                value=<?php echo $searchBoxValue; ?>>
         </form>
     </div>
     
