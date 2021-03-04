@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>ブログサービス(仮)</title>
+        <title>脳内世界にて、独り、浮遊。</title>
         <link rel="stylesheet" type="text/css" href=<?php echo $styleSheetUrl. "search/search.css"; ?>>
     </head>
     <body>
