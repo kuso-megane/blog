@@ -20,7 +20,7 @@ class CookieSetter
         }
         */
         setcookie('searched_word', $searched_word, [
-            'expires' => time() + 600
+            'expires' => 0
         ]);
     }
 }
