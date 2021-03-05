@@ -1,11 +1,11 @@
 <?php
 
-namespace infra\database\helpers;
+namespace myapp\myFrameWork\DB;
 
 use PDO;
 use PDOException;
 
-class DBConnection
+class Connection
 {
     const DB_HOST = 'db';
     const MAIN_DB = 'app';
@@ -34,15 +34,15 @@ class DBConnection
 
     /**
      * return new PDO
-     * @return PDO
+     * @return MyDbh
      */
-    public function connect():PDO
+    public function connect():MyDbh
     {
         $dsn = "mysql:dbname={$this->dbname};" . 'host=' . $this::DB_HOST;
         $pw = $this::DB_PASS[$this->username];
 
         try {
-            $dbh = new PDO($dsn, $this->username, $pw);
+            $dbh = new MyDbh($dsn, $this->username, $pw);
             $dbh->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }

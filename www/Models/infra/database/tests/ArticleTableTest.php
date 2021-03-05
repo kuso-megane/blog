@@ -228,12 +228,8 @@ class ArticleTableTest extends TestCase
                 $this->table->findRecentOnesInfos($this->maxNum, $isLastPage, $pageId, $c_id, $subc_id, $word));
 
                 $this->assertTrue($isLastPage); //該当記事が1ページに収まる
+
         }
-        
-        
-
-        
-
 
     }
 
