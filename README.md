@@ -11,7 +11,10 @@
 - ```$_GET```などのphpのスーパーグローバル変数を、readableなpropertyとして保持するクラス。
 - getterのみをもち、書き込みを禁止
 
-
+## DB
+- PDOを拡張したクラス```MyDbh```を通して、DBにアクセスする。
+- ```MyDbh```がselect, count, update, insertなどの基本的なDBアクセスをラッピングしたメソッドをもっている
+- ```(new Connenction($is_test, $username))->connect()```が、```MyDbh```を返す 。
 
 # 参考
 - 安全なsqlの呼び出し方　https://www.ipa.go.jp/files/000017320.pdf
