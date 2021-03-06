@@ -220,11 +220,14 @@ class MyDbh extends PDO
      * (e.g.) [ ':id' => int, ':name' => string]
      * 
      * if you wanna bind these manually, this can be empty
+     * @param int $executeFlag
      * 
-     * @return PDOStatement
+     * if you wanna execute this manually, this must be self::ONLY_PREPARE
+     * 
+     * @return PDOStatement|void
      * 
      */
-    public function insertPrepare(string $tableName, string $columns, array $boundColumns = []):PDOStatement
+    public function insert(string $tableName, string $columns, array $boundColumns = [], int $executeFlag = self::EXECUTE)
     {
         $values = ' VALUES(';
         
@@ -248,9 +251,17 @@ class MyDbh extends PDO
             $sth->bindValue($key, $value, $data_type);
         }
 
-
+        if ($executeFlag == self::ONLY_PREPARE) {
+            return $sth;
+        }
+        else if ($executeFlag == self::EXECUTE) {
+            $sth->execute();
+        }
+        else {
+            $e = new UnexpectedParamException($executeFlag);
+            echo $e->getMessage();
+        }
         
-        return $sth;
     }
 
 
@@ -268,12 +279,15 @@ class MyDbh extends PDO
      * 
      * @param string $condition 'id = :id AND num > :num' or 'id = 3, num > 3'
      * @param array $boundCondition (e.g.) [':id' => int, ':num' => int]
+     * @param int $executeFlag
+     * 
+     * if you wanna execute this manually, this must be self::ONLY_PREPARE
      * 
      *
-     * @return PDOStatement
+     * @return PDOStatement|void
      * 
      */
-    public function updatePrepare(string $tableName, string $columns, string $condition = '', array $boundValues = []):PDOStatement
+    public function update(string $tableName, string $columns, string $condition = '', array $boundValues = [], $executeFlag = self::EXECUTE)
     {
         $where = " WHERE $condition ";
         $command = 'UPDATE ' . $tableName . ' SET ' .  $columns . $where;
@@ -294,7 +308,15 @@ class MyDbh extends PDO
             $sth->bindValue($key, $value, $data_type);
         }
 
-        
-        return $sth;
+        if ($executeFlag == self::ONLY_PREPARE) {
+            return $sth;
+        }
+        else if ($executeFlag == self::EXECUTE) {
+            $sth->execute();
+        }
+        else {
+            $e = new UnexpectedParamException($executeFlag);
+            echo $e->getMessage();
+        }
     }
 }

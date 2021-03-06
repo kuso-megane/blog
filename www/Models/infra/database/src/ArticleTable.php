@@ -77,7 +77,6 @@ class ArticleTable
                 );
 
                 $total = $this->dbh->select('num', $this::PARENT1_TABLENAME, 'id = :c_id', [], [':c_id' => $c_id])[0]['num'];
-                var_dump($total);
                 if ($total <= $maxNum * $pageId) {
                     $isLastPage = TRUE;
                 }else {

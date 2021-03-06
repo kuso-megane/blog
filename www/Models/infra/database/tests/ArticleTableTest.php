@@ -33,11 +33,11 @@ class ArticleTableTest extends TestCase
         $this->dbh->truncate($this::PARENT2_TABLENAME);
         $this->dbh->truncate($this::PARENT1_TABLENAME);
 
-        $sth1 = $this->dbh->insertPrepare($this::PARENT1_TABLENAME, ':id, :name, :num', [], MyDbh::ONLY_PREPARE);
+        $sth1 = $this->dbh->insert($this::PARENT1_TABLENAME, ':id, :name, :num', [], MyDbh::ONLY_PREPARE);
         $sth1->execute([':id' => 0, ':name' => 'category1', ':num' => 0]);
         $sth1->execute([':id' => 0, ':name' => 'category2', ':num' => 0]);
 
-        $sth2 = $this->dbh->insertPrepare($this::PARENT2_TABLENAME, ':id, :name, :c_id, :num', [], MyDbh::ONLY_PREPARE);
+        $sth2 = $this->dbh->insert($this::PARENT2_TABLENAME, ':id, :name, :c_id, :num', [], MyDbh::ONLY_PREPARE);
         $sth2->execute([':id' => 0, ':name' => 'subCategory1', ':c_id' => 1, ':num' => 0]);
         $sth2->execute([':id' => 0, ':name' => 'subCategory2', ':c_id' => 1, ':num' => 0]);
         $sth2->execute([':id' => 0, ':name' => 'subCategory3', ':c_id' => 2, ':num' => 0]);
@@ -64,7 +64,7 @@ class ArticleTableTest extends TestCase
                 $subc_id = 1;
     
     
-                $sth = $this->dbh->insertPrepare(
+                $sth = $this->dbh->insert(
                     $this::TABLENAME,
                     ':id, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate',
                     [
@@ -74,7 +74,8 @@ class ArticleTableTest extends TestCase
                         ':title' => $title,
                         ':thumbnailName' => $thumbnailName,
                         ':content' => $content
-                    ]
+                    ],
+                    MyDbh::ONLY_PREPARE
                 );
 
 
@@ -83,12 +84,10 @@ class ArticleTableTest extends TestCase
                     $this->dbh->beginTransaction();
                     $sth->bindValue(':updateDate', $this::SAMPLE_TIME);
                     $sth->execute();
-                    $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :id',
-                    [':id' => $c_id])
-                    ->execute();
-                    $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id',
-                    [':id' => $subc_id])
-                    ->execute();
+                    $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :id',
+                    [':id' => $c_id]);
+                    $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id',
+                    [':id' => $subc_id]);
                     $this->dbh->commit();
                 }
                 
@@ -97,12 +96,10 @@ class ArticleTableTest extends TestCase
                 $this->dbh->beginTransaction();
                 $sth->bindValue(':updateDate', $this::SAMPLE_TIME_NEWER);
                 $sth->execute();
-                $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :id',
-                [':id' => $c_id])
-                ->execute();
-                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id',
-                [':id' => $subc_id])
-                ->execute();
+                $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :id',
+                [':id' => $c_id]);
+                $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id',
+                [':id' => $subc_id]);
                 $this->dbh->commit();
                 
     
@@ -147,10 +144,11 @@ class ArticleTableTest extends TestCase
                 $fake_subc_id = 3;
 
     
-                $sth = $this->dbh->insertPrepare(
+                $sth = $this->dbh->insert(
                     $this::TABLENAME,
                     ':id, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate',
-                    []
+                    [],
+                    MyDbh::ONLY_PREPARE
                 );
 
                 //指定されたカテゴリの記事を2つ作成
@@ -173,9 +171,9 @@ class ArticleTableTest extends TestCase
                     ':content' => $content,
                     ':updateDate' => $this::SAMPLE_TIME_NEWER
                 ]);
-                $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 2', 'id = :id', [':id' => $c_id]);
-                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $subc_id1]);
-                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $subc_id2]);
+                $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 2', 'id = :id', [':id' => $c_id]);
+                $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $subc_id1]);
+                $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $subc_id2]);
                 $this->dbh->commit();
 
 
@@ -190,8 +188,8 @@ class ArticleTableTest extends TestCase
                     ':content' => $content,
                     ':updateDate' => $this::SAMPLE_TIME
                 ]);
-                $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $fake_c_id]);
-                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $fake_subc_id]);
+                $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $fake_c_id]);
+                $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $fake_subc_id]);
                 $this->dbh->commit();
 
 
@@ -211,7 +209,7 @@ class ArticleTableTest extends TestCase
                 $subc_id = 2;
                 $fake_subc_id = 1;
 
-                $sth = $this->dbh->insertPrepare(
+                $sth = $this->dbh->insert(
                     $this::TABLENAME,
                     '0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate',
                     [
@@ -221,7 +219,7 @@ class ArticleTableTest extends TestCase
                         ':thumbnailName' => $thumbnailName,
                         ':content' => $content
                     ],
-
+                    MyDbh::ONLY_PREPARE
                 );
 
                 //指定されたカテゴリ、サブカテゴリの記事を２つ作成
@@ -231,18 +229,14 @@ class ArticleTableTest extends TestCase
                 $sth->execute();
                 $sth->bindValue(':updateDate', $this::SAMPLE_TIME_NEWER);
                 $sth->execute();
-                $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 2', 'id = :c_id', [':c_id' => $c_id])
-                ->execute();
-                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 2', 'id = :subc_id', [':subc_id' => $subc_id])
-                ->execute();
+                $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 2', 'id = :c_id', [':c_id' => $c_id]);
+                $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 2', 'id = :subc_id', [':subc_id' => $subc_id]);
                 $this->dbh->commit();
 
                 //指定されていないサブカテゴリの記事を１つ作成
                 $this->dbh->beginTransaction();
-                $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :c_id', [':c_id' => $c_id])
-                ->execute();
-                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :subc_id', [':subc_id' => $fake_subc_id])
-                ->execute();
+                $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :c_id', [':c_id' => $c_id]);
+                $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :subc_id', [':subc_id' => $fake_subc_id]);
                 $this->dbh->commit();
 
                 $expected = [
@@ -266,7 +260,7 @@ class ArticleTableTest extends TestCase
             $c_id = 1;
             $subc_id = 1;
 
-            $sth = $this->dbh->insertPrepare(
+            $sth = $this->dbh->insert(
                 $this::TABLENAME,
                 '0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate',
                 [
@@ -274,7 +268,8 @@ class ArticleTableTest extends TestCase
                     ':subc_id' => $subc_id,
                     ':thumbnailName' => $thumbnailName,
                     ':content' => $content,
-                ]
+                ],
+                MyDbh::ONLY_PREPARE
             );
 
             //指定された検索ワードに該当するタイトルの記事を2つ作成
@@ -285,10 +280,8 @@ class ArticleTableTest extends TestCase
             $sth->bindValue(':title', 'b:searchedB');
             $sth->bindValue(':updateDate', $this::SAMPLE_TIME_NEWER);
             $sth->execute();
-            $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 2', 'id = :c_id', [':c_id' => $c_id])
-            ->execute();
-            $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 2', 'id = :subc_id', [':subc_id' => $subc_id])
-            ->execute();
+            $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 2', 'id = :c_id', [':c_id' => $c_id]);
+            $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 2', 'id = :subc_id', [':subc_id' => $subc_id]);
             $this->dbh->commit();
 
             //指定された検索ワードを含まないタイトルの記事を1つ作成
@@ -296,10 +289,8 @@ class ArticleTableTest extends TestCase
             $sth->bindValue(':title', $title);
             $sth->bindValue(':updateDate', $this::SAMPLE_TIME);
             $sth->execute();
-            $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :c_id', [':c_id' => $c_id])
-            ->execute();
-            $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :subc_id', [':subc_id' => $subc_id])
-            ->execute();
+            $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :c_id', [':c_id' => $c_id]);
+            $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :subc_id', [':subc_id' => $subc_id]);
             $this->dbh->commit();
 
             $expected = [

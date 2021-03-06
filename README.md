@@ -1,6 +1,7 @@
 # 環境
 - dockerコンテナを構築し、apache2 + php + mysqlで作成。鋭意進行中！
 - 学習のため、webフレームワークを使わずに作成
+- routing, DI, テストは外部ライブラリを採用
 
 # localでの構築
 - ```docker-compose up -d```

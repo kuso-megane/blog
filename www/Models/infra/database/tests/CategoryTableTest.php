@@ -19,7 +19,7 @@ class CategoryTableTest extends TestCase
 
         $this->dbh->truncate($this::TABLENAME);
    
-        $sth = $this->dbh->insertPrepare($this::TABLENAME, ':id, :name, :num', [':id' => 0, ':num' => 0]);
+        $sth = $this->dbh->insert($this::TABLENAME, ':id, :name, :num', [':id' => 0, ':num' => 0], MyDbh::ONLY_PREPARE);
 
         for ($i = 1; $i < 3; ++$i) {
             $sth->bindValue(':name', "category{$i}");

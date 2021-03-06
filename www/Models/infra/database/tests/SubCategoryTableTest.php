@@ -23,14 +23,14 @@ class SubCategoryTableTest extends TestCase
         $this->dbh->truncate($this::TABLENAME);
         $this->dbh->truncate($this::PARENT_TABLENAME);
 
-        $sth = $this->dbh->insertPrepare($this::PARENT_TABLENAME, ':id, :name , :num', ['id' => 0, ':num' => 0]);
+        $sth = $this->dbh->insert($this::PARENT_TABLENAME, ':id, :name , :num', ['id' => 0, ':num' => 0], MyDbh::ONLY_PREPARE);
 
         for ($i = 1; $i < 3; ++$i) {
             $sth->bindValue(':name', "category{$i}");
             $sth->execute();
         }
  
-        $sth2 = $this->dbh->insertPrepare($this::TABLENAME, ':id, :name, :c_id, :num', [':id' => 0, ':num' => 0]);
+        $sth2 = $this->dbh->insert($this::TABLENAME, ':id, :name, :c_id, :num', [':id' => 0, ':num' => 0], MyDbh::ONLY_PREPARE);
 
         for ($i = 1; $i < 3; ++$i) {
             $sth2->bindValue(':name', "subCategory{$i}");
