@@ -12,22 +12,22 @@ html {
     background-color: #CCCCCC;
 
     //smartphone-vertical
-    @media screen and (max-width: 480) {
+    @media screen and (max-width: 480px) {
         font-size: 12px;
     }
 
     //smartphone-horizonal
-    @media screen and (max-width: 896){
+    @media screen and (min-width: 481px) and (max-width: 896px){
         font-size: 16px;
     }
 
     //tablet-vertical
-    @media screen and (max-width: 1024) {
+    @media screen and (min-width: 897px) and (max-width: 1024px) {
         font-size: 18px;
     }
 
     //pc and tablet-horiozonal
-    @media screen {
+    @media screen and (min-width: 1025px) {
         font-size: 20px;
     }
 }
