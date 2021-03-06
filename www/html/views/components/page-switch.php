@@ -1,12 +1,7 @@
 <?php
-    $isLastPage = $vm['isLastPage'];
-    $pageId = $vm['pageId'];
     $prevPage = $pageId - 1;
     $nextPage = $pageId + 1;
-
-    $currentUrl = $vm['currentUrl'];
-
-    $searched_word = $vm['searched_word'];
+    
     $wordQuery = ($searched_word != NULL) ? "&w={$searched_word}" : '';
 ?>
 

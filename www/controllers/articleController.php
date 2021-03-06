@@ -2,10 +2,10 @@
 
 namespace myapp\Controllers;
 
-require 'viewFilePath.php';
+use myapp\myFrameWork\Bases\BaseController;
 
 
-class ArticleController
+class ArticleController extends BaseController
 {
 
 
@@ -14,7 +14,7 @@ class ArticleController
         //modelから記事情報を持ってくる
         //$data = 
 
-        require VIEW_FILE_PATH.'article/show.php';
+        require $this::VIEW_FILE_PATH.'article/show.php';
     }
  
 }

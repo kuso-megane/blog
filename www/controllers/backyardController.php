@@ -2,10 +2,10 @@
 
 namespace myapp\Controllers;
 
-require 'viewFilePath.php';
+use myapp\myFrameWork\Bases\BaseController;
 
 
-class BackyardController
+class BackyardController extends BaseController
 {
 
 
@@ -14,7 +14,7 @@ class BackyardController
         //modelから記事一覧を持ってくる
         //$data = 
 
-        require VIEW_FILE_PATH.'backyard/index.php';
+        require $this::VIEW_FILE_PATH.'backyard/index.php';
     }
 
 
@@ -27,7 +27,7 @@ class BackyardController
             //$data =
         }
         
-        require VIEW_FILE_PATH.'backyard/edit.php';
+        require $this::VIEW_FILE_PATH.'backyard/edit.php';
     }
 
 

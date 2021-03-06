@@ -4,8 +4,6 @@
     $styleSheetUrl = "/asset/stylesheet/";
     $componentsPath = "/var/www/html/views/components/";
     $imgUrl = "/asset/img/";
-
-    $searched_word = $vm['searched_word'];
 ?>
 
 <!DOCTYPE html>

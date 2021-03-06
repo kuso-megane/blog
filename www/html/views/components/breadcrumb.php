@@ -1,9 +1,7 @@
 <?php
-    $searched_category = $vm['searched_category'];
     $searched_c_id = $searched_category['id'];
     $searched_c_name = $searched_category['name'];
 
-    $searched_subCategory = $vm['searched_subCategory'];
     $searched_subc_id = $searched_subCategory['id'];
     $searched_subc_name = $searched_subCategory['name'];
 ?>

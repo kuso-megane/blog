@@ -2,10 +2,10 @@
 
 namespace myapp\Controllers;
 
-require __DIR__. '/helpers/render.php';
+use myapp\myFrameWork\Bases\BaseController;
 
 
-class SearchController
+class SearchController extends BaseController
 {
 
 
@@ -17,7 +17,7 @@ class SearchController
 
         $interactor = $container->get('domain\search\Interactor');
         $vm = $interactor->interact($vars);
-        render($vm, 'search', 'index');
+        $this->render($vm, 'search', 'index');
     }
 
 
@@ -30,6 +30,6 @@ class SearchController
 
         $interactor = $container->get('domain\search\Interactor');
         $vm = $interactor->interact($vars);
-        render($vm, 'search', 'result');
+        $this->render($vm, 'search', 'result');
     }
 }

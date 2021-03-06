@@ -1,7 +1,3 @@
-<?php
-    $recentArtclInfos = $vm['recentArtclInfos'];
-?>
-
 
 <div id="article-container">
     <?php if($recentArtclInfos != NULL): ?>

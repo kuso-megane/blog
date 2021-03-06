@@ -1,9 +1,3 @@
-<?php
-    $categoryArtclCount = $vm['categoryArtclCount'];
-    $subCategoryArtclCount = $vm['subCategoryArtclCount'];
-    $searchBoxValue = $vm['searchBoxValue'];  
-?>
-
 
 <div id="main--sidebar">
     <div id="my-profile">
