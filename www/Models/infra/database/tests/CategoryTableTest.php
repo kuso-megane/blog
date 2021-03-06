@@ -2,30 +2,28 @@
 
 use PHPUnit\Framework\TestCase;
 use infra\database\src\CategoryTable;
-use infra\database\helpers\DBConnection;
-use infra\database\helpers\DBHMyLib;
+use myapp\myFrameWork\DB\Connection;
+use myapp\myFrameWork\DB\MyDbh;
 
 class CategoryTableTest extends TestCase
 {
     const TABLENAME = 'Category';
     private $dbh;
     private $table;
-    private $dbhHelper;
 
 
     protected function setUp():void
     {
-        $this->dbh = (new DBConnection(TRUE))->connect();
+        $this->dbh = (new Connection(TRUE))->connect();
         $this->table = new CategoryTable(TRUE);
-        $this->dbhHelper = new DBHMyLib($this->dbh);
 
-        $this->dbhHelper->truncate($this::TABLENAME);
-
-        $command = 'INSERT INTO ' . $this::TABLENAME . ' VALUES(0, :name, :num)';   
-        $sth = $this->dbhHelper->prepare($command);
+        $this->dbh->truncate($this::TABLENAME);
+   
+        $sth = $this->dbh->insertPrepare($this::TABLENAME, ':id, :name, :num', [':id' => 0, ':num' => 0]);
 
         for ($i = 1; $i < 3; ++$i) {
-            $sth->execute([':name' => "category{$i}", ':num' => 0]);
+            $sth->bindValue(':name', "category{$i}");
+            $sth->execute();
         }
     }
 

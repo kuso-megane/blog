@@ -4,10 +4,9 @@ use PHPUnit\Framework\TestCase;
 use infra\database\src\CategoryTable;
 use infra\database\src\SubCategoryTable;
 use infra\database\src\ArticleTable;
-use infra\database\helpers\DBConnection;
-use infra\database\helpers\DBHMyLib;
+use myapp\myFrameWork\DB\Connection;
 use myapp\config\AppConfig;
-use phpDocumentor\Reflection\Types\Float_;
+use myapp\myFrameWork\DB\MyDbh;
 
 class ArticleTableTest extends TestCase
 {
@@ -19,29 +18,30 @@ class ArticleTableTest extends TestCase
 
     private $dbh;
     private $table;
-    private $dbhHelper;
     private $maxNum;
 
 
     protected function setUp():void
     {
-        $this->dbh = (new DBConnection(TRUE))->connect();
+        $this->dbh = (new Connection(TRUE))->connect();
         $this->table = new ArticleTable(TRUE);
         $this->parentTable1 = new CategoryTable(TRUE);
         $this->parentTable2 = new SubCategoryTable(TRUE);
-        $this->dbhHelper = new DBHMyLib($this->dbh);
         $this->maxNum = (new AppConfig)::ARTCL_NUM;
 
-        $this->dbhHelper->truncate($this::TABLENAME);
-        $this->dbhHelper->truncate($this::PARENT2_TABLENAME);
-        $this->dbhHelper->truncate($this::PARENT1_TABLENAME);
+        $this->dbh->truncate($this::TABLENAME);
+        $this->dbh->truncate($this::PARENT2_TABLENAME);
+        $this->dbh->truncate($this::PARENT1_TABLENAME);
 
-        $this->dbh->exec('INSERT INTO ' . $this::PARENT1_TABLENAME . " VALUES(0, 'category1', 0)");
-        $this->dbh->exec('INSERT INTO ' . $this::PARENT1_TABLENAME . " VALUES(0, 'category2', 0)");
-        $this->dbh->exec('INSERT INTO ' . $this::PARENT2_TABLENAME . " VALUES(0, 'subCategory1', 1, 0)");
-        $this->dbh->exec('INSERT INTO ' . $this::PARENT2_TABLENAME . " VALUES(0, 'subCategory2', 1, 0)");
-        $this->dbh->exec('INSERT INTO ' . $this::PARENT2_TABLENAME . " VALUES(0, 'subCategory3', 2, 0)");
-        $this->dbh->exec('INSERT INTO ' . $this::PARENT2_TABLENAME . " VALUES(0, 'subCategory4', 2, 0)");
+        $sth1 = $this->dbh->insertPrepare($this::PARENT1_TABLENAME, ':id, :name, :num', [], MyDbh::ONLY_PREPARE);
+        $sth1->execute([':id' => 0, ':name' => 'category1', ':num' => 0]);
+        $sth1->execute([':id' => 0, ':name' => 'category2', ':num' => 0]);
+
+        $sth2 = $this->dbh->insertPrepare($this::PARENT2_TABLENAME, ':id, :name, :c_id, :num', [], MyDbh::ONLY_PREPARE);
+        $sth2->execute([':id' => 0, ':name' => 'subCategory1', ':c_id' => 1, ':num' => 0]);
+        $sth2->execute([':id' => 0, ':name' => 'subCategory2', ':c_id' => 1, ':num' => 0]);
+        $sth2->execute([':id' => 0, ':name' => 'subCategory3', ':c_id' => 2, ':num' => 0]);
+        $sth2->execute([':id' => 0, ':name' => 'subCategory4', ':c_id' => 2, ':num' => 0]);
 
     }
 
@@ -52,34 +52,61 @@ class ArticleTableTest extends TestCase
     public function testFindRecentOnesInfos(int $pageId, bool $isSetC_id, bool $isSetSubc_id, bool $isSetWord)
     {
         $isLastPage = (bool)NULL;
+
+        $title = 'sampleTitle';
+        $thumbnailName = 'sampleThumnail.jpg';
+        $content = '<p>This is Sample.</p>';
+
         if ($isSetWord == FALSE) {
             if ($isSetC_id == FALSE && $isSetSubc_id == FALSE) {
 
                 $c_id = 1;
                 $subc_id = 1;
     
-                $command = 'INSERT INTO ' . $this::TABLENAME . 
-                " VALUES(0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate)";
     
-                $sth = $this->dbhHelper->prepare($command);
-    
+                $sth = $this->dbh->insertPrepare(
+                    $this::TABLENAME,
+                    ':id, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate',
+                    [
+                        ':id' => 0,
+                        ':c_id' => $c_id,
+                        ':subc_id' => $subc_id,
+                        ':title' => $title,
+                        ':thumbnailName' => $thumbnailName,
+                        ':content' => $content
+                    ]
+                );
+
+
                 // 1ページで表示できる最大数の記事を作成
                 for ($i = 0; $i < $this->maxNum; ++$i) {
                     $this->dbh->beginTransaction();
-                    $this->insertSampleArticle($sth, $c_id, $subc_id, 'sampleTitle', $this::SAMPLE_TIME);
-                    $this->dbh->exec('UPDATE Category SET num = num + 1 WHERE id = ' . $c_id);
-                    $this->dbh->exec('UPDATE SubCategory SET num = num + 1 WHERE id = ' . $subc_id);
+                    $sth->bindValue(':updateDate', $this::SAMPLE_TIME);
+                    $sth->execute();
+                    $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :id',
+                    [':id' => $c_id])
+                    ->execute();
+                    $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id',
+                    [':id' => $subc_id])
+                    ->execute();
                     $this->dbh->commit();
                 }
                 
+                
                 // 1つ、他より新しいデータを追加
                 $this->dbh->beginTransaction();
-                $this->insertSampleArticle($sth, $c_id, $subc_id, 'sampleTitle', $this::SAMPLE_TIME_NEWER);
-                $this->dbh->exec('UPDATE Category SET num = num + 1 WHERE id = ' . $c_id);
-                $this->dbh->exec('UPDATE SubCategory SET num = num + 1 WHERE id = ' . $subc_id);
+                $sth->bindValue(':updateDate', $this::SAMPLE_TIME_NEWER);
+                $sth->execute();
+                $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :id',
+                [':id' => $c_id])
+                ->execute();
+                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id',
+                [':id' => $subc_id])
+                ->execute();
                 $this->dbh->commit();
+                
     
-    
+                
                 if ($pageId == 1) {
     
                     $expected = [
@@ -108,7 +135,9 @@ class ArticleTableTest extends TestCase
                     $this->assertSame($expected, $this->table->findRecentOnesInfos($this->maxNum, $isLastPage, $pageId));
                     $this->assertTrue($isLastPage); //該当記事が2ページに収まる
                 }
+                
             }
+            
             else if ($isSetC_id == TRUE && $isSetSubc_id == FALSE) {
 
                 $c_id = 1;
@@ -117,28 +146,52 @@ class ArticleTableTest extends TestCase
                 $subc_id2 = 2;
                 $fake_subc_id = 3;
 
-
-                $command = 'INSERT INTO ' . $this::TABLENAME . 
-                " VALUES(0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate)";
     
-                $sth = $this->dbhHelper->prepare($command);
+                $sth = $this->dbh->insertPrepare(
+                    $this::TABLENAME,
+                    ':id, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate',
+                    []
+                );
 
                 //指定されたカテゴリの記事を2つ作成
                 $this->dbh->beginTransaction();
-                $this->insertSampleArticle($sth, $c_id, $subc_id1, 'sampleTitle', $this::SAMPLE_TIME);
-                $this->insertSampleArticle($sth, $c_id, $subc_id2, 'sampleTitle', $this::SAMPLE_TIME_NEWER);
-                $this->dbh->exec('UPDATE Category SET num = num + 2 WHERE id = ' . $c_id);
-                $this->dbh->exec('UPDATE SubCategory SET num = num + 2 WHERE id = ' . $subc_id1);
+                $sth->execute([
+                    ':id' => 0,
+                    ':c_id' => $c_id,
+                    ':subc_id' => $subc_id1,
+                    ':title' => $title,
+                    ':thumbnailName' => $thumbnailName,
+                    ':content' => $content,
+                    ':updateDate' => $this::SAMPLE_TIME
+                ]);
+                $sth->execute([
+                    ':id' => 0,
+                    ':c_id' => $c_id,
+                    ':subc_id' => $subc_id2,
+                    ':title' => $title,
+                    ':thumbnailName' => $thumbnailName,
+                    ':content' => $content,
+                    ':updateDate' => $this::SAMPLE_TIME_NEWER
+                ]);
+                $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 2', 'id = :id', [':id' => $c_id]);
+                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $subc_id1]);
+                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $subc_id2]);
                 $this->dbh->commit();
 
 
                 //指定されていないカテゴリの記事を作成
                 $this->dbh->beginTransaction();
-    
-                $this->insertSampleArticle($sth, $fake_c_id, $fake_subc_id, 'sampleTitle', $this::SAMPLE_TIME);
-                $this->dbh->exec('UPDATE Category SET num = num + 1 WHERE id = ' . $fake_c_id);
-                $this->dbh->exec('UPDATE SubCategory SET num = num + 1 WHERE id = ' . $fake_subc_id);
-
+                $sth->execute([
+                    ':id' => 0,
+                    ':c_id' => $fake_c_id,
+                    ':subc_id' => $fake_subc_id,
+                    ':title' => $title,
+                    ':thumbnailName' => $thumbnailName,
+                    ':content' => $content,
+                    ':updateDate' => $this::SAMPLE_TIME
+                ]);
+                $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $fake_c_id]);
+                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :id', [':id' => $fake_subc_id]);
                 $this->dbh->commit();
 
 
@@ -158,24 +211,38 @@ class ArticleTableTest extends TestCase
                 $subc_id = 2;
                 $fake_subc_id = 1;
 
-                $command = 'INSERT INTO ' . $this::TABLENAME . 
-                " VALUES(0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate)";
-    
-                $sth = $this->dbhHelper->prepare($command);
+                $sth = $this->dbh->insertPrepare(
+                    $this::TABLENAME,
+                    '0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate',
+                    [
+                        ':c_id' => $c_id,
+                        ':subc_id' => $subc_id,
+                        ':title' => $title,
+                        ':thumbnailName' => $thumbnailName,
+                        ':content' => $content
+                    ],
+
+                );
 
                 //指定されたカテゴリ、サブカテゴリの記事を２つ作成
                 $this->dbh->beginTransaction();
-                $this->insertSampleArticle($sth, $c_id, $subc_id, 'sampleTitle', $this::SAMPLE_TIME);
-                $this->insertSampleArticle($sth, $c_id, $subc_id, 'sampleTitle', $this::SAMPLE_TIME_NEWER);
-                $this->dbh->exec('UPDATE Category SET num = num + 2 WHERE id = ' . $c_id);
-                $this->dbh->exec('UPDATE SubCategory SET num = num + 2 WHERE id = ' . $subc_id);
+                
+                $sth->bindValue(':updateDate', $this::SAMPLE_TIME);
+                $sth->execute();
+                $sth->bindValue(':updateDate', $this::SAMPLE_TIME_NEWER);
+                $sth->execute();
+                $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 2', 'id = :c_id', [':c_id' => $c_id])
+                ->execute();
+                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 2', 'id = :subc_id', [':subc_id' => $subc_id])
+                ->execute();
                 $this->dbh->commit();
 
                 //指定されていないサブカテゴリの記事を１つ作成
                 $this->dbh->beginTransaction();
-                $this->insertSampleArticle($sth, $c_id, $fake_subc_id, 'sampleTitle', $this::SAMPLE_TIME);
-                $this->dbh->exec('UPDATE Category SET num = num + 1 WHERE id = ' . $c_id);
-                $this->dbh->exec('UPDATE SubCategory SET num = num + 1 WHERE id = ' . $fake_subc_id);
+                $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :c_id', [':c_id' => $c_id])
+                ->execute();
+                $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :subc_id', [':subc_id' => $fake_subc_id])
+                ->execute();
                 $this->dbh->commit();
 
                 $expected = [
@@ -191,45 +258,64 @@ class ArticleTableTest extends TestCase
                 $this->assertTrue($isLastPage); //該当記事が1ページに収まる
                 
             }
+            
         }
+        
         else if ($isSetWord == TRUE) {
             $word = 'searched';
             $c_id = 1;
             $subc_id = 1;
 
-            $command = 'INSERT INTO ' . $this::TABLENAME . 
-                " VALUES(0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate)";
-    
-                $sth = $this->dbhHelper->prepare($command);
+            $sth = $this->dbh->insertPrepare(
+                $this::TABLENAME,
+                '0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate',
+                [
+                    'c_id' => $c_id,
+                    ':subc_id' => $subc_id,
+                    ':thumbnailName' => $thumbnailName,
+                    ':content' => $content,
+                ]
+            );
 
-                //指定された検索ワードに該当するタイトルの記事を2つ作成
-                $this->dbh->beginTransaction();
-                $this->insertSampleArticle($sth, $c_id, $subc_id, 'a:searchedA', $this::SAMPLE_TIME);
-                $this->insertSampleArticle($sth, $c_id, $subc_id, 'b:searchedB', $this::SAMPLE_TIME_NEWER);
-                $this->dbh->exec('UPDATE Category SET num = num + 2 WHERE id = ' . $c_id);
-                $this->dbh->exec('UPDATE SubCategory SET num = num + 2 WHERE id = ' . $subc_id);
-                $this->dbh->commit();
+            //指定された検索ワードに該当するタイトルの記事を2つ作成
+            $this->dbh->beginTransaction();
+            $sth->bindValue(':title', 'a:searchedA');
+            $sth->bindValue(':updateDate', $this::SAMPLE_TIME);
+            $sth->execute();
+            $sth->bindValue(':title', 'b:searchedB');
+            $sth->bindValue(':updateDate', $this::SAMPLE_TIME_NEWER);
+            $sth->execute();
+            $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 2', 'id = :c_id', [':c_id' => $c_id])
+            ->execute();
+            $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 2', 'id = :subc_id', [':subc_id' => $subc_id])
+            ->execute();
+            $this->dbh->commit();
 
-                //指定された検索ワードを含まないタイトルの記事を1つ作成
-                $this->dbh->beginTransaction();
-                $this->insertSampleArticle($sth, $c_id, $subc_id, 'sampleTitle', $this::SAMPLE_TIME);
-                $this->dbh->exec('UPDATE Category SET num = num + 1 WHERE id = ' . $c_id);
-                $this->dbh->exec('UPDATE SubCategory SET num = num + 1 WHERE id = ' . $subc_id);
-                $this->dbh->commit();
+            //指定された検索ワードを含まないタイトルの記事を1つ作成
+            $this->dbh->beginTransaction();
+            $sth->bindValue(':title', $title);
+            $sth->bindValue(':updateDate', $this::SAMPLE_TIME);
+            $sth->execute();
+            $this->dbh->updatePrepare($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :c_id', [':c_id' => $c_id])
+            ->execute();
+            $this->dbh->updatePrepare($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :subc_id', [':subc_id' => $subc_id])
+            ->execute();
+            $this->dbh->commit();
 
-                $expected = [
-                    ['id' => 2, 'c_id' => $c_id, 'subc_id' => $subc_id, 'title' => 'b:searchedB',
-                    'thumbnailName' => 'sampleThumnail.jpg', 'updateDate' => $this::SAMPLE_TIME_NEWER],
-                    ['id' => 1, 'c_id' => $c_id, 'subc_id' => $subc_id, 'title' => 'a:searchedA',
-                    'thumbnailName' => 'sampleThumnail.jpg', 'updateDate' => $this::SAMPLE_TIME]
-                ];
+            $expected = [
+                ['id' => 2, 'c_id' => $c_id, 'subc_id' => $subc_id, 'title' => 'b:searchedB',
+                'thumbnailName' => 'sampleThumnail.jpg', 'updateDate' => $this::SAMPLE_TIME_NEWER],
+                ['id' => 1, 'c_id' => $c_id, 'subc_id' => $subc_id, 'title' => 'a:searchedA',
+                'thumbnailName' => 'sampleThumnail.jpg', 'updateDate' => $this::SAMPLE_TIME]
+            ];
 
-                $this->assertSame($expected,
-                $this->table->findRecentOnesInfos($this->maxNum, $isLastPage, $pageId, $c_id, $subc_id, $word));
+            $this->assertSame($expected,
+            $this->table->findRecentOnesInfos($this->maxNum, $isLastPage, $pageId, $c_id, $subc_id, $word));
 
-                $this->assertTrue($isLastPage); //該当記事が1ページに収まる
+            $this->assertTrue($isLastPage); //該当記事が1ページに収まる
 
         }
+        
 
     }
 
@@ -243,15 +329,5 @@ class ArticleTableTest extends TestCase
             'when $c_id and $subc_id are set, others not set($pageId = 1)' => [1, TRUE, TRUE, FALSE],
             'when $word is set' => [1, FALSE, FALSE, TRUE]
         ];
-    }
-
-
-    public function insertSampleArticle(PDOStatement $sth, int $c_id, int $subc_id, string $title, string $date):array
-    {
-        $sth->execute([':c_id' => $c_id, ':subc_id' => $subc_id, ':title' => $title,
-        ':thumbnailName' => 'sampleThumnail.jpg', ':content' => '<p>This is Sample.</p>',
-        ':updateDate' => $date]);
-
-        return  $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 }

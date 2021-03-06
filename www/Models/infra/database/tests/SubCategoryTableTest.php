@@ -3,8 +3,8 @@
 use PHPUnit\Framework\TestCase;
 use infra\database\src\CategoryTable;
 use infra\database\src\SubCategoryTable;
-use infra\database\helpers\DBConnection;
-use infra\database\helpers\DBHMyLib;
+use myapp\myFrameWork\DB\Connection;
+use myapp\myFrameWork\DB\MyDbh;
 
 class SubCategoryTableTest extends TestCase
 {
@@ -12,30 +12,30 @@ class SubCategoryTableTest extends TestCase
     const PARENT_TABLENAME = 'Category';
     private $dbh;
     private $table;
-    private $dbhHelper;
 
 
     protected function setUp():void
     {
-        $this->dbh = (new DBConnection(TRUE))->connect();
+        $this->dbh = (new Connection(TRUE))->connect();
         $this->table = new SubCategoryTable(TRUE);
         $this->parentTable = new CategoryTable(TRUE);
-        $this->dbhHelper = new DBHMyLib($this->dbh);
 
-        $this->dbhHelper->truncate($this::TABLENAME);
-        $this->dbhHelper->truncate($this::PARENT_TABLENAME);
+        $this->dbh->truncate($this::TABLENAME);
+        $this->dbh->truncate($this::PARENT_TABLENAME);
 
-        $command = 'INSERT INTO ' . $this::PARENT_TABLENAME . ' VALUES(0, :name , :num)';
-        $sth = $this->dbhHelper->prepare($command);
+        $sth = $this->dbh->insertPrepare($this::PARENT_TABLENAME, ':id, :name , :num', ['id' => 0, ':num' => 0]);
+
         for ($i = 1; $i < 3; ++$i) {
-            $sth->execute([':name' => "category{$i}", ':num' => 0]);
+            $sth->bindValue(':name', "category{$i}");
+            $sth->execute();
         }
-
-        $command2 = 'INSERT INTO ' . $this::TABLENAME . ' VALUES(0, :name, :c_id, :num)'; 
-        $sth2 = $this->dbhHelper->prepare($command2);
+ 
+        $sth2 = $this->dbh->insertPrepare($this::TABLENAME, ':id, :name, :c_id, :num', [':id' => 0, ':num' => 0]);
 
         for ($i = 1; $i < 3; ++$i) {
-            $sth2->execute([':name' => "subCategory{$i}", ':c_id' => $i, ':num' => 0]);
+            $sth2->bindValue(':name', "subCategory{$i}");
+            $sth2->bindValue(':c_id', $i, PDO::PARAM_INT);
+            $sth2->execute();
         }
     }
 

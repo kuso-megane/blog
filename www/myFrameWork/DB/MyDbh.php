@@ -2,12 +2,15 @@
 
 namespace myapp\myFrameWork\DB;
 
+use myapp\myFrameWork\Exception\UnexpectedParamException;
 use PDO;
 use PDOException;
 use PDOStatement;
 
 class MyDbh extends PDO
 {
+    const EXECUTE = 1;
+    const ONLY_PREPARE = 2;
 
     /**
      * truncate table by ignoring foreign key constrict
@@ -38,12 +41,15 @@ class MyDbh extends PDO
 
         } catch (PDOException $e) {
 
-            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-            $class = $trace[1]['class'];
-            $type = $trace[1]['type'];
-            $function = $trace[1]['function'];
-            $line = $trace[1]['line'];
-            echo "\nPDO::prepare() failed in {$class}{$type}{$function}() line:{$line}\n given command: {$command};\n {$e->getMessage()}\n";
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+            $calling_class = $trace[2]['class'];
+            $calling_type = $trace[2]['type'];
+            $calling_function = $trace[2]['function'];
+            
+            $called_class = $trace[1]['class'];
+            $called_type = $trace[1]['type'];
+            $called_function = $trace[1]['function'];
+            echo "\nPDO::prepare() failed in {$calling_class}{$calling_type}{$calling_function}()#{$called_class}{$called_type}{$called_function}()\ngiven command: {$command};\n {$e->getMessage()}\n";
 
         }
 
@@ -52,21 +58,18 @@ class MyDbh extends PDO
 
 
     /**
-     * This execute SELECT query with prepared statement by binding value and executing. You only have to fetch after this.
+     * This prepare SELECT statement with binding $boundCondition and $option. You only have to fetch after this.
      * 
      * @param string $select
      * @param string $tableName
      * @param string $condition
-     * @param array $boundCondition
+     * @param array $boundValues
      * @param array $options
      * 
      * @return PDOStatement
      */
-    private function rawSelect(string $select, string $tableName, string $condition = '', array $boundCondition = [], array $options = []):PDOStatement
+    private function rawSelect(string $select, string $tableName, string $condition = '', array $boundValues = [], array $options = []):PDOStatement
     {
-        foreach($options as $key => $value) {
-            $$key = $value;
-        }
 
         if ($condition != NULL) {
             $where = " WHERE {$condition} ";
@@ -75,8 +78,14 @@ class MyDbh extends PDO
             $where = '';
         }
 
+
+        foreach($options as $key => $value) {
+            $$key = $value;
+        }
+
         if ($orderby != NULL) {
-            $order = " ORDER BY :orderby :sort ";
+            $sort = ($sort == NULL) ? 'ASC' : $sort;
+            $order = " ORDER BY {$orderby} {$sort} ";
         }
         else {
             $order = '';
@@ -84,10 +93,10 @@ class MyDbh extends PDO
 
         if ($limitNum != NULL) {
             if ($limitStart != NULL) {
-                $limit = " LIMIT :limitStart,:limitNum ";
+                $limit = " LIMIT {$limitStart},{$limitNum} ";
             }
             else {
-                $limit = " LIMIT :limitNum ";
+                $limit = " LIMIT {$limitNum} ";
             }
         }
         else {
@@ -97,8 +106,21 @@ class MyDbh extends PDO
 
         $query = 'SELECT ' . $select . ' FROM ' . $tableName . $where . $order . $limit;
         $sth = $this->myPrepare($query);
-        $boundValues = $boundCondition + $options;
-        $sth->execute($boundValues);
+
+        foreach ($boundValues as $key => $value) {
+            if (is_int($value)) {
+                $data_type = PDO::PARAM_INT;
+            }
+            else if (is_string($value)) {
+                $data_type = PDO::PARAM_STR;
+            }
+            else {
+                $e = new UnexpectedParamException([$key => $value]);
+                echo $e->getMessage();
+            }
+            
+            $sth->bindValue($key, $value, $data_type);
+        }
 
         return $sth;
     }
@@ -111,105 +133,168 @@ class MyDbh extends PDO
      * 
      * @param string $columns the columns you want (e.g.) 'id, num'
      * @param string $tableName
-     * @param string $condition For prepared statement, this must be like 'id = :id AND num > :num' 
-     * @param array $boundCondition (e.g.) [':id' => int, ':num' => int]
+     * @param string $condition 'id = :id AND num > :num' or 'id = 3, num > 3'
      * @param array $options
      * [
-     *      ':orderby' = string,
-     *      ':sort' = 'ASC'|'DESC',
-     *      ':limitStart' = int,
-     *      ':limitNum' => int
+     *      'orderby' => ':orderby'|column,
+     *      'sort' => 'ASC'|'DESC',
+     *      'limitStart' => ':limitStart'|int,
+     *      'limitNum' => ':limitNum'|int
      * ]
+     * @param array $boundValues (e.g.) [':id' => int, ':num' => int, ':orderby' => string]
      * 
-     * @return array (e.g.)[ ['id' => int, 'name' => string], [] ] 
+     * if you wanna bind these manually, this can be empty
      * 
-     * $options[':limitStart']    the start index of the records you want, 
+     * @param int $executeFlag if you wanna get PDOStatement and execute it manually, this must be MyDbh::ONLY_PREPARE
      * 
-     * $options[':limitNum']      the num of the records you want
+     * 
+     * @return array|PDOStatement (e.g.)[ ['id' => int, 'name' => string], [] ] 
+     * 
+     * 
+     * limitStart is the start index of the records you want.
+     * 
+     * limitNum is the num of the records you want.
      * 
      * Note that $boundCondition is only for $condition.
      * Others like $options[':orderby'] will be automatically formatted for prepared statement and bound.
      * 
      */
-    public function select(string $columns, string $tableName, string $condition = '', array $boundCondition = [], array $options = []):array
+    public function select(string $columns, string $tableName, string $condition = '', array $options = [], array $boundValues = [], int $executeFlag = self::EXECUTE)
     {  
-        $sth = $this->rawSelect($columns, $tableName, $condition, $boundCondition, $options);
+        $sth = $this->rawSelect($columns, $tableName, $condition, $boundValues, $options);
 
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+
+        if ($executeFlag == self::ONLY_PREPARE) {
+            return $sth;
+        }
+        else if ($executeFlag == self::EXECUTE) {
+            $sth->execute();
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
+        }
+        else {
+            $e = new UnexpectedParamException($executeFlag);
+            echo $e->getMessage();
+        } 
     }
 
 
     /**
-     * return count of $column of records
+     * return count of $column of records or prepare count query and return PDOStatement
      * @param string $column
      * @param string $tableName
-     * @param string $condition For prepared statement, this must be like 'id = :id AND num > :num' 
+     * @param string $condition 'id = :id AND num > :num' or 'id = 3, num > 3'
      * @param array $boundCondition (e.g.) [':id' => int, ':num' => int]
      * 
-     * @return int
+     * if you wanna bind these manually, this can be empty
+     * 
+     * @param int $executeFlag  if you wanna get PDOStatement and execute it manually, this must be MyDbh::ONLY_PREPARE
+     * 
+     * @return int|PDOStatement
      * 
      */
-    public function count(string $column = '*', string $tableName, string $condition = '', array $boundCondition = []):int
+    public function count(string $column = '*', string $tableName, string $condition = '', array $boundValues = [], int $executeFlag = self::EXECUTE)
     {
         $select = "count($column) as total";
-        $sth = $this->rawSelect($select, $tableName, $condition, $boundCondition);
+        $sth = $this->rawSelect($select, $tableName, $condition, $boundValues);
 
-        return $sth->fetch(PDO::FETCH_ASSOC)['total'];
+        if ($executeFlag == self::ONLY_PREPARE) {
+            return $sth;
+        }
+        else if ($executeFlag == self::EXECUTE) {
+            $sth->execute();
+            return $sth->fetch(PDO::FETCH_ASSOC)['total'];
+        }
+        else {
+            $e = new UnexpectedParamException($executeFlag);
+            echo $e->getMessage();
+        }  
     }
 
 
     /**
-     * insert record with $boundValues into the table you want
+     * prepare insert command, bind columns and return PDOStatement
      * 
      * @param string $tableName
+     * @param string $columns (e.g.) ':id, :name' or "0, 'aaa'"
      * @param array $boundColumns
      * (e.g.) [ ':id' => int, ':name' => string]
      * 
-     * @return void
+     * if you wanna bind these manually, this can be empty
      * 
-     * Note that this automatically bind $boundValues to query.
+     * @return PDOStatement
+     * 
      */
-    public function insert(string $tableName, array $boundColumns):void
+    public function insertPrepare(string $tableName, string $columns, array $boundColumns = []):PDOStatement
     {
         $values = ' VALUES(';
-        $len = count($boundColumns);
-        $c = 0;
-        foreach($boundColumns as $column => $boundValue) {
-            ++$c;
-            if ($c == $len) {
-                $values += "{$column}";
-            }
-            $values += ":{$column}, ";
-        }
-        $values += ') ';
+        
+        $values .= "$columns) ";
 
         $command = 'INSERT INTO ' . $tableName . $values;
         $sth = $this->myPrepare($command);
-        $boundValues = $boundColumns;
-        $sth->execute($boundValues);
+
+        foreach ($boundColumns as $key => $value) {
+            if (is_int($value)) {
+                $data_type = PDO::PARAM_INT;
+            }
+            else if (is_string($value)) {
+                $data_type = PDO::PARAM_STR;
+            }
+            else {
+                $e = new UnexpectedParamException([$key => $value]);
+                echo $e->getMessage();
+            }
+            
+            $sth->bindValue($key, $value, $data_type);
+        }
+
+
+        
+        return $sth;
     }
 
 
     /**
-     * update $column into $value
-     * @param string $columns
+     * prepare update command, bind columns, and return PDOStatement
+     * 
      * @param string $tableName
-     * @param array $boundColumns
-     * [':columnname' => newValue]
-     * @param string $condition For prepared statement, this must be like 'id = :id AND num > :num' 
+     * @param string $columns (e.g.) 'num = :num, name = :name' or "num = 3, name = 'aaa'"
+     * 
+     * if you wanna increment $columns like 'num', set this like 'num = num + 1'
+     * 
+     * @param array $boundColumns  (e.g. )[':num' => newNum, ':name' => newName]
+     * 
+     * if you wanna bind these manually, this can be empty
+     * 
+     * @param string $condition 'id = :id AND num > :num' or 'id = 3, num > 3'
      * @param array $boundCondition (e.g.) [':id' => int, ':num' => int]
      * 
-     * @return void
-     * 
-     * if you wanna increment $column, set $value like 'num + 1'
+     *
+     * @return PDOStatement
      * 
      */
-    public function update(string $column, string $tableName, array $boundColumns, string $condition = '', array $boundCondition = []):void
+    public function updatePrepare(string $tableName, string $columns, string $condition = '', array $boundValues = []):PDOStatement
     {
-        $where = " WHERE {$condition} ";
-        $command = 'UPDATE ' . $tableName . ' SET ' . $column . ' = ' . key($boundColumns) . $where;
+        $where = " WHERE $condition ";
+        $command = 'UPDATE ' . $tableName . ' SET ' .  $columns . $where;
         $sth = $this->myPrepare($command);
-        $boundValues = $boundColumns + $boundCondition;
-        $sth->execute($boundValues);
+
+        foreach ($boundValues as $key => $value) {
+            if (is_int($value)) {
+                $data_type = PDO::PARAM_INT;
+            }
+            else if (is_string($value)) {
+                $data_type = PDO::PARAM_STR;
+            }
+            else {
+                $e = new UnexpectedParamException([$key => $value]);
+                echo $e->getMessage();
+            }
+            
+            $sth->bindValue($key, $value, $data_type);
+        }
+
+        
+        return $sth;
     }
 }
