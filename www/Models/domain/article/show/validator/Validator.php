@@ -1,9 +1,8 @@
 <?php
 
-namespace domain\article\validator;
+namespace domain\article\show\validator;
 
-use domain\article\Data\InputData;
-use PhpParser\Node\Expr\Cast\Int_;
+use domain\article\show\Data\InputData;
 
 class validator
 {
