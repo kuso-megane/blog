@@ -2,11 +2,13 @@
 
 namespace infra\Repository;
 
+use domain\article\show\Data\Article;
+use domain\article\show\RepositoryPort\ArticleRepositoryPort;
 use domain\search\Data\ArtclInfo;
 use domain\search\RepositoryPort\RecentArtclInfosRepositoryPort;
 use infra\database\src\ArticleTable;
 
-class ArticleRepository implements RecentArtclInfosRepositoryPort
+class ArticleRepository implements RecentArtclInfosRepositoryPort, ArticleRepositoryPort
 {
 
     private $table;
@@ -46,5 +48,24 @@ class ArticleRepository implements RecentArtclInfosRepositoryPort
         }
         
         return $ans;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function getArticle(array $input): Article
+    {
+        $id = $input['id'];
+        $data = $this->table->findById($id);
+
+        return new Article(
+            $data['c_id'],
+            $data['subc_id'],
+            $data['title'],
+            $data['thumbnailName'],
+            $data['content'],
+            $data['updateDate']
+        );
     }
 }

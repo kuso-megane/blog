@@ -28,7 +28,6 @@ class Interactor
         
 
         $input = (new Validator)->validate($vars)->toArray();
-
         
         $article = $this->articleRepository->getArticle($input);
         

@@ -215,7 +215,7 @@ class MyDbh extends PDO
      * prepare insert command, bind columns and return PDOStatement
      * 
      * @param string $tableName
-     * @param string $columns (e.g.) ':id, :name' or "0, 'aaa'"
+     * @param string $columns (e.g.) ':id, :name' or "0, 'aaa'" or '0, :name' etc
      * @param array $boundColumns
      * (e.g.) [ ':id' => int, ':name' => string]
      * 

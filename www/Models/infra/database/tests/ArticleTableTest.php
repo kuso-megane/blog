@@ -311,6 +311,44 @@ class ArticleTableTest extends TestCase
     }
 
 
+    /**
+     * 
+     */
+    public function testFindById()
+    {
+        $id = 1;
+        $c_id = 1;
+        $subc_id = 1;
+        $title = 'sampleTitle';
+        $thumbnailName = 'sampleThumnail.jpg';
+        $content = '<p>This is Sample.</p>';
+
+        //id = 1とid = 2の記事データを作成,
+        $sth = $this->dbh->insert(
+            $this::TABLENAME,
+            '0, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate',
+            [':c_id' => $c_id, ':subc_id' => $subc_id, ':title' => $title, ':thumbnailName' => $thumbnailName,
+            ':content' => $content, ':updateDate' => $this::SAMPLE_TIME],
+            MyDbh::ONLY_PREPARE
+        );
+        $sth->execute();
+        $sth->execute();
+
+
+        $expected = [
+            'id' => $id,
+            'c_id' => $c_id,
+            'subc_id' => $subc_id,
+            'title' => $title,
+            'thumbnailName' => $thumbnailName,
+            'content' => $content,
+            'updateDate' => $this::SAMPLE_TIME
+        ];
+
+        $this->assertSame($expected, $this->table->findById($id));
+    }
+
+
     public function providerForFindRecentOnesInfos():array
     {
         return [

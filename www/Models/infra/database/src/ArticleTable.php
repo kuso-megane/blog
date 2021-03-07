@@ -180,11 +180,13 @@ class ArticleTable
      * @param int $id
      * 
      * @return array 
-     * ['id' => int, 'c_id' => int, 'subc_id' => int, 'title' => string, 'thumbnainName' => string, 
+     * ['id' => int, 'c_id' => int, 'subc_id' => int, 'title' => string, 'thumbnailName' => string, 
      * 'content' => string, updataDate' => string]
      */
     public function findById(int $id):array
     {
-        return [];
+        $record = $this->dbh->select('*', $this::TABLENAME, 'id = :id', [], [':id' => $id])[0];
+
+        return $record;
     }
 }

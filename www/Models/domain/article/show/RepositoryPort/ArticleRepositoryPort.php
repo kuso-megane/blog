@@ -7,7 +7,7 @@ use domain\article\show\Data\Article;
 interface ArticleRepositoryPort
 {
     /**
-     * @param $input
+     * @param array $input
      * 
      * @return Article
      */
