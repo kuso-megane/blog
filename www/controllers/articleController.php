@@ -3,6 +3,7 @@
 namespace myapp\Controllers;
 
 use myapp\myFrameWork\Bases\BaseController;
+use domain\article\Interactor;
 
 
 class ArticleController extends BaseController
@@ -11,10 +12,14 @@ class ArticleController extends BaseController
 
     public function show(array $vars)
     {
-        //modelから記事情報を持ってくる
-        //$data = 
+        $builder = new \DI\ContainerBuilder();
+        $builder->addDefinitions('/var/www/Models/diconfig.php');
+        $container = $builder->build();
 
-        require $this::VIEW_FILE_PATH.'article/show.php';
+        $interactor = $container->get(Interactor::class);
+        $vm = $interactor->interact($vars);
+
+        $this->render($vm, 'article', 'show');
     }
  
 }

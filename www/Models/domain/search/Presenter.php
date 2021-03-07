@@ -2,15 +2,13 @@
 
 namespace domain\search;
 
-use domain\components\mainSidebar\Presenter as MainSidebarPresenter;
-use myapp\myFrameWork\superGlobalVars as Gvars;
 
 class Presenter
 {
 
     /**
      * @param array $input
-     * @param array $recentArtclInfos array of Data\ArtclInfo
+     * @param ArtclInfo[] $recentArtclInfos
      * @param bool $isLastPage
      * 
      * @param array $breadCrumbData
@@ -22,7 +20,9 @@ class Presenter
      *      'searched_word' => string | NULL,
      *      'recentArtclInfos' => return of $this->formatForRAI(),
      *      'isLastPage' => int
-    * ]
+     * ]
+     * +components\breadCrumb\Interactor->interact()
+     * +components\mainSidebar\Interactor->interact()
      */
     public function present(array $input, string $currentUrl, array $recentArtclInfos, bool $isLastPage,
     array $breadCrumbData, array $mainSidebarData)
