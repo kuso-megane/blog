@@ -8,7 +8,7 @@ interface SubCategoryArtclCountRepositoryPort
 {
 
     /**
-     * @return array of SubCategoryArtclCount
+     * @return SubCategoryArtclCount[]
      */
     public function getSubCategoryArtclCount():array;
 

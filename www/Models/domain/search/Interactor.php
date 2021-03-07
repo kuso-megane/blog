@@ -2,12 +2,7 @@
 
 namespace domain\search;
 
-use domain\components\breadCrumb\RepositoryPort\SearchedCategoryRepositoryPort;
-use domain\components\breadCrumb\RepositoryPort\SearchedSubCategoryRepositoryPort;
 use domain\search\RepositoryPort\RecentArtclInfosRepositoryPort;
-use domain\components\mainSidebar\RepositoryPort\CategoryArtclCountRepositoryPort;
-use domain\components\mainSidebar\RepositoryPort\SubCategoryArtclCountRepositoryPort;
-use domain\search\helpers\CookieSetter;
 use domain\search\Presenter;
 use domain\search\validator\Validator;
 use myapp\config\AppConfig;
@@ -17,25 +12,13 @@ class Interactor
 {
 
     private $recentArtclInfosRepository;
-    private $categoryArtclCountRepositoryPort;
-    private $subCategoryArtclCountRepositoryPort;
-    private $searchedCategoryRepository;
-    private $searchedSubCategoryRepository;
 
     
     public function __construct(
-        RecentArtclInfosRepositoryPort $recentArtclInfosRepository,
-        CategoryArtclCountRepositoryPort $categoryArtclCountRepositoryPort,
-        SubCategoryArtclCountRepositoryPort $subCategoryArtclCountRepositoryPort,
-        SearchedCategoryRepositoryPort $searchedCategoryRepository,
-        SearchedSubCategoryRepositoryPort $searchedSubCategoryRepository
-    )
+        RecentArtclInfosRepositoryPort $recentArtclInfosRepository
+    ) 
     {
         $this->recentArtclInfosRepository = $recentArtclInfosRepository;
-        $this->categoryArtclCountRepositoryPort = $categoryArtclCountRepositoryPort;
-        $this->subCategoryArtclCountRepositoryPort = $subCategoryArtclCountRepositoryPort;
-        $this->searchedCategoryRepository = $searchedCategoryRepository;
-        $this->searchedSubCategoryRepository = $searchedSubCategoryRepository;
     }
     
 
@@ -55,34 +38,22 @@ class Interactor
         $isLastPage = $isLastPageAndRecentArtclInfos[0];
         $recentArtclInfos = $isLastPageAndRecentArtclInfos[1];
 
-        //cookieをセット
-        (new CookieSetter)->set($input);
-
-        //カテゴリ検索
-        $categoryArtclCount = $this->categoryArtclCountRepositoryPort->getCategoryArtclCount();
-        $subCategoryArtclCount = $this->subCategoryArtclCountRepositoryPort->getSubCategoryArtclCount();
-
-        //パンクズリスト
-        $searchedCategory = $this->searchedCategoryRepository->getSearchedCategory($input);
-        if ($searchedCategory != NULL) {
-            $searchedCategory = $searchedCategory->toArray();
-        }
-        $searchedSubCategory = $this->searchedSubCategoryRepository->getSearchedSubCategory($input);
-        if ($searchedSubCategory != NULL) {
-            $searchedSubCategory = $searchedSubCategory->toArray();
-        }
 
         //現在のurl
         $server = (new Gvars)->getServer();
-
         $uri = $server['REQUEST_URI'];
         if (false !== $pos = strpos($uri, '?')) {
             $uri = substr($uri, 0, $pos);
         }
         $currentUrl = rawurldecode($uri);
 
-        return (new Presenter())
-        ->present($input, $currentUrl, $recentArtclInfos, $isLastPage, $categoryArtclCount, $subCategoryArtclCount,
-        $searchedCategory, $searchedSubCategory);
+        $builder = new \DI\ContainerBuilder();
+        $builder->addDefinitions('/var/www/Models/diconfig.php');
+        $container = $builder->build();
+
+        $breadCrumbData = $container->get('domain\components\breadCrumb\Interactor')->interact($vars);
+        $mainSidebarData = $container->get('domain\components\mainSidebar\Interactor')->interact($vars);
+
+        return (new Presenter())->present($input, $currentUrl, $recentArtclInfos, $isLastPage, $breadCrumbData, $mainSidebarData);
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace domain\search\helpers;
+namespace domain\components\mainSidebar\helpers;
 
 use myapp\myFrameWork\SuperGlobalVars;
 

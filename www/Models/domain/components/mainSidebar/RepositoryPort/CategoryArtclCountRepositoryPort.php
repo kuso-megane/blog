@@ -9,7 +9,7 @@ interface CategoryArtclCountRepositoryPort
 {
 
     /**
-     * @return array of CategoryArtclCount
+     * @return CategoryArtclCount[]
      */
     public function getCategoryArtclCount():array;
 

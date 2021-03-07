@@ -2,64 +2,50 @@
 
 namespace domain\search;
 
-use domain\components\mainSidebar\PresenterTrait as MainSidebarPresenter;
+use domain\components\mainSidebar\Presenter as MainSidebarPresenter;
 use myapp\myFrameWork\superGlobalVars as Gvars;
 
 class Presenter
 {
 
-    use MainSidebarPresenter;
-
     /**
-     * @param int $pageId
+     * @param array $input
      * @param array $recentArtclInfos array of Data\ArtclInfo
      * @param bool $isLastPage
      * 
-     * @param array $categoryArtclCount of Data\CategoryArtclCount
-     * @param array $subCategoryArtclCount of Data\SubCategoryArtclCount
+     * @param array $breadCrumbData
+     * @param array $mainSidebarData
      * 
      * @return array [
      *      'currentUri' => string
      *      'pageId' => int
-     *      'searched_category' =>  NULL|array ['id' => int, 'name' -> string],
-     *      'searched_subCategory' => NULL|array ['id' => int, 'name' -> string],
      *      'searched_word' => string | NULL,
      *      'recentArtclInfos' => return of $this->formatForRAI(),
-     *      'isLastPage' => int,
-     *      'categoryArtclCount' => return of $this->formatForCAC(),
-     *      'subCategoryArtclCount' => return of $this->formatForSCAC()   ,
-     *      'searchBoxValue' => string
+     *      'isLastPage' => int
     * ]
      */
-    public function present(array $input, string $currentUrl, array $recentArtclInfos, bool $isLastPage,array $categoryArtclCount,
-    array $subCategoryArtclCount, ?array $searched_category, ?array $searched_subCategory)
+    public function present(array $input, string $currentUrl, array $recentArtclInfos, bool $isLastPage,
+    array $breadCrumbData, array $mainSidebarData)
     {
         
-
         $pageId = $input['pageId'];
         $searched_word = $input['searched_word'];
 
-        $cookie = (new Gvars)->getCookie();
-        $searchBoxValue = ($input['searched_word'] != NULL) ? $input['searched_word'] : $cookie['searched_word'];
-
-        return [
+        $data = [
             'currentUrl' => $currentUrl,
             'pageId' => $pageId,
-            'searched_category' => $searched_category,
-            'searched_subCategory' => $searched_subCategory,
             'searched_word' => $searched_word,
             'recentArtclInfos' => $this->formatForRAI($recentArtclInfos),
-            'isLastPage' => $isLastPage,
-            'categoryArtclCount' => $this->formatForCAC($categoryArtclCount),
-            'subCategoryArtclCount' => $this->formatForSCAC($subCategoryArtclCount),
-            'searchBoxValue' => $searchBoxValue
+            'isLastPage' => $isLastPage
         ];
+
+        return $data + $breadCrumbData + $mainSidebarData;
     }
 
 
     /**
      * formatter for recentArtclInfo
-     * @param array of Data\ArtclInfo $recentArtclInfos
+     * @param ArtclInfo[] $recentArtclInfos
      * 
      * @return array [
      *      ['id' => int, 'title' => string, 'updateDate' => string, 'thumbnailName' => string, 'c_id' => int, 'subc_id' => int],
