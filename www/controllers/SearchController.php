@@ -3,6 +3,7 @@
 namespace myapp\Controllers;
 
 use myapp\myFrameWork\Bases\BaseController;
+use domain\search\Interactor;
 
 
 class SearchController extends BaseController
@@ -15,7 +16,7 @@ class SearchController extends BaseController
         $builder->addDefinitions('/var/www/Models/diconfig.php');
         $container = $builder->build();
 
-        $interactor = $container->get('domain\search\Interactor');
+        $interactor = $container->get(Interactor::class);
         $vm = $interactor->interact($vars);
         $this->render($vm, 'search', 'index');
     }
@@ -28,7 +29,7 @@ class SearchController extends BaseController
         $builder->addDefinitions('/var/www/Models/diconfig.php');
         $container = $builder->build();
 
-        $interactor = $container->get('domain\search\Interactor');
+        $interactor = $container->get(Interactor::class);
         $vm = $interactor->interact($vars);
         $this->render($vm, 'search', 'result');
     }

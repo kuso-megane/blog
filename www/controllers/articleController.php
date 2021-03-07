@@ -3,7 +3,7 @@
 namespace myapp\Controllers;
 
 use myapp\myFrameWork\Bases\BaseController;
-use domain\article\Interactor;
+use domain\article\show\Interactor as ShowInteractor;
 
 
 class ArticleController extends BaseController
@@ -16,7 +16,7 @@ class ArticleController extends BaseController
         $builder->addDefinitions('/var/www/Models/diconfig.php');
         $container = $builder->build();
 
-        $interactor = $container->get(Interactor::class);
+        $interactor = $container->get(ShowInteractor::class);
         $vm = $interactor->interact($vars);
 
         $this->render($vm, 'article', 'show');
