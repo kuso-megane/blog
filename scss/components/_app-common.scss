@@ -12,7 +12,7 @@ html {
     background-color: #CCCCCC;
 
     //smartphone-vertical
-    @media screen and (max-width: 480px) {
+    @media screen and (min-width: 320px) {
         font-size: 12px;
     }
 
