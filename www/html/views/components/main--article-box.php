@@ -8,7 +8,7 @@
         <?php foreach($recentArtclInfos as $artcls): ?>
 
         <div class="article-box">
-            <a href="/xxx" class="linkbox">
+            <a href=<?php echo '/article/' . $artcls['id']; ?> class="linkbox">
                 <div class="article-thumbnail-container">
                     <img src=<?php echo (ViewsConfig::IMG_URL."test2.jpg"); ?> alt="テスト画像" class="article-thumbnail">
                 </div>

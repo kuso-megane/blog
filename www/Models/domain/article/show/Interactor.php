@@ -2,7 +2,7 @@
 
 namespace domain\article\show;
 
-use domain\article\show\RepositoryPort\ArticleRepositoryPort;
+use domain\article\show\RepositoryPort\ArticleContentRepositoryPort;
 use domain\article\show\validator\Validator;
 use domain\components\breadCrumb\Interactor as BreadCrumbInteractor;
 use domain\components\mainSidebar\Interactor as MainSidebarInteractor;
@@ -13,7 +13,7 @@ class Interactor
     private $articleRepository;
 
     
-    public function __construct(ArticleRepositoryPort $articleRepository)
+    public function __construct(ArticleContentRepositoryPort $articleRepository)
     {
         $this->articleRepository = $articleRepository;
     }
@@ -31,7 +31,7 @@ class Interactor
 
         $input = (new Validator)->validate($vars)->toArray();
         
-        $article = $this->articleRepository->getArticle($input)->toArray();
+        $article = $this->articleRepository->getArticleContent($input)->toArray();
         
 
         $builder = new \DI\ContainerBuilder();

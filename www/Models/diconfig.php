@@ -1,6 +1,6 @@
 <?php
 
-use domain\article\show\RepositoryPort\ArticleRepositoryPort;
+use domain\article\show\RepositoryPort\ArticleContentRepositoryPort;
 use domain\components\breadCrumb\RepositoryPort\SearchedCategoryRepositoryPort;
 use domain\components\breadCrumb\RepositoryPort\SearchedSubCategoryRepositoryPort;
 use domain\components\mainSidebar\RepositoryPort\CategoryArtclCountRepositoryPort;
@@ -19,5 +19,5 @@ return [
     SubCategoryArtclCountRepositoryPort::class => \DI\create(SubCategoryRepository::class),
     SearchedCategoryRepositoryPort::class => \DI\create(CategoryRepository::class),
     SearchedSubCategoryRepositoryPort::class => \DI\create(SubCategoryRepository::class),
-    ArticleRepositoryPort::class => ArticleRepository::class
+    ArticleContentRepositoryPort::class => \DI\create(ArticleRepository::class)
 ];
