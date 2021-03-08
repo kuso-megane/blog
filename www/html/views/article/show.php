@@ -19,7 +19,12 @@
 
                 <?php require ViewsConfig::COMPONENTS_PATH. 'breadcrumb.php'; ?>
 
-                
+                <h3 id="article--title"><?php echo $title; ?></h3>  
+                <p id="article--updateDate"><?php echo '最終更新日:'. $updateDate; ?></p>
+
+                <div id="article--content">
+                    <?php echo $content; ?>
+                </div>
                 
 
             </div>
