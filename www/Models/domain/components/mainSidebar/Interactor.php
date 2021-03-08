@@ -34,9 +34,10 @@ class Interactor
     {
 
         $input = (new Validator)->validate()->toArray();
+        $searched_word = $input['searched_word'];
 
         //cookieをセット
-        (new CookieSetter)->set($input);
+        (new CookieSetter)->set($searched_word);
 
         //カテゴリ検索
         $categoryArtclCount = $this->categoryArtclCountRepositoryPort->getCategoryArtclCount();

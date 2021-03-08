@@ -41,9 +41,9 @@ class CategoryRepository implements CategoryArtclCountRepositoryPort, SearchedCa
     /**
      * @inheritdoc
      */
-    public function getSearchedCategory(array $input): ?SearchedCategory
+    public function getSearchedCategory(int $searched_c_id): ?SearchedCategory
     {
-        $searched_c_id = $input['searched_c_id'];
+        
         if ($searched_c_id == NULL) {
             return NULL;
         }

@@ -8,9 +8,9 @@ interface SearchedCategoryRepositoryPort
 {
 
     /**
-     * @param array $input
+     * @param int $searched_c_id
      * 
      * @return SearchedCategory|NULL
      */
-    public function getSearchedCategory(array $input):?SearchedCategory;
+    public function getSearchedCategory(int $searched_c_id):?SearchedCategory;
 }

@@ -30,8 +30,10 @@ class Interactor
         
 
         $input = (new Validator)->validate($vars)->toArray();
+
+        $id = $input['id'];
         
-        $article = $this->articleRepository->getArticleContent($input)->toArray();
+        $article = $this->articleRepository->getArticleContent($id)->toArray();
         
 
         $builder = new \DI\ContainerBuilder();

@@ -7,6 +7,8 @@ use domain\search\Presenter;
 use domain\search\validator\Validator;
 use myapp\config\AppConfig;
 use myapp\myFrameWork\SuperGlobalVars as GVars;
+use domain\components\breadCrumb\Interactor as BreadCrumbInteractor;
+use domain\components\mainSidebar\Interactor as MainSidebarInteractor;
 
 class Interactor
 {
@@ -24,17 +26,23 @@ class Interactor
 
 
     /**
-     * @param array|NULL $var
+     * @param array $var
      * 
      * @return array
      */
-    public function interact(?array $vars):array
+    public function interact(array $vars):array
     {
         $artclNum = (new AppConfig)::ARTCL_NUM;
 
         $input = (new Validator)->validate($vars)->toArray();
 
-        $isLastPageAndRecentArtclInfos = $this->recentArtclInfosRepository->getIsLastPageAndRecentArtclInfos($input, $artclNum);
+        $pageId = $input['pageId'];
+        $searched_c_id = $input['searched_c_id'];
+        $searched_subc_id = $input['searched_subc_id'];
+        $searched_word = $input['searched_word'];
+
+        $isLastPageAndRecentArtclInfos = $this->recentArtclInfosRepository
+        ->getIsLastPageAndRecentArtclInfos($artclNum, $pageId, $searched_c_id, $searched_subc_id, $searched_word);
         $isLastPage = $isLastPageAndRecentArtclInfos[0];
         $recentArtclInfos = $isLastPageAndRecentArtclInfos[1];
 
@@ -51,8 +59,8 @@ class Interactor
         $builder->addDefinitions('/var/www/Models/diconfig.php');
         $container = $builder->build();
 
-        $breadCrumbData = $container->get('domain\components\breadCrumb\Interactor')->interact($vars);
-        $mainSidebarData = $container->get('domain\components\mainSidebar\Interactor')->interact($vars);
+        $breadCrumbData = $container->get(BreadCrumbInteractor::class)->interact($vars);
+        $mainSidebarData = $container->get(MainSidebarInteractor::class)->interact();
 
         return (new Presenter())->present($input, $currentUrl, $recentArtclInfos, $isLastPage, $breadCrumbData, $mainSidebarData);
     }

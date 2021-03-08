@@ -7,9 +7,9 @@ use domain\article\show\Data\ArticleContent;
 interface ArticleContentRepositoryPort
 {
     /**
-     * @param array $input
+     * @param int
      * 
      * @return Article
      */
-    public function getArticleContent(array $input): ArticleContent;
+    public function getArticleContent(int $id): ArticleContent;
 }

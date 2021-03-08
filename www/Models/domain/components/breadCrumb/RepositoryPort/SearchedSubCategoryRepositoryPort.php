@@ -8,9 +8,9 @@ interface SearchedSubCategoryRepositoryPort
 {
 
     /**
-     * @param array $input
+     * @param int $searched_subc_id
      * 
      * @return SearchedSubCategory|NULL
      */
-    public function getSearchedSubCategory(array $input):?SearchedSubCategory;
+    public function getSearchedSubCategory(int $searched_subc_id):?SearchedSubCategory;
 }

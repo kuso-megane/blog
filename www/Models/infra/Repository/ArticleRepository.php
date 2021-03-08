@@ -20,19 +20,16 @@ class ArticleRepository implements RecentArtclInfosRepositoryPort, ArticleConten
     /**
      * @inheritdoc
      */
-    public function getIsLastPageAndRecentArtclInfos(array $input, int $artclNum):array
+    public function getIsLastPageAndRecentArtclInfos(int $artclNum, int $pageId, int $searched_c_id,
+    int $searched_subc_id, string $searched_word):array
     {
         $ans = [];
         $ans[1] = [];
 
         $isLastPage = (bool)NULL;
-        $pageId = $input['pageId'];
-        $input_c_id = $input['searched_c_id'];
-        $input_subc_id = $input['searched_subc_id'];
-        $word = $input['searched_word'];
 
         $datas = $this->table->findRecentOnesInfos($artclNum, $isLastPage, $pageId,
-        $input_c_id, $input_subc_id, $word);
+        $searched_c_id, $searched_subc_id, $searched_word);
 
         $ans[0] = $isLastPage;
 
@@ -54,9 +51,8 @@ class ArticleRepository implements RecentArtclInfosRepositoryPort, ArticleConten
     /**
      * @inheritdoc
      */
-    public function getArticleContent(array $input): ArticleContent
+    public function getArticleContent(int $id): ArticleContent
     {
-        $id = $input['id'];
         $data = $this->table->findById($id);
 
         return new ArticleContent(

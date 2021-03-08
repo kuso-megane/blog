@@ -35,11 +35,14 @@ class Interactor
 
         $input = (new Validator)->validate($vars)->toArray();
 
-        $searchedCategory = $this->searchedCategoryRepository->getSearchedCategory($input);
+        $searched_c_id = $input['searched_c_id'];
+        $searched_subc_id = $input['searched_subc_id'];
+
+        $searchedCategory = $this->searchedCategoryRepository->getSearchedCategory($searched_c_id);
         if ($searchedCategory != NULL) {
             $searchedCategory = $searchedCategory->toArray();
         }
-        $searchedSubCategory = $this->searchedSubCategoryRepository->getSearchedSubCategory($input);
+        $searchedSubCategory = $this->searchedSubCategoryRepository->getSearchedSubCategory($searched_subc_id);
         if ($searchedSubCategory != NULL) {
             $searchedSubCategory = $searchedSubCategory->toArray();
         }
