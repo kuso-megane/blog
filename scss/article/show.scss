@@ -8,6 +8,35 @@
 
 @use '../components/breadcrumb';
 
-
-
 @use '../components/main--sidebar';
+
+#article {
+
+    margin: 1rem;
+
+    &--title {
+        margin-block-start: 4rem;
+    }
+
+    &--updateDate {
+        text-align: right;
+        font-size: 0.8rem;
+    }
+
+    &--content {
+        font-size: 1rem;
+        overflow-wrap: break-word;
+
+        .red {
+            color: red;
+        }
+
+        a {
+            color: blue;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
