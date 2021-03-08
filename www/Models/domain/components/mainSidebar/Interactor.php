@@ -27,14 +27,13 @@ class Interactor
 
 
     /**
-     * @param array|NULL $var
      * 
      * @return array
      */
-    public function interact(?array $vars = NULL):array
+    public function interact():array
     {
 
-        $input = (new Validator)->validate($vars)->toArray();
+        $input = (new Validator)->validate()->toArray();
 
         //cookieをセット
         (new CookieSetter)->set($input);

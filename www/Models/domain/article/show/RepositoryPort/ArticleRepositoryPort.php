@@ -2,7 +2,7 @@
 
 namespace domain\article\show\RepositoryPort;
 
-use domain\article\show\Data\Article;
+use domain\article\show\Data\ArticleContent;
 
 interface ArticleRepositoryPort
 {
@@ -11,5 +11,5 @@ interface ArticleRepositoryPort
      * 
      * @return Article
      */
-    public function getArticle(array $input): Article;
+    public function getArticle(array $input): ArticleContent;
 }

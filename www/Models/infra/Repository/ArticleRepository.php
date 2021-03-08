@@ -2,7 +2,7 @@
 
 namespace infra\Repository;
 
-use domain\article\show\Data\Article;
+use domain\article\show\Data\ArticleContent;
 use domain\article\show\RepositoryPort\ArticleRepositoryPort;
 use domain\search\Data\ArtclInfo;
 use domain\search\RepositoryPort\RecentArtclInfosRepositoryPort;
@@ -54,16 +54,15 @@ class ArticleRepository implements RecentArtclInfosRepositoryPort, ArticleReposi
     /**
      * @inheritdoc
      */
-    public function getArticle(array $input): Article
+    public function getArticle(array $input): ArticleContent
     {
         $id = $input['id'];
         $data = $this->table->findById($id);
 
-        return new Article(
+        return new ArticleContent(
             $data['c_id'],
             $data['subc_id'],
             $data['title'],
-            $data['thumbnailName'],
             $data['content'],
             $data['updateDate']
         );

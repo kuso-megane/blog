@@ -4,6 +4,8 @@ namespace domain\article\show;
 
 use domain\article\show\RepositoryPort\ArticleRepositoryPort;
 use domain\article\show\validator\Validator;
+use domain\components\breadCrumb\Interactor as BreadCrumbInteractor;
+use domain\components\mainSidebar\Interactor as MainSidebarInteractor;
 
 
 class Interactor
@@ -29,15 +31,19 @@ class Interactor
 
         $input = (new Validator)->validate($vars)->toArray();
         
-        $article = $this->articleRepository->getArticle($input);
+        $article = $this->articleRepository->getArticle($input)->toArray();
         
 
         $builder = new \DI\ContainerBuilder();
         $builder->addDefinitions('/var/www/Models/diconfig.php');
         $container = $builder->build();
 
-        $breadCrumbData = $container->get('domain\components\breadCrumb\Interactor')->interact($vars);
-        $mainSidebarData = $container->get('domain\components\mainSidebar\Interactor')->interact($vars);
+        $breadCrumbData = $container->get(BreadCrumbInteractor::class)
+        ->interact([
+            'c_id' => $article['c_id'],
+            'subc_id' => $article['subc_id']
+        ]);
+        $mainSidebarData = $container->get(MainSidebarInteractor::class)->interact();
 
         return (new Presenter())->present($article, $breadCrumbData, $mainSidebarData);
     }
