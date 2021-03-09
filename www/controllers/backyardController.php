@@ -14,7 +14,7 @@ class BackyardController extends BaseController
         //modelから記事一覧を持ってくる
         //$data = 
 
-        require $this::VIEW_FILE_PATH.'backyard/index.php';
+        require $this::VIEW_FILE_PATH.'backyard/article/index.php';
     }
 
 
@@ -27,21 +27,15 @@ class BackyardController extends BaseController
             //$data =
         }
         
-        require $this::VIEW_FILE_PATH.'backyard/edit.php';
+        require $this::VIEW_FILE_PATH.'backyard/article/edit.php';
     }
 
 
-    public function create (array $vars)
+    public function post (array $vars)
     {
         //modelから最新投稿を持ってくる
         //$data =
            
     }
 
-    public function update (array $vars)
-    {
-        //modelから最新投稿を持ってくる
-        //$data =
-        
-    }
 }

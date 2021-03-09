@@ -1,12 +1,5 @@
 <?php 
 
-
-if ($isNew == TRUE) {
-    echo "create\n";
-}
-else {
-    echo "update\n";
-}
 echo 'This is backyard/edit.php';
 
 /*

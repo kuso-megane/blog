@@ -17,10 +17,9 @@ $dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) u
     $r->addRoute('GET', $base.'article/{artcl_id:\d+}', 'articleShow');
 
     $r->addGroup('/backyard', function (FastRoute\RouteCollector $r) {
-        $r->addRoute('GET', '[/]', 'backyardIndex');
-        $r->addRoute('GET', '/edit[/{artcl_id:\d+}]', 'backyardEdit');
-        $r->addRoute('POST', '/create/{c_id:\d+}/{subc_id:\d+}/{title:}/{content:}', 'backyardCreate');
-        $r->addRoute('POST', '/post/{artcl_id:\d+}{c_id:\d+}/{subc_id:\d+}/{title:}/{content:}', 'backyardUpdate');
+        $r->addRoute('GET', '/article', 'backyardIndex');
+        $r->addRoute('GET', '/article/edit[/{artcl_id:\d+}]', 'backyardEdit');
+        $r->addRoute('POST', '/article/post{/artcl_id:\d+}', 'backyardPost');
     });
     
 });

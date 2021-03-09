@@ -1,0 +1,16 @@
+a {
+    color: blue;
+    
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+table, td, th {
+    border: solid 1px black;
+}
+
+th {
+    width: 200px;
+}
+
