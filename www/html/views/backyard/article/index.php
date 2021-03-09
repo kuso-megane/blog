@@ -23,7 +23,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><a href="">編集</a></td>
+                    <td><a href="/backyard/article/edit/1">編集</a></td>
                     <td>aaa</td>
                     <td><a href="">リンク</a></td>
                 </tr>

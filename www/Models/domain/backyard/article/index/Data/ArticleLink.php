@@ -1,0 +1,24 @@
+<?php
+
+namespace domain\backyard\article\index\Data;
+
+class ArticleLink
+{
+    private $id;
+    private $title;
+    
+    public function __construct(int $id, string $title)
+    {
+        $this->id = $id;
+        $this->title = $title;
+    }
+
+
+    public function toArray():array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title
+        ];
+    }    
+}

@@ -23,7 +23,7 @@ class Interactor
     /**
      * @param array $var
      * 
-     * @return array
+     * @return array refer to Presenter->present()
      */
     public function interact(array $vars):array
     {
