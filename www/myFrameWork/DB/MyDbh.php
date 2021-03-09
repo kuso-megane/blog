@@ -41,15 +41,14 @@ class MyDbh extends PDO
 
         } catch (PDOException $e) {
 
-            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
-            $calling_class = $trace[2]['class'];
-            $calling_type = $trace[2]['type'];
-            $calling_function = $trace[2]['function'];
-            
-            $called_class = $trace[1]['class'];
-            $called_type = $trace[1]['type'];
-            $called_function = $trace[1]['function'];
-            echo "\nPDO::prepare() failed in {$calling_class}{$calling_type}{$calling_function}()#{$called_class}{$called_type}{$called_function}()\ngiven command: {$command};\n {$e->getMessage()}\n";
+            $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+            foreach($trace as $arr) {
+                $class = $arr['class'];
+                $function = $arr['function'];
+                $type = $arr['type'];
+                echo "\n#Stacktree: {$class}{$type}{$function}()";
+            }
+            echo "\nPDO::prepare() failed\ngiven command: {$command};\n {$e->getMessage()}\n";
 
         }
 
