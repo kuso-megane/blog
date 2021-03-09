@@ -7,17 +7,30 @@ use domain\backyardArticle\edit\Data\OldArticleContent;
 class Presenter
 {
     /**
-     * @param OldArticleContent $oldArticleContent
+     * @param bool $isNew
+     * @param OldArticleContent|NULL $oldArticleContent
      * 
      * @param array [
-     *      'oldArticleContent' => ['id' => int, 'title' => string, 'content' => string]
+     *      'isNew' => bool,
+     *      'artcl_id' => int|NULL,
+     *      'oldTitle' => string|NULL,
+     *      'oldContent' => string|NULL
      * ]
      */
-    public function present(OldArticleContent $oldArticleContent):array
+    public function present(bool $isNew, ?OldArticleContent $oldArticleContent):array
     {
 
+        $oldArticleContent = ($oldArticleContent != NULL) ? $oldArticleContent->toArray() : [];
+
+        $artcl_id = $oldArticleContent['id'];
+        $oldTitle = $oldArticleContent['title'];
+        $oldContent = $oldArticleContent['content'];
+
         return [
-            'oldArticleContent' => $oldArticleContent->toArray()
+            'isNew' => $isNew,
+            'artcl_id' => $artcl_id,
+            'oldTitle' => $oldTitle,
+            'oldContent' => $oldContent
         ];
     }
 }

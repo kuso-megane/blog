@@ -4,6 +4,8 @@ namespace infra\Repository;
 
 use domain\article\show\Data\ArticleContent;
 use domain\article\show\RepositoryPort\ArticleContentRepositoryPort;
+use domain\backyardArticle\edit\Data\OldArticleContent;
+use domain\backyardArticle\edit\RepositoryPort\OldArticleContentRepositoryPort;
 use domain\backyardArticle\index\Data\ArticleLink;
 use domain\backyardArticle\index\RepositoryPort\ArticleLinksRepositoryPort;
 use domain\search\Data\ArtclInfo;
@@ -12,7 +14,11 @@ use infra\database\src\ArticleTable;
 use myapp\config\AppConfig;
 
 class ArticleRepository
-implements RecentArtclInfosRepositoryPort, ArticleContentRepositoryPort, ArticleLinksRepositoryPort
+implements
+RecentArtclInfosRepositoryPort,
+ArticleContentRepositoryPort,
+ArticleLinksRepositoryPort,
+OldArticleContentRepositoryPort
 {
 
     private $table;
@@ -83,5 +89,20 @@ implements RecentArtclInfosRepositoryPort, ArticleContentRepositoryPort, Article
         }
 
         return $articles;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getOldArticleContent(int $artcl_id): OldArticleContent
+    {
+        $article = $this->table->findById($artcl_id);
+
+        return new OldArticleContent(
+            $article['id'],
+            $article['title'],
+            $article['content']
+        );
     }
 }

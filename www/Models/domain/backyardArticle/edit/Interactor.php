@@ -27,8 +27,16 @@ class Interactor
 
         $artcl_id = $input['artcl_id'];
 
-        $oldArticleContent = $this->oldArticleContentRepository->getOldArticleContent($artcl_id);
+        if ($artcl_id == NULL) {
+            $isNew = TRUE;
+            $oldArticleContent = NULL;
+        }
+        elseif ($artcl_id != NULL) {
+            $isNew = FALSE;
+            $oldArticleContent = $this->oldArticleContentRepository->getOldArticleContent($artcl_id);
+        }
 
-        return (new Presenter)->present($oldArticleContent);
+        
+        return (new Presenter)->present($isNew, $oldArticleContent);
     }
 }

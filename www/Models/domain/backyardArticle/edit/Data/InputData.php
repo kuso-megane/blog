@@ -6,7 +6,7 @@ class InputData
 {
     private $artcl_id;
 
-    public function __construct(int $artcl_id)
+    public function __construct(?int $artcl_id)
     {
         $this->artcl_id = $artcl_id;
     }

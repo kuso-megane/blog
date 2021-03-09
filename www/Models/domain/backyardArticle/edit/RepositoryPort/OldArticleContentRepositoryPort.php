@@ -11,5 +11,5 @@ interface OldArticleContentRepositoryPort
      * 
      * @return OldArticleContent
      */
-    public function getOldArticleContent(): OldArticleContent;
+    public function getOldArticleContent(int $artcl_id): OldArticleContent;
 }

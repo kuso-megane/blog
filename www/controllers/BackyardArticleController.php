@@ -4,6 +4,7 @@ namespace myapp\Controllers;
 
 use myapp\myFrameWork\Bases\BaseController;
 use domain\backyardArticle\index\Interactor as IndexInteractor;
+use domain\backyardArticle\edit\Interactor as EditInteractor;
 
 
 class BackyardArticleController extends BaseController
@@ -23,16 +24,16 @@ class BackyardArticleController extends BaseController
     }
 
 
-    public function edit (?array $vars = NULL)
+    public function edit (array $vars = NULL)
     {
-        // 記事がすでにある場合
-        $isNew = ($vars == NULL) ? TRUE : FALSE;
-        if (!($isNew)) {
-            //modelから記事情報を持ってくる
-            //$data =
-        }
-        
-        require $this::VIEW_FILE_PATH.'backyard/article/edit.php';
+        $builder = new \DI\ContainerBuilder();
+        $builder->addDefinitions('/var/www/Models/diconfig.php');
+        $container = $builder->build();
+
+        $interactor = $container->get(EditInteractor::class);
+        $vm = $interactor->interact($vars);
+
+        $this->render($vm, 'backyardArticle', 'edit');
     }
 
 

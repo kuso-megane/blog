@@ -1,6 +1,7 @@
 <?php
 
 use domain\article\show\RepositoryPort\ArticleContentRepositoryPort;
+use domain\backyardArticle\edit\RepositoryPort\OldArticleContentRepositoryPort;
 use domain\backyardArticle\index\RepositoryPort\ArticleLinksRepositoryPort;
 use domain\components\breadCrumb\RepositoryPort\SearchedCategoryRepositoryPort;
 use domain\components\breadCrumb\RepositoryPort\SearchedSubCategoryRepositoryPort;
@@ -21,5 +22,6 @@ return [
     SearchedCategoryRepositoryPort::class => \DI\create(CategoryRepository::class),
     SearchedSubCategoryRepositoryPort::class => \DI\create(SubCategoryRepository::class),
     ArticleContentRepositoryPort::class => \DI\create(ArticleRepository::class),
-    ArticleLinksRepositoryPort::class => \DI\create(ArticleRepository::class)
+    ArticleLinksRepositoryPort::class => \DI\create(ArticleRepository::class),
+    OldArticleContentRepositoryPort::class => \DI\create(ArticleRepository::class)
 ];
