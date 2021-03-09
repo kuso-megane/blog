@@ -3,7 +3,7 @@
 ?>
 
 <div id="article-container">
-    <?php if($recentArtclInfos != NULL): ?>
+    <?php if(!empty($recentArtclInfos)): ?>
 
         <?php foreach($recentArtclInfos as $artcls): ?>
 

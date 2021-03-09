@@ -38,6 +38,8 @@ class ArticleTable
      *      ['id' => int, 'c_id' => int, 'subc_id' => int, 'title' => string, 'thumbnailName' => string, 'updataDate' => string],
      *      []
      * ]
+     * 
+     * If no record is found, this returns empty array.
      */
     public function findRecentOnesInfos(int $maxNum, bool &$isLastPage, int $pageId, ?int $c_id = NULL, ?int $subc_id = NULL, ?string $word = NULL):array
     {
@@ -128,6 +130,7 @@ class ArticleTable
 
                 return $articleInfos;
             }
+            //未テスト
             elseif($c_id != NULL && $subc_id == NULL) {
 
                 $articleInfos = $sth = $this->dbh->select(
@@ -150,6 +153,7 @@ class ArticleTable
                 return $articleInfos;
 
             }
+            //未テスト
             elseif ($c_id != NULL && $subc_id != NULL) {
 
                 $articleInfos = $sth = $this->dbh->select(
@@ -182,10 +186,17 @@ class ArticleTable
      * @return array 
      * ['id' => int, 'c_id' => int, 'subc_id' => int, 'title' => string, 'thumbnailName' => string, 
      * 'content' => string, updataDate' => string]
+     * 
+     * If no record is found, this returns empty array.
      */
     public function findById(int $id):array
     {
         $record = $this->dbh->select('*', $this::TABLENAME, 'id = :id', [], [':id' => $id])[0];
+
+        //select()が空配列を返した場合、その0番目の要素($record)はNULLとなってしまうので、配列に変換
+        if ($record == NULL) {
+            $record = [];
+        }
 
         return $record;
     }

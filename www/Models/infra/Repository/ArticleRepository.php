@@ -30,8 +30,8 @@ OldArticleContentRepositoryPort
     /**
      * @inheritdoc
      */
-    public function getIsLastPageAndRecentArtclInfos(int $artclNum, int $pageId, int $searched_c_id,
-    int $searched_subc_id, string $searched_word):array
+    public function getIsLastPageAndRecentArtclInfos(int $artclNum, int $pageId, ?int $searched_c_id,
+    ?int $searched_subc_id, ?string $searched_word):array
     {
         $ans = [];
         $ans[1] = [];
@@ -43,16 +43,22 @@ OldArticleContentRepositoryPort
 
         $ans[0] = $isLastPage;
 
-        foreach($datas as $data) {
-            $id = $data['id'];
-            $title = $data['title'];
-            $updateDate = $data['updateDate'];
-            $thumbnailName = $data['thumbnailName'];
-            $c_id = $data['c_id'];
-            $subc_id = $data['subc_id'];
+        if (!empty($datas)) {
+            foreach($datas as $data) {
+                $id = $data['id'];
+                $title = $data['title'];
+                $updateDate = $data['updateDate'];
+                $thumbnailName = $data['thumbnailName'];
+                $c_id = $data['c_id'];
+                $subc_id = $data['subc_id'];
 
-            array_push($ans[1], new ArtclInfo($id, $title, $updateDate, $thumbnailName, $c_id, $subc_id));
+                array_push($ans[1], new ArtclInfo($id, $title, $updateDate, $thumbnailName, $c_id, $subc_id));
+            }
         }
+        else {
+            $ans[1] = [];
+        }
+        
         
         return $ans;
     }
