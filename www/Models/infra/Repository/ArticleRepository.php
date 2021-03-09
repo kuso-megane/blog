@@ -72,11 +72,11 @@ implements RecentArtclInfosRepositoryPort, ArticleContentRepositoryPort, Article
     /**
      * @inheritDoc
      */
-    public function getArticleLinks(): array
+    public function getArticleLinks(?string $searched_word): array
     {
         $maxNum = AppConfig::BY_ARTCL_NUM;
         $isLastPage = (bool)NULL; //不要だが、引数として必要
-        $articles = $this->table->findRecentOnesInfos($maxNum, $isLastPage, 1);
+        $articles = $this->table->findRecentOnesInfos($maxNum, $isLastPage, 1, NULL, NULL, $searched_word);
 
         foreach($articles as &$article) {
             $article = new ArticleLink($article['id'], $article['title']);

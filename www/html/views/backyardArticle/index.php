@@ -13,6 +13,11 @@
     <body>
         <h2>記事BY</h2>
         <p><a href="/backyard/article/edit">新規作成</a></p>
+        <p>&lt;ワード検索&gt;</p>
+        <form action="/backyard/article" method="get">
+            <input id="search-box" type="search" name="w" placeholder="記事フリーワード検索"
+                value=<?php echo $searchBoxValue; ?>>
+        </form>
         <table>
             <thead>
                 <tr>
