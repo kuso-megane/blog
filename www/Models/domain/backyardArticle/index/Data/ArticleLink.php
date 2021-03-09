@@ -1,6 +1,6 @@
 <?php
 
-namespace domain\backyard\article\index\Data;
+namespace domain\backyardArticle\index\Data;
 
 class ArticleLink
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace domain\backyard\article\index;
+namespace domain\backyardArticle\index;
 
-use domain\backyard\article\index\Data\ArticleLink;
+use domain\backyardArticle\index\Data\ArticleLink;
 
 class Presenter
 {

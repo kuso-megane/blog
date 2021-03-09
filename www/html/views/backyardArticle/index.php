@@ -22,11 +22,17 @@
                 </tr>
             </thead>
             <tbody>
+
+                <?php foreach($articleLinks as $articleLink): ?>
+
                 <tr>
-                    <td><a href="/backyard/article/edit/1">編集</a></td>
-                    <td>aaa</td>
-                    <td><a href="">リンク</a></td>
+                    <td><a href=<?php echo "/backyard/article/edit/". $articleLink['id']; ?>>編集ページ</a></td>
+                    <td><?php echo $articleLink['title']; ?></td>
+                    <td><a href=<?php echo '/article/'. $articleLink['id']; ?>>リンク</a></td>
                 </tr>
+
+                <?php endforeach; ?>
+                
             </tbody>
         </table>
         

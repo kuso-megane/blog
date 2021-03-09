@@ -3,7 +3,7 @@
 // routerからcontrollerへ繋ぐ
 
 use myapp\Controllers\articleController as Article;
-use myapp\Controllers\BackyardController as Backyard;
+use myapp\Controllers\BackyardArticleController;
 use myapp\Controllers\SearchController as Search;
 
 /**
@@ -32,28 +32,22 @@ function callAction (string $handler, ?array $vars = NULL)
         $controller->show($vars);
         
     }
-    elseif ($handler == 'backyardIndex') {
+    elseif ($handler == 'backyardArticleIndex') {
 
-        $controller = new Backyard;
+        $controller = new BackyardArticleController;
         $controller->index($vars);
 
     }
-    elseif ($handler == 'backyardEdit') {
+    elseif ($handler == 'backyardArticleEdit') {
 
-        $controller = new Backyard;
+        $controller = new BackyardArticleController;
         $controller->edit($vars);
 
     }
-    elseif ($handler == 'backyardCreate') {
+    elseif ($handler == 'backyardArticlePost') {
 
-        $controller = new Backyard;
-        $controller->create($vars);
-
-    }
-    elseif ($handler == 'backyardUpdate') {
-        
-        $controller = new Backyard;
-        $controller->update($vars);
+        $controller = new BackyardArticleController;
+        $controller->post($vars);
 
     }
 }

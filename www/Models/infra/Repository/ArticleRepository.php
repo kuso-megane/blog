@@ -4,11 +4,15 @@ namespace infra\Repository;
 
 use domain\article\show\Data\ArticleContent;
 use domain\article\show\RepositoryPort\ArticleContentRepositoryPort;
+use domain\backyardArticle\index\Data\ArticleLink;
+use domain\backyardArticle\index\RepositoryPort\ArticleLinksRepositoryPort;
 use domain\search\Data\ArtclInfo;
 use domain\search\RepositoryPort\RecentArtclInfosRepositoryPort;
 use infra\database\src\ArticleTable;
+use myapp\config\AppConfig;
 
-class ArticleRepository implements RecentArtclInfosRepositoryPort, ArticleContentRepositoryPort
+class ArticleRepository
+implements RecentArtclInfosRepositoryPort, ArticleContentRepositoryPort, ArticleLinksRepositoryPort
 {
 
     private $table;
@@ -62,5 +66,22 @@ class ArticleRepository implements RecentArtclInfosRepositoryPort, ArticleConten
             $data['content'],
             $data['updateDate']
         );
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getArticleLinks(): array
+    {
+        $maxNum = AppConfig::BY_ARTCL_NUM;
+        $isLastPage = (bool)NULL; //不要だが、引数として必要
+        $articles = $this->table->findRecentOnesInfos($maxNum, $isLastPage, 1);
+
+        foreach($articles as &$article) {
+            $article = new ArticleLink($article['id'], $article['title']);
+        }
+
+        return $articles;
     }
 }

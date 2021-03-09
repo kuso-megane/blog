@@ -1,9 +1,9 @@
 <?php
 
-namespace domain\backyard\article\index;
+namespace domain\backyardArticle\index;
 
-use domain\backyard\article\index\RepositoryPort\ArticleLinksRepositoryPort;
-use domain\backyard\article\index\Presenter;
+use domain\backyardArticle\index\RepositoryPort\ArticleLinksRepositoryPort;
+use domain\backyardArticle\index\Presenter;
 
 class Interactor
 {

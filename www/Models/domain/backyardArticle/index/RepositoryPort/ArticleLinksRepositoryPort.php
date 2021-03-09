@@ -1,8 +1,8 @@
 <?php
 
-namespace domain\backyard\article\index\RepositoryPort;
+namespace domain\backyardArticle\index\RepositoryPort;
 
-use domain\backyard\article\index\Data\ArticleLink;
+use domain\backyardArticle\index\Data\ArticleLink;
 
 interface ArticleLinksRepositoryPort
 {

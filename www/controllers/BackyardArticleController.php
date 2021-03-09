@@ -3,18 +3,23 @@
 namespace myapp\Controllers;
 
 use myapp\myFrameWork\Bases\BaseController;
+use domain\backyardArticle\index\Interactor as IndexInteractor;
 
 
-class BackyardController extends BaseController
+class BackyardArticleController extends BaseController
 {
 
 
     public function index (?array $vars)
     {
-        //modelから記事一覧を持ってくる
-        //$data = 
+        $builder = new \DI\ContainerBuilder();
+        $builder->addDefinitions('/var/www/Models/diconfig.php');
+        $container = $builder->build();
 
-        require $this::VIEW_FILE_PATH.'backyard/article/index.php';
+        $interactor = $container->get(IndexInteractor::class);
+        $vm = $interactor->interact();
+
+        $this->render($vm, 'backyardArticle', 'index');
     }
 
 
