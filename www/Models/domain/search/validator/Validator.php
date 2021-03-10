@@ -21,8 +21,7 @@ class validator
         if ($pageId == NULL) {
             $pageId = 1;
         }
-
-        if (!($pageId > 0 && $pageId <= 100000)) {
+        elseif (!($pageId > 0 && $pageId <= 100000)) {
             throw new ValidationFailException('存在しないページを指定しています。');
         }
 
