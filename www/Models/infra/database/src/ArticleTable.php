@@ -183,20 +183,15 @@ class ArticleTable
     /**
      * @param int $id
      * 
-     * @return array 
+     * @return array|NULL
      * ['id' => int, 'c_id' => int, 'subc_id' => int, 'title' => string, 'thumbnailName' => string, 
      * 'content' => string, updataDate' => string]
      * 
-     * If no record is found, this returns empty array.
+     * If no record is found, this returns NULL.
      */
-    public function findById(int $id):array
+    public function findById(int $id):?array
     {
-        $record = $this->dbh->select('*', $this::TABLENAME, 'id = :id', [], [':id' => $id])[0];
-
-        //select()が空配列を返した場合、その0番目の要素($record)はNULLとなってしまうので、配列に変換
-        if ($record == NULL) {
-            $record = [];
-        }
+        $record = $this->dbh->select('*', $this::TABLENAME, 'id = :id', [], [':id' => $id])[0]; //見つからなかった場合はNULL
 
         return $record;
     }

@@ -9,7 +9,7 @@ interface ArticleLinksRepositoryPort
     /**
      * @param string|NULL $searched_word
      * 
-     * @return ArticleLink[]
+     * @return ArticleLink[]|NUll
      */
-    public function getArticleLinks(?string $searched_word): array;
+    public function getArticleLinks(?string $searched_word): ?array;
 }

@@ -30,10 +30,10 @@ class SubCategoryTable
 
 
     /**
-     * @return array ['id' => int, 'name' => string, 'c_id' => int, 'num' => int]
+     * @return NULL|array ['id' => int, 'name' => string, 'c_id' => int, 'num' => int]
      */
-    public function findById(int $subc_id):array
+    public function findById(int $subc_id):?array
     {
-        return $this->dbh->select('*', $this::TABLENAME, 'id = :subc_id', [], [':subc_id' => $subc_id])[0];
+        return $this->dbh->select('*', $this::TABLENAME, 'id = :subc_id', [], [':subc_id' => $subc_id])[0];//見つからなかった場合はNULL
     }
 }

@@ -43,12 +43,11 @@ class CategoryRepository implements CategoryArtclCountRepositoryPort, SearchedCa
      */
     public function getSearchedCategory(int $searched_c_id): ?SearchedCategory
     {
-        
-        if ($searched_c_id == NULL) {
+        $record = $this->table->findById($searched_c_id);
+        if ($record == NULL) {
             return NULL;
         }
-        else {
-            $record = $this->table->findById($searched_c_id);
+        else { 
             $name = $record['name'];
             return new SearchedCategory($searched_c_id, $name);
         }

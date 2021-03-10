@@ -56,7 +56,7 @@ OldArticleContentRepositoryPort
             }
         }
         else {
-            $ans[1] = [];
+            $ans[1] = NULL;
         }
         
         
@@ -67,48 +67,63 @@ OldArticleContentRepositoryPort
     /**
      * @inheritdoc
      */
-    public function getArticleContent(int $id): ArticleContent
+    public function getArticleContent(int $id): ?ArticleContent
     {
         $data = $this->table->findById($id);
 
-        return new ArticleContent(
-            $data['c_id'],
-            $data['subc_id'],
-            $data['title'],
-            $data['content'],
-            $data['updateDate']
-        );
+        if ($data == NULL) {
+            return NULL;
+        }
+        else {
+            return new ArticleContent(
+                $data['c_id'],
+                $data['subc_id'],
+                $data['title'],
+                $data['content'],
+                $data['updateDate']
+            );
+        }
     }
 
 
     /**
      * @inheritDoc
      */
-    public function getArticleLinks(?string $searched_word): array
+    public function getArticleLinks(?string $searched_word): ?array
     {
         $maxNum = AppConfig::BY_ARTCL_NUM;
         $isLastPage = (bool)NULL; //不要だが、引数として必要
         $articles = $this->table->findRecentOnesInfos($maxNum, $isLastPage, 1, NULL, NULL, $searched_word);
 
-        foreach($articles as &$article) {
-            $article = new ArticleLink($article['id'], $article['title']);
-        }
+        if (!empty($articles)) {
+            foreach($articles as &$article) {
+                $article = new ArticleLink($article['id'], $article['title']);
+            }
 
-        return $articles;
+            return $articles;
+        }
+        else {
+            return NULL;
+        }
     }
 
 
     /**
      * @inheritDoc
      */
-    public function getOldArticleContent(int $artcl_id): OldArticleContent
+    public function getOldArticleContent(int $artcl_id): ?OldArticleContent
     {
         $article = $this->table->findById($artcl_id);
 
-        return new OldArticleContent(
-            $article['id'],
-            $article['title'],
-            $article['content']
-        );
+        if ($article == NULL) {
+            return NULL;
+        }
+        else {
+            return new OldArticleContent(
+                $article['id'],
+                $article['title'],
+                $article['content']
+            );
+        }
     }
 }

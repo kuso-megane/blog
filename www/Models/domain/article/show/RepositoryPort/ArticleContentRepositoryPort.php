@@ -9,7 +9,7 @@ interface ArticleContentRepositoryPort
     /**
      * @param int
      * 
-     * @return Article
+     * @return Article|NULL
      */
-    public function getArticleContent(int $id): ArticleContent;
+    public function getArticleContent(int $id): ?ArticleContent;
 }

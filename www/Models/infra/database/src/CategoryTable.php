@@ -34,11 +34,11 @@ class CategoryTable
     /**
      * @param int $id
      * 
-     * @return array ['id' => int, 'name' => string, 'num' => int]
+     * @return NULL|array ['id' => int, 'name' => string, 'num' => int]
      */
-    public function findById(int $id):array
+    public function findById(int $id):?array
     {
-        $records = $this->dbh->select('*', $this::TABLENAME, 'id = :id', [], [':id' => $id]);
+        $records = $this->dbh->select('*', $this::TABLENAME, 'id = :id', [], [':id' => $id]);//見つからなかった場合はNULL
         return $records[0];
     }
 }

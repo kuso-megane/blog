@@ -9,7 +9,7 @@ interface OldArticleContentRepositoryPort
     /**
      * @param int $artcl_id
      * 
-     * @return OldArticleContent
+     * @return OldArticleContent|NULL
      */
-    public function getOldArticleContent(int $artcl_id): OldArticleContent;
+    public function getOldArticleContent(int $artcl_id): ?OldArticleContent;
 }

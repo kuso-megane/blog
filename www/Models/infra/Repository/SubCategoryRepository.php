@@ -42,12 +42,11 @@ class SubCategoryRepository implements SubCategoryArtclCountRepositoryPort, Sear
      */
     public function getSearchedSubCategory(int $searched_subc_id): ?SearchedSubCategory
     {
-        
-        if ($searched_subc_id == NULL) {
+        $record = $this->table->findById($searched_subc_id);
+        if ($record == NULL) {
             return NULL;
         }
         else {
-            $record = $this->table->findById($searched_subc_id);
             $name = $record['name'];
             return new SearchedSubCategory($searched_subc_id, $name);
         }
