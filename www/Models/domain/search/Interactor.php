@@ -9,6 +9,7 @@ use myapp\config\AppConfig;
 use myapp\myFrameWork\SuperGlobalVars as GVars;
 use domain\components\breadCrumb\Interactor as BreadCrumbInteractor;
 use domain\components\mainSidebar\Interactor as MainSidebarInteractor;
+use domain\Exception\ValidationFailException;
 
 class Interactor
 {
@@ -28,13 +29,20 @@ class Interactor
     /**
      * @param array $var
      * 
-     * @return array
+     * @return array|int
      */
-    public function interact(array $vars):array
+    public function interact(array $vars)
     {
         $artclNum = (new AppConfig)::ARTCL_NUM;
 
-        $input = (new Validator)->validate($vars)->toArray();
+        try {
+            $input = (new Validator)->validate($vars)->toArray();
+        }
+        catch (ValidationFailException $e) {
+            echo $e->getMessage();
+            return AppConfig::INVALID_PARAMS;
+        }
+        
 
         $pageId = $input['pageId'];
         $searched_c_id = $input['searched_c_id'];
@@ -59,8 +67,8 @@ class Interactor
         $builder->addDefinitions('/var/www/Models/diconfig.php');
         $container = $builder->build();
 
-        $breadCrumbData = $container->get(BreadCrumbInteractor::class)->interact($vars);
         $mainSidebarData = $container->get(MainSidebarInteractor::class)->interact();
+        $breadCrumbData = $container->get(BreadCrumbInteractor::class)->interact($vars);
 
         return (new Presenter())->present($input, $currentUrl, $recentArtclInfos, $isLastPage, $breadCrumbData, $mainSidebarData);
     }

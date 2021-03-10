@@ -8,6 +8,7 @@ class Presenter
 
     /**
      * @param array $input
+     * @param string $currentUrl
      * @param ArtclInfo[] $recentArtclInfos
      * @param bool $isLastPage
      * 
@@ -18,24 +19,26 @@ class Presenter
      *      'currentUri' => string
      *      'pageId' => int
      *      'searched_word' => string | NULL,
-     *      'recentArtclInfos' => return of $this->formatForRAI(),
+     *      'recentArtclInfos' => return of $this->formatForRAI() or empty array
      *      'isLastPage' => int
      * ]
      * +components\breadCrumb\Interactor->interact()
      * +components\mainSidebar\Interactor->interact()
      */
-    public function present(array $input, string $currentUrl, array $recentArtclInfos, bool $isLastPage,
+    public function present(array $input, string $currentUrl, ?array $recentArtclInfos, bool $isLastPage,
     array $breadCrumbData, array $mainSidebarData)
     {
         
         $pageId = $input['pageId'];
         $searched_word = $input['searched_word'];
 
+        $recentArtclInfos = ($recentArtclInfos != NULL) ? $this->formatForRAI($recentArtclInfos) : [];
+
         $data = [
             'currentUrl' => $currentUrl,
             'pageId' => $pageId,
             'searched_word' => $searched_word,
-            'recentArtclInfos' => $this->formatForRAI($recentArtclInfos),
+            'recentArtclInfos' => $recentArtclInfos,
             'isLastPage' => $isLastPage
         ];
 

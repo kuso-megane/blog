@@ -7,22 +7,28 @@ use domain\article\show\Data\ArticleContent;
 class Presenter
 {
     /**
-     * @param Article $article
+     * @param ArticleContent|NULL $article
+     * @param array $breadCrumbData
+     * @param array $mainSidebarData
      * 
      * @return array [
-     *      'c_id' => int,
-     *      'subc_id' => int,
-     *      'title' => string,
-     *      'content' => string,
-     *      'updateDate' => string
+     *      'articleContent' 
+     *       => [
+     *              'c_id' => int,
+     *              'subc_id' => int,
+     *              'title' => string,
+     *              'content' => string,
+     *              'updateDate' => string
+     *          ]
      * ]
      * +components\breadCrumb\Interactor->interact()
      * +components\mainSidebar\Interactor->interact()
+     *  
      */
-    public function present(array $article, array $breadCrumbData, array $mainSidebarData):array
+    public function present(?ArticleContent $article, array $breadCrumbData, array $mainSidebarData):array
     {
-        $data = $article;
+        $data = ($article != NULL) ? $article->toArray() : [];
 
-        return $data + $breadCrumbData + $mainSidebarData;
+        return ['articleContent' => $data] + $breadCrumbData + $mainSidebarData;
     }
 }

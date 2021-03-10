@@ -6,6 +6,8 @@ use domain\components\breadCrumb\RepositoryPort\SearchedCategoryRepositoryPort;
 use domain\components\breadCrumb\RepositoryPort\SearchedSubCategoryRepositoryPort;
 use domain\components\breadCrumb\Presenter;
 use domain\components\breadCrumb\validator\Validator;
+use domain\Exception\ValidationFailException;
+use myapp\config\AppConfig;
 
 class Interactor
 {
@@ -28,25 +30,38 @@ class Interactor
     /**
      * @param array|NULL $var
      * 
-     * @return array
+     * @return array|int
+     * 
+     * if validation fails, this returns (int) AppConfig::INVALID_PARAMS
      */
-    public function interact(?array $vars = NULL):array
+    public function interact(?array $vars = NULL)
     {
 
-        $input = (new Validator)->validate($vars)->toArray();
+        try {
+            $input = (new Validator)->validate($vars)->toArray();
+        }
+        catch (ValidationFailException $e) {
+            echo $e->getMessage();
+            return AppConfig::INVALID_PARAMS;
+        } 
+        
 
         $searched_c_id = $input['searched_c_id'];
         $searched_subc_id = $input['searched_subc_id'];
 
-        $searchedCategory = $this->searchedCategoryRepository->getSearchedCategory($searched_c_id);
-        if ($searchedCategory != NULL) {
-            $searchedCategory = $searchedCategory->toArray();
+        if ($searched_c_id == NULL) {
+            $searchedCategory = NULL;
         }
-        $searchedSubCategory = $this->searchedSubCategoryRepository->getSearchedSubCategory($searched_subc_id);
-        if ($searchedSubCategory != NULL) {
-            $searchedSubCategory = $searchedSubCategory->toArray();
+        else {
+            $searchedCategory = $this->searchedCategoryRepository->getSearchedCategory($searched_c_id);
         }
 
+        if ($searched_subc_id == NULL) {
+            $searchedCategory = NULL;
+        }
+        else {
+            $searchedSubCategory = $this->searchedSubCategoryRepository->getSearchedSubCategory($searched_subc_id);
+        }
 
         return (new Presenter())->present($searchedCategory, $searchedSubCategory);
     }

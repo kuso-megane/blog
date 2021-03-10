@@ -4,7 +4,7 @@ namespace myapp\Controllers;
 
 use myapp\myFrameWork\Bases\BaseController;
 use domain\search\Interactor;
-
+use myapp\config\AppConfig;
 
 class SearchController extends BaseController
 {
@@ -18,7 +18,13 @@ class SearchController extends BaseController
 
         $interactor = $container->get(Interactor::class);
         $vm = $interactor->interact($vars);
-        $this->render($vm, 'search', 'index');
+
+        if ($vm == AppConfig::INVALID_PARAMS) {
+            return FALSE;
+        }
+        else {
+            $this->render($vm, 'search', 'index');
+        }        
     }
 
 
@@ -31,6 +37,13 @@ class SearchController extends BaseController
 
         $interactor = $container->get(Interactor::class);
         $vm = $interactor->interact($vars);
-        $this->render($vm, 'search', 'result');
+
+        if ($vm == AppConfig::INVALID_PARAMS) {
+            return FALSE;
+        }
+        else {
+            $this->render($vm, 'search', 'result');
+        } 
+        
     }
 }

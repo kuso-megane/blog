@@ -4,13 +4,13 @@ namespace domain\components\mainSidebar;
 
 use domain\components\mainSideBar\Data\CategoryArtclCount;
 use domain\components\mainSideBar\Data\SubCategoryArtclCount;
-use myapp\myFrameWork\SuperGlobalVars as GVars;
+
 
 class Presenter
 {   
 
     /**
-     * @param array $input
+     * @param string|NULL $searchBoxValue
      * @param CategoryArtclCount[] $categoryArtclCount
      * @param SubCategoryArtclCount[] $subCategoryArtclCount
      * 
@@ -20,10 +20,9 @@ class Presenter
      *      'searchBoxValue' => string
      * ]
      */
-    public function present(array $input, array  $categoryArtclCount, array $subCategoryArtclCount):array
+    public function present(?string $searchBoxValue, array  $categoryArtclCount, array $subCategoryArtclCount):array
     {
-        $cookie = (new Gvars)->getCookie();
-        $searchBoxValue = ($input['searched_word'] != NULL) ? $input['searched_word'] : $cookie['searched_word'];
+        
 
         return [
             'categoryArtclCount' => $this->formatForCAC($categoryArtclCount),

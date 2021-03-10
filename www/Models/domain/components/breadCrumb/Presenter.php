@@ -17,8 +17,10 @@ class Presenter
      * ]
      * 
      */
-    public function present(?array $searched_category, ?array $searched_subCategory):array
+    public function present(?SearchedCategory $searched_category, ?SearchedSubCategory $searched_subCategory):array
     {
+        $searched_category = ($searched_category != NULL) ? $searched_category->toArray() : NULL;
+        $searched_subCategory = ($searched_subCategory != NULL) ? $searched_subCategory->toArray() : NULL;
         
         return [
             'searched_category' => $searched_category,

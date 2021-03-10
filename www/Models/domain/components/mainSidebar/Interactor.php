@@ -7,6 +7,7 @@ use domain\components\mainSidebar\RepositoryPort\SubCategoryArtclCountRepository
 use domain\components\mainSidebar\helpers\CookieSetter;
 use domain\components\mainSidebar\Presenter;
 use domain\components\mainSidebar\validator\Validator;
+use myapp\myFrameWork\SuperGlobalVars as GVars;
 
 class Interactor
 {
@@ -43,7 +44,9 @@ class Interactor
         $categoryArtclCount = $this->categoryArtclCountRepositoryPort->getCategoryArtclCount();
         $subCategoryArtclCount = $this->subCategoryArtclCountRepositoryPort->getSubCategoryArtclCount();
 
+        $cookie = (new Gvars)->getCookie();
+        $searchBoxValue = ($searched_word != NULL) ? $searched_word : $cookie['searched_word'];
 
-        return (new Presenter())->present($input, $categoryArtclCount, $subCategoryArtclCount);
+        return (new Presenter())->present($searchBoxValue, $categoryArtclCount, $subCategoryArtclCount);
     }
 }
