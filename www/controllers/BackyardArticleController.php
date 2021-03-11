@@ -43,15 +43,25 @@ class BackyardArticleController extends BaseController
         }
         else {
             $this->render($vm, 'backyardArticle', 'edit');
-        }    
+        }
     }
 
 
     public function post (array $vars)
     {
-        //modelから最新投稿を持ってくる
-        //$data =
-           
+        $builder = new \DI\ContainerBuilder();
+        $builder->addDefinitions('/var/www/Models/diconfig.php');
+        $container = $builder->build();
+
+        $interactor = $container->get(EditInteractor::class);
+        $exe = $interactor->interact($vars);
+
+        if ($exe == AppConfig::INVALID_PARAMS) {
+            return FALSE;
+        }
+        elseif ($exe == AppConfig::POST_SUCCESS) {
+            //保留
+        }    
     }
 
 }

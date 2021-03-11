@@ -5,6 +5,12 @@ namespace myapp\myFrameWork\Exception;
 use Exception;
 use Throwable;
 
+
+/**
+ * thrown when not TypeError but unexpeted.
+ * (e.g.) function hoge (int $num)
+ * $num is expected 1 or 2 but when 3 given, throw this exception.
+ */
 class UnexpectedParamException extends Exception
 {
     private $given;
