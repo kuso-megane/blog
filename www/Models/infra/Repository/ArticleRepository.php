@@ -8,6 +8,7 @@ use domain\backyardArticle\edit\Data\OldArticleContent;
 use domain\backyardArticle\edit\RepositoryPort\OldArticleContentRepositoryPort;
 use domain\backyardArticle\index\Data\ArticleLink;
 use domain\backyardArticle\index\RepositoryPort\ArticleLinksRepositoryPort;
+use domain\backyardArticle\post\RepositoryPort\ArticlePostRepositoryPort;
 use domain\search\Data\ArtclInfo;
 use domain\search\RepositoryPort\RecentArtclInfosRepositoryPort;
 use infra\database\src\ArticleTable;
@@ -18,7 +19,8 @@ implements
 RecentArtclInfosRepositoryPort,
 ArticleContentRepositoryPort,
 ArticleLinksRepositoryPort,
-OldArticleContentRepositoryPort
+OldArticleContentRepositoryPort,
+ArticlePostRepositoryPort
 {
 
     private $table;
@@ -114,16 +116,24 @@ OldArticleContentRepositoryPort
     public function getOldArticleContent(int $artcl_id): ?OldArticleContent
     {
         $article = $this->table->findById($artcl_id);
+         
+        return new OldArticleContent(
+            $article['id'],
+            $article['c_id'],
+            $article['subc_id'],
+            $article['title'],
+            $article['thumbnailName'],
+            $article['content']
+        );
+    }
 
-        if ($article == NULL) {
-            return NULL;
-        }
-        else {
-            return new OldArticleContent(
-                $article['id'],
-                $article['title'],
-                $article['content']
-            );
-        }
+
+    /**
+     * @inheritDoc
+     */
+    public function postArticle(?int $artcl_id, int $c_id, int $subc_id, string $title, ?string $thumbnailName,
+    string $content): void
+    {
+        
     }
 }

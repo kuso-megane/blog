@@ -1,6 +1,6 @@
 <?php
 
-namespace domain\bavkyardArticle\edit\RepositoryPort;
+namespace domain\backyardArticle\edit\RepositoryPort;
 
 use domain\backyardArticle\edit\Data\Category;
 

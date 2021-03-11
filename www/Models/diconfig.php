@@ -4,7 +4,7 @@ use domain\article\show\RepositoryPort\ArticleContentRepositoryPort;
 use domain\backyardArticle\edit\RepositoryPort\OldArticleContentRepositoryPort;
 use domain\backyardArticle\edit\RepositoryPort\SubCategoryListRepositoryPort;
 use domain\backyardArticle\index\RepositoryPort\ArticleLinksRepositoryPort;
-use domain\bavkyardArticle\edit\RepositoryPort\CategoryListRepositoryPort;
+use domain\backyardArticle\edit\RepositoryPort\CategoryListRepositoryPort;
 use domain\components\breadCrumb\RepositoryPort\SearchedCategoryRepositoryPort;
 use domain\components\breadCrumb\RepositoryPort\SearchedSubCategoryRepositoryPort;
 use domain\components\mainSidebar\RepositoryPort\CategoryArtclCountRepositoryPort;

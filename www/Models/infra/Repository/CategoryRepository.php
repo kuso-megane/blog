@@ -3,7 +3,7 @@
 namespace infra\Repository;
 
 use domain\backyardArticle\edit\Data\Category;
-use domain\bavkyardArticle\edit\RepositoryPort\CategoryListRepositoryPort;
+use domain\backyardArticle\edit\RepositoryPort\CategoryListRepositoryPort;
 use domain\components\breadCrumb\Data\SearchedCategory;
 use domain\components\breadCrumb\RepositoryPort\SearchedCategoryRepositoryPort;
 use domain\components\mainSidebar\Data\CategoryArtclCount;

@@ -6,7 +6,7 @@ use domain\backyardArticle\edit\RepositoryPort\OldArticleContentRepositoryPort;
 use domain\backyardArticle\edit\Validator\Validator;
 use domain\backyardArticle\edit\Presenter;
 use domain\backyardArticle\edit\RepositoryPort\SubCategoryListRepositoryPort;
-use domain\bavkyardArticle\edit\RepositoryPort\CategoryListRepositoryPort;
+use domain\backyardArticle\edit\RepositoryPort\CategoryListRepositoryPort;
 use domain\Exception\ValidationFailException;
 use myapp\config\AppConfig;
 
