@@ -25,14 +25,26 @@
         <form action="/backyard/article/post" action="post">
             <p id="input-title">
                 title: <input type="text" name="title" placeholder="新しいタイトルを記入" value=<?php echo $titleValue; ?>>
-                *titleは自動的に反映される
             </p>
             <p id="input-content">
                 content:<br>
-                <textarea name="content" id="" cols="40" rows="20" placeholder="新しい内容を記入">
+                <textarea id="editor" name="content" cols="20" rows="8" placeholder="新しい内容を記入">
                     <?php echo $contentValue; ?>
                 </textarea>
+
+                <!--import simpleMDE-->
+                <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+                <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+                <script>
+                    var simplemde = new SimpleMDE({
+                        element: document.getElementById("editor"),
+                        forceSync: true,
+                        spellChecker: false
+                        });
+                </script>
+
             </p>
+            <input type="submit" value="投稿">
         </form>
     </body>
 </html>

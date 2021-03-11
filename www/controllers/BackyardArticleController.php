@@ -5,7 +5,7 @@ namespace myapp\Controllers;
 use myapp\myFrameWork\Bases\BaseController;
 use domain\backyardArticle\index\Interactor as IndexInteractor;
 use domain\backyardArticle\edit\Interactor as EditInteractor;
-
+use myapp\config\AppConfig;
 
 class BackyardArticleController extends BaseController
 {
@@ -20,7 +20,12 @@ class BackyardArticleController extends BaseController
         $interactor = $container->get(IndexInteractor::class);
         $vm = $interactor->interact();
 
-        $this->render($vm, 'backyardArticle', 'index');
+        if ($vm == AppConfig::INVALID_PARAMS) {
+            return FALSE;
+        }
+        else {
+            $this->render($vm, 'backyardArticle', 'index');
+        } 
     }
 
 
@@ -33,7 +38,12 @@ class BackyardArticleController extends BaseController
         $interactor = $container->get(EditInteractor::class);
         $vm = $interactor->interact($vars);
 
-        $this->render($vm, 'backyardArticle', 'edit');
+        if ($vm == AppConfig::INVALID_PARAMS) {
+            return FALSE;
+        }
+        else {
+            $this->render($vm, 'backyardArticle', 'edit');
+        }    
     }
 
 

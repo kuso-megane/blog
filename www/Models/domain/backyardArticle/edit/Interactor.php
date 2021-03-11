@@ -5,6 +5,8 @@ namespace domain\backyardArticle\edit;
 use domain\backyardArticle\edit\RepositoryPort\OldArticleContentRepositoryPort;
 use domain\backyardArticle\edit\Validator\Validator;
 use domain\backyardArticle\edit\Presenter;
+use domain\Exception\ValidationFailException;
+use myapp\config\AppConfig;
 
 class Interactor
 {
@@ -19,11 +21,20 @@ class Interactor
     /**
      * @param array $vars
      * 
-     * @return array refer to Presenter->present()
+     * @return array|int refer to Presenter->present()
+     * 
+     * if validation fails, this returns AppConfig::INVALID_PARAMS
      */
-    public function interact(array $vars):array
+    public function interact(array $vars)
     {
-        $input = (new Validator)->validate($vars)->toArray();
+        try {
+            $input = (new Validator)->validate($vars)->toArray();
+        }
+        catch (ValidationFailException $e) {
+            echo $e->getMessage();
+            return AppConfig::INVALID_PARAMS;
+        }
+        
 
         $artcl_id = $input['artcl_id'];
 
