@@ -36,10 +36,13 @@ class Interactor
         }
 
         $artcl_id = $input['artcl_id'];
+        $c_id = $input['c_id'];
+        $subc_id = $input['subc_id'];
         $title = $input['title'];
+        $thumbnailName = $input['thumbnailName'];
         $content = $input['content'];
 
-        $this->articlePostRepository->post($artcl_id, $title, $content);
+        $this->articlePostRepository->postArticle($artcl_id, $c_id, $subc_id, $title, $thumbnailName, $content);
 
 
         return AppConfig::POST_SUCCESS;
