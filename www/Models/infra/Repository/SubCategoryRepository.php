@@ -2,13 +2,18 @@
 
 namespace infra\Repository;
 
+use domain\backyardArticle\edit\RepositoryPort\SubCategoryListRepositoryPort;
 use domain\components\breadCrumb\Data\SearchedSubCategory;
 use domain\components\breadCrumb\RepositoryPort\SearchedSubCategoryRepositoryPort;
 use domain\components\mainSidebar\Data\SubCategoryArtclCount;
 use domain\components\mainSidebar\RepositoryPort\SubCategoryArtclCountRepositoryPort;
 use infra\database\src\SubCategoryTable;
+use domain\backyardArticle\edit\Data\SubCategory;
 
-class SubCategoryRepository implements SubCategoryArtclCountRepositoryPort, SearchedSubCategoryRepositoryPort
+class SubCategoryRepository
+implements SubCategoryArtclCountRepositoryPort,
+SearchedSubCategoryRepositoryPort,
+SubCategoryListRepositoryPort
 {
 
     public function __construct()
@@ -50,5 +55,24 @@ class SubCategoryRepository implements SubCategoryArtclCountRepositoryPort, Sear
             $name = $record['name'];
             return new SearchedSubCategory($searched_subc_id, $name);
         }
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function getSubCategoryList(): array
+    {
+        $ans = [];
+
+        $datas = $this->table->findAll();
+        foreach($datas as $data) {
+            $id = $data['id'];
+            $category = $data['name'];
+            $c_id = $data['c_id'];
+            array_push($ans, new SubCategory($id,$category, $c_id));
+        }
+        
+        return $ans;
     }
 }

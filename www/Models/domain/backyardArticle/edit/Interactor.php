@@ -5,16 +5,26 @@ namespace domain\backyardArticle\edit;
 use domain\backyardArticle\edit\RepositoryPort\OldArticleContentRepositoryPort;
 use domain\backyardArticle\edit\Validator\Validator;
 use domain\backyardArticle\edit\Presenter;
+use domain\backyardArticle\edit\RepositoryPort\SubCategoryListRepositoryPort;
+use domain\bavkyardArticle\edit\RepositoryPort\CategoryListRepositoryPort;
 use domain\Exception\ValidationFailException;
 use myapp\config\AppConfig;
 
 class Interactor
 {
     private $oldArticleContentRepository;
+    private $categoryListRepository;
+    private $subCategoryListRepository;
 
-    public function __construct(OldArticleContentRepositoryPort $oldArticleContentRepository)
+    public function __construct(
+        OldArticleContentRepositoryPort $oldArticleContentRepository,
+        CategoryListRepositoryPort $categoryListRepository,
+        SubCategoryListRepositoryPort $subCategoryListRepository
+    )
     {
         $this->oldArticleContentRepository = $oldArticleContentRepository;
+        $this->categoryListRepository = $categoryListRepository;
+        $this->subCategoryListRepository = $subCategoryListRepository;
     }
 
 
@@ -47,7 +57,10 @@ class Interactor
             $oldArticleContent = $this->oldArticleContentRepository->getOldArticleContent($artcl_id);
         }
 
+        $categoryList = $this->categoryListRepository->getCategoryList();
+        $subCategoryList = $this->subCategoryListRepository->getSubCategoryList();
+
         
-        return (new Presenter)->present($isNew, $oldArticleContent);
+        return (new Presenter)->present($isNew, $oldArticleContent, $categoryList, $subCategoryList);
     }
 }
