@@ -18,50 +18,6 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title><?php ViewsConfig::TITLE; ?></title>
         <link rel="stylesheet" type="text/css" href=<?php echo ViewsConfig::STYLE_SHEET_URL. "backyard/article.css"; ?>>
-        <!--サブカテゴリ選択肢の動的形成-->
-        <script type="text/javascript">
-            function selectedSubCategoryList(selectedC_id) {
-
-                <?php foreach($subCategoryList as $c_id => $subCategories): ?>
-
-                    if (selectedC_id === <?php echo $c_id; ?>) {
-                        ans = [];
-                        
-                        <?php foreach($subCategories as $subCategory): ?>
-
-                            subc_id = <?php echo $subCategory['id']; ?>;
-                            name = <?php echo $subCategory['name']; ?>;
-                            ans.push([subc_id, name]);
-
-                        <?php endforeach; ?>
-
-                        return ans;
-                    }
-
-                <?php endforeach; ?>
-            }
-
-
-            function initSubcOption(){
-                let select = document.getElementById("subc_idSelect");
-
-                //既存の選択肢を削除
-                while (select.firstChild) {
-                    select.removeChild(select.firstChild);
-                }
-
-                let selectedC_id = document.getElementById("c_idSelect").value;
-                
-                let selectedSubCategoryList = selectedSubCategoryList(selectedC_id);
-
-                let option = document.createElement("option");
-                for (let subc of selectedSubCategoryList) {
-                    option.value = subc[0];
-                    option.text = subc[1];
-                    select.appendChild(option);
-                }
-            }
-        </script>
     </head>
     <body>
         <h2>記事BY</h2>
@@ -73,7 +29,7 @@
 
                     <?php foreach($categoryList as $category): ?>
 
-                    <option value=<?php echo $category['id']; ?> <?php if ($oldC_id == $category['id']){ echo 'selected'; } ?>>
+                    <option value="<?php echo $category['id']; ?>" <?php if ($oldC_id == $category['id']){ echo 'selected'; } ?>>
                         <?php echo $category['name']; ?>
                     </option>
 
@@ -83,7 +39,17 @@
             </p>
             <p id="input-subc_id">
                 サブカテゴリ:
-                <select name="subc_id" id="subc_idSelect"></select>
+                <select name="subc_id" id="subc_idSelect">
+
+                    <?php foreach($subCategoryList[$oldC_id] as $subCategory): ?>
+
+                    <option value="<?php echo $subCategory['id']; ?>" <?php if ($oldSubc_id == $subCategory['id']){ echo 'selected'; } ?> >
+                        <?php echo $subCategory['name']; ?>
+                    </option>
+
+                    <?php endforeach; ?>
+                    
+                </select>
             </p>
             <p id="input-title">
                 title: <input type="text" name="title" placeholder="新しいタイトルを記入" value=<?php echo $titleValue; ?>>
@@ -106,6 +72,52 @@
                 forceSync: true,
                 spellChecker: false
             });
+        </script>
+
+        <!--サブカテゴリ選択肢の動的形成-->
+        <script>
+            const selectedSubCategoryList = function(selectedC_id) {
+
+                <?php foreach($subCategoryList as $c_id => $subCategories): ?>
+
+                    if (selectedC_id == <?php echo $c_id; ?>) {
+                        let ans = [];
+                        
+                        <?php foreach($subCategories as $subCategory): ?>
+
+                            ans.push([
+                                <?php echo $subCategory['id']; ?>,
+                                "<?php echo $subCategory['name']; ?>"
+                            ]);
+
+                        <?php endforeach; ?>
+
+                        return ans;
+                    }
+
+                <?php endforeach; ?>
+                
+            }
+
+
+            function initSubcOption(){
+                let select = document.getElementById("subc_idSelect");
+
+                //既存の選択肢を削除
+                while (select.firstChild) {
+                    select.removeChild(select.firstChild);
+                }
+
+                let selectedC_id = document.getElementById("c_idSelect").value;
+            
+                for (const subc of selectedSubCategoryList(selectedC_id)) {
+                    let option = document.createElement("option");
+                    option.value = subc[0];
+                    option.text = subc[1];
+                    select.appendChild(option);
+                }
+            }
+
         </script>
     </body>
 </html>
