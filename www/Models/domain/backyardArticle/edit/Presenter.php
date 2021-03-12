@@ -90,9 +90,8 @@ class Presenter
             if ($arr[$subCategory['c_id']] == NULL) {
                 $arr[$subCategory['c_id']] = [];
             }
-            else {
-                array_push($arr[$subCategory['c_id']], ['id' => $subCategory['id'], 'name' => $subCategory['name']]);
-            }
+            
+            array_push($arr[$subCategory['c_id']], ['id' => $subCategory['id'], 'name' => $subCategory['name']]);
         }
 
         return $arr;
