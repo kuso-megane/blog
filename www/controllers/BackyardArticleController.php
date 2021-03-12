@@ -21,6 +21,7 @@ class BackyardArticleController extends BaseController
         $vm = $interactor->interact();
 
         if ($vm == AppConfig::INVALID_PARAMS) {
+            http_response_code(400);
             return FALSE;
         }
         else {
@@ -39,6 +40,7 @@ class BackyardArticleController extends BaseController
         $vm = $interactor->interact($vars);
 
         if ($vm == AppConfig::INVALID_PARAMS) {
+            http_response_code(400);
             return FALSE;
         }
         else {

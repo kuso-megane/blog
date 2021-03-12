@@ -39,8 +39,19 @@ class Interactor
             $input = (new Validator)->validate($vars)->toArray();
         }
         catch (ValidationFailException $e) {
-            echo $e->getMessage();
-            return AppConfig::INVALID_PARAMS;
+            return (new Presenter)->reportInValidParams($e->getMessage());
+        }
+
+        $builder = new \DI\ContainerBuilder();
+        $builder->addDefinitions('/var/www/Models/diconfig.php');
+        $container = $builder->build();
+
+        try {
+            $mainSidebarData = $container->get(MainSidebarInteractor::class)->interact();
+            $breadCrumbData = $container->get(BreadCrumbInteractor::class)->interact($vars);
+        }
+        catch (ValidationFailException $e) {
+            return (new Presenter)->reportInValidParams($e->getMessage());
         }
         
 
@@ -63,12 +74,6 @@ class Interactor
         }
         $currentUrl = rawurldecode($uri);
 
-        $builder = new \DI\ContainerBuilder();
-        $builder->addDefinitions('/var/www/Models/diconfig.php');
-        $container = $builder->build();
-
-        $mainSidebarData = $container->get(MainSidebarInteractor::class)->interact();
-        $breadCrumbData = $container->get(BreadCrumbInteractor::class)->interact($vars);
 
         return (new Presenter())->present($input, $currentUrl, $recentArtclInfos, $isLastPage, $breadCrumbData, $mainSidebarData);
     }

@@ -31,8 +31,7 @@ class Interactor
             $input = (new Validator)->validate($vars)->toArray();
         }
         catch (ValidationFailException $e) {
-            echo $e->getMessage();
-            return AppConfig::INVALID_PARAMS;
+            return (new Presenter)->reportInValidParams($e->getMessage());
         }
 
         $artcl_id = $input['artcl_id'];

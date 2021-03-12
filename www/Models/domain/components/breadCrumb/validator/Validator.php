@@ -15,12 +15,13 @@ class Validator
     public function validate(array $vars):InputData
     {
         $c_id = ($vars['c_id'] != NULL) ? (int) $vars['c_id'] : NULL;
-        $subc_id = ($vars['subc_id'] != NULL) ? (int) $vars['subc_id'] : NULL;
+        if (!($c_id === NULL || $c_id > 0)) {
+            throw new ValidationFailException('想定外のカテゴリを指定しています。');
+        }
 
-        if ($c_id != NULL && $subc_id != NULL) {
-            if (!($c_id > 0 && $subc_id > 0)) {
-                throw new ValidationFailException('想定外のカテゴリを指定しています。');
-            }
+        $subc_id = ($vars['subc_id'] != NULL) ? (int) $vars['subc_id'] : NULL;
+        if (!($subc_id === NULL || $subc_id > 0)) {
+            throw new ValidationFailException('想定外のサブカテゴリを指定しています。');
         }
         
         

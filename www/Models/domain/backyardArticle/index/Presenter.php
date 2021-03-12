@@ -3,6 +3,7 @@
 namespace domain\backyardArticle\index;
 
 use domain\backyardArticle\index\Data\ArticleLink;
+use myapp\config\AppConfig;
 
 class Presenter
 {
@@ -18,6 +19,21 @@ class Presenter
         return [
             'articleLinks' => $this->formatForArticleLinks($articleLinks)
         ];
+    }
+
+
+    /**
+     * Call when validation failed.
+     * @param string|NULL $message
+     * 
+     * @return int AppConfig::INVALID_PARAMS
+     */
+    public function reportInValidParams(?string $message):int
+    {
+        http_response_code(400);
+        echo $message;
+
+        return AppConfig::INVALID_PARAMS;
     }
 
 

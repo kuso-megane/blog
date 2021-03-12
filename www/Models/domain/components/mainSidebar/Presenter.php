@@ -31,7 +31,6 @@ class Presenter
         ];
     }
 
-    
     /**
      * formatter for categoryArtclCount
      * @param CategoryArtclCount[] $categoryArtclCount

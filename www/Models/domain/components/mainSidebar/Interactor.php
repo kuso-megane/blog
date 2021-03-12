@@ -7,6 +7,7 @@ use domain\components\mainSidebar\RepositoryPort\SubCategoryArtclCountRepository
 use domain\components\mainSidebar\helpers\CookieSetter;
 use domain\components\mainSidebar\Presenter;
 use domain\components\mainSidebar\validator\Validator;
+use domain\Exception\ValidationFailException;
 use myapp\myFrameWork\SuperGlobalVars as GVars;
 
 class Interactor
@@ -29,12 +30,20 @@ class Interactor
 
     /**
      * 
-     * @return array
+     * @return array|int
+     * if validation fails, this returns ValidationFailException
      */
-    public function interact():array
+    public function interact()
     {
 
-        $input = (new Validator)->validate()->toArray();
+        try {
+            $input = (new Validator)->validate()->toArray();
+        }
+        catch (ValidationFailException $e) {
+            return $e;
+        }
+        
+
         $searched_word = $input['searched_word'];
 
         //cookieをセット

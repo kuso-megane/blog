@@ -24,9 +24,7 @@ class Interactor
     /**
      * @param array $var
      * 
-     * @return array|int refer to Presenter->present()
-     * 
-     * if validation fails, this return (int)AppConfig::INVALID_PARAMS
+     * @return array|int refer to Presenter
      */
     public function interact(array $vars)
     {
@@ -35,8 +33,7 @@ class Interactor
             $input = (new Validator)->validate($vars)->toArray();
         }
         catch (ValidationFailException $e) {
-            echo $e->getMessage();
-            return AppConfig::INVALID_PARAMS;
+            return (new Presenter)->reportInValidParams($e->getMessage());
         }
         
 
@@ -47,14 +44,28 @@ class Interactor
         $builder = new \DI\ContainerBuilder();
         $builder->addDefinitions('/var/www/Models/diconfig.php');
         $container = $builder->build();
-        $mainSidebarData = $container->get(MainSidebarInteractor::class)->interact();
+
+        try {
+            $mainSidebarData = $container->get(MainSidebarInteractor::class)->interact();
+        }
+        catch (ValidationFailException $e) {
+            return (new Presenter)->reportInValidParams($e->getMessage());
+        }
+        
 
         if ($article != NULL) {
-            $breadCrumbData = $container->get(BreadCrumbInteractor::class)
-            ->interact([
-                'c_id' => $article->toArray()['c_id'],
-                'subc_id' => $article->toArray()['subc_id']
-            ]);
+
+            try {
+                $breadCrumbData = $container->get(BreadCrumbInteractor::class)
+                ->interact([
+                    'c_id' => $article->toArray()['c_id'],
+                    'subc_id' => $article->toArray()['subc_id']
+                ]);
+            }
+            catch (ValidationFailException $e) {
+                return (new Presenter)->reportInValidParams($e->getMessage());
+            }
+            
         }
         else {
             $breadCrumbData = [];

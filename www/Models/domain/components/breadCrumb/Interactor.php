@@ -32,7 +32,7 @@ class Interactor
      * 
      * @return array|int
      * 
-     * if validation fails, this returns (int) AppConfig::INVALID_PARAMS
+     * if validation fails, this returns ValidationFailException
      */
     public function interact(?array $vars = NULL)
     {
@@ -41,8 +41,7 @@ class Interactor
             $input = (new Validator)->validate($vars)->toArray();
         }
         catch (ValidationFailException $e) {
-            echo $e->getMessage();
-            return AppConfig::INVALID_PARAMS;
+            return $e;
         } 
         
 

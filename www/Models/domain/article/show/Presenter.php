@@ -3,6 +3,7 @@
 namespace domain\article\show;
 
 use domain\article\show\Data\ArticleContent;
+use myapp\config\AppConfig;
 
 class Presenter
 {
@@ -30,5 +31,20 @@ class Presenter
         $data = ($article != NULL) ? $article->toArray() : [];
 
         return ['articleContent' => $data] + $breadCrumbData + $mainSidebarData;
+    }
+
+
+    /**
+     * Call when validation failed.
+     * @param string|NULL $message
+     * 
+     * @return int AppConfig::INVALID_PARAMS
+     */
+    public function reportInValidParams(?string $message):int
+    {
+        http_response_code(400);
+        echo $message;
+
+        return AppConfig::INVALID_PARAMS;
     }
 }

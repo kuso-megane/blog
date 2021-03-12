@@ -5,6 +5,7 @@ namespace domain\backyardArticle\index;
 use domain\backyardArticle\index\RepositoryPort\ArticleLinksRepositoryPort;
 use domain\backyardArticle\index\Presenter;
 use domain\backyardArticle\index\Validator\Validator;
+use domain\Exception\ValidationFailException;
 
 class Interactor
 {
@@ -21,7 +22,13 @@ class Interactor
      */
     public function interact():array
     {
-        $input = (new Validator)->validate()->toArray();
+        try {
+            $input = (new Validator)->validate()->toArray();
+        }
+        catch (ValidationFailException $e) {
+            return (new Presenter)->reportInValidParams($e->getMessage());
+        }
+        
         $searched_word = $input['searched_word'];
 
         $articleLinks = $this->articleLinksRepository->getArticleLinks($searched_word);
