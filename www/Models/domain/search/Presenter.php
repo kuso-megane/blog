@@ -53,7 +53,7 @@ class Presenter
      * 
      * @return int AppConfig::INVALID_PARAMS
      */
-    public function reportInValidParams(?string $message):int
+    public function reportInValidParams(?string $message = 'Invalid url was given'):int
     {
         http_response_code(400);
         echo $message;

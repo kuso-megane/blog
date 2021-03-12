@@ -8,9 +8,11 @@ class Presenter
 {
 
     /**
+     * Call when post succeeded
+     * @param string|NULL $message
      * 
      */
-    public function present():array
+    public function reportSuccess():int 
     {
 
     }
@@ -22,7 +24,7 @@ class Presenter
      * 
      * @return int AppConfig::INVALID_PARAMS
      */
-    public function reportInValidParams(?string $message):int
+    public function reportInValidParams(?string $message = 'Invalid url was given'):int
     {
         http_response_code(400);
         echo $message;
