@@ -60,9 +60,7 @@
             </p>
             <p id="input-content">
                 content:<br>
-                <textarea id="editor" name="content" cols="20" rows="8">
-                    <?php echo $contentValue; ?>
-                </textarea>
+                <textarea id="editor" name="content" cols="20" rows="8"><?php echo $contentValue; ?></textarea>
             </p>
 
             <input type="submit" value="投稿">

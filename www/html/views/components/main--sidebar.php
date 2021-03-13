@@ -18,9 +18,9 @@
     </div>
 
     <div id="search-container">
-        <p>&lt;ワード検索&gt;</p>
+        <p>&lt;ワード検索(30文字以内)&gt;</p>
         <form action="/search" method="get">
-            <input id="search-box" type="search" name="w" placeholder="記事フリーワード検索"
+            <input id="search-box" type="search" name="w" placeholder="記事タイトル検索"
                 value=<?php echo $searchBoxValue; ?>>
         </form>
     </div>
