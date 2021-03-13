@@ -12,8 +12,8 @@ interface ArticlePostRepositoryPort
      * @param string|NULL $thumbnailName
      * @param string $content
      * 
-     * @return void
+     * @return bool whether post succeed or not
      */
     public function postArticle(?int $artcl_id, int $c_id, int $subc_id, string $title,
-    ?string $thumbnailName, string $content):void;
+    ?string $thumbnailName, string $content):bool;
 }

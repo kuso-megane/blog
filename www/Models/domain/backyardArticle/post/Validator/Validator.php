@@ -19,15 +19,15 @@ class Validator
 
         $get = (new GVars)->getGet();
 
-        $c_id = $get['c_id'];
+        $c_id = ($get['c_id'] != NULL) ? (int) $get['c_id'] : NULL;
 
-        if (!($c_id > 0)) {
+        if (!($c_id != NULL && $c_id > 0)) {
             throw new ValidationFailException('想定外のカテゴリが指定されています。');
         }
 
-        $subc_id = $get['subc_id'];
+        $subc_id = ($get['subc_id'] != NULL) ? (int) $get['subc_id'] : NULL;
 
-        if (!($subc_id > 0)) {
+        if (!($subc_id != NULL && $subc_id > 0)) {
             throw new ValidationFailException('想定外のサブカテゴリが指定されています。');
         }
 

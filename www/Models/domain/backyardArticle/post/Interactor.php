@@ -24,6 +24,7 @@ class Interactor
      * @return int AppConfig::POST_SUCCESS or AppConfig::INVALID_PARAMS
      * 
      * if validation fails, this returns AppConfig::INVALID_PARAMS
+     * if post succeeds, this returns AppConfig::POST_SUCCESS
      */
     public function interact(array $vars)
     {
@@ -44,7 +45,7 @@ class Interactor
         $this->articlePostRepository->postArticle($artcl_id, $c_id, $subc_id, $title, $thumbnailName, $content);
 
 
-        return AppConfig::POST_SUCCESS;
+        return (new Presenter)->reportSuccess();
     }
     
 }

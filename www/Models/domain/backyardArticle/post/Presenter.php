@@ -11,10 +11,13 @@ class Presenter
      * Call when post succeeded
      * @param string|NULL $message
      * 
+     * @return int AppConfig::POST_SUCCESS
      */
-    public function reportSuccess():int 
+    public function reportSuccess(?string $message = 'Post succeeded!'):int 
     {
-
+        http_response_code(201);
+        echo $message;
+        return AppConfig::POST_SUCCESS;
     }
 
 
