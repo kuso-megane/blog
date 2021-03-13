@@ -311,9 +311,6 @@ class ArticleTableTest extends TestCase
     }
 
 
-    /**
-     * 
-     */
     public function testFindById()
     {
         $id = 1;
@@ -346,6 +343,101 @@ class ArticleTableTest extends TestCase
         ];
 
         $this->assertSame($expected, $this->table->findById($id));
+    }
+
+
+    public function testCreate()
+    {
+
+        $c_id = 1;
+        $subc_id = 1;
+        $title = 'sampleTitle';
+        $thumbnailName = 'sample.jpg';
+        $content = '<p>This is sample</p>';
+
+        $this->table->create($c_id, $subc_id, $title, $thumbnailName, $content);
+
+        $expected = [
+            [
+                'id' => 1,
+                'c_id' => $c_id,
+                'subc_id' => $subc_id,
+                'title' => $title,
+                'thumbnailName' => $thumbnailName,
+                'content' => $content
+            ]
+        ];
+        $record = $this->dbh->select('id, c_id, subc_id, title, thumbnailName, content', $this::TABLENAME);
+
+        $this->assertSame($expected, $record);
+
+        $categoryNum = $this->dbh->select('num', $this::PARENT1_TABLENAME, 'id = :id', [], [':id' => $c_id])[0]['num'];
+        $subCategoryNum = $this->dbh->select('num', $this::PARENT2_TABLENAME, 'id = :id', [], [':id' => $subc_id])[0]['num'];
+
+        $this->assertSame(1, $categoryNum);
+        $this->assertSame(1, $subCategoryNum);
+    }
+
+
+    public function testUpdate()
+    {
+        $id = 1;
+        $c_id = 1;
+        $subc_id = 1;
+        $title = 'sampleTitle';
+        $thumbnailName = 'sampleThumbnail.jpg';
+        $content = '<p>This is sample</p>';
+
+        $newC_id = 2;
+        $newSubc_id = 2;
+        $newTitle = 'newTitle';
+        $newThumbnailName = 'new.jpg';
+        $newContent = '<p>This was updated</p>';
+
+        $this->dbh->beginTransaction();
+        $this->dbh->insert(
+            $this::TABLENAME,
+            ':id, :c_id, :subc_id, :title, :thumbnailName, :content, :updateDate',
+            [
+                ':id' => $id,
+                ':c_id' => $c_id,
+                ':subc_id' => $subc_id,
+                ':title' => $title,
+                ':thumbnailName' => $thumbnailName,
+                ':content' => $content,
+                ':updateDate' => $this::SAMPLE_TIME
+            ]
+        );
+        $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :c_id', [':c_id' => $c_id]);
+        $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :subc_id', [':subc_id' => $subc_id]);
+        $this->dbh->commit();
+
+        $this->table->update($id, $newC_id, $newSubc_id, $newTitle, $newThumbnailName, $newContent);
+
+        $expected = [
+            'id' => $id,
+            'c_id' => $newC_id,
+            'subc_id' => $newSubc_id,
+            'title' => $newTitle,
+            'thumbnailName' => $newThumbnailName,
+            'content' => $newContent
+        ];
+
+        $this->assertSame(
+            $expected,
+            $this->dbh->select('id, c_id, subc_id, title, thumbnailName, content', $this::TABLENAME, 'id = :id', [], [':id' => $id])[0]
+        );
+
+        $oldCategoryNum  = $this->dbh->select('num', $this::PARENT1_TABLENAME, 'id = :id', [], [':id' => $c_id])[0]['num'];
+        $newCategoryNum = $this->dbh->select('num', $this::PARENT1_TABLENAME, 'id = :id', [], [':id' => $newC_id])[0]['num'];
+
+        $oldSubCategoryNum = $this->dbh->select('num', $this::PARENT2_TABLENAME, 'id = :id', [], [':id' => $subc_id])[0]['num'];
+        $newSubCategoryNum = $this->dbh->select('num', $this::PARENT2_TABLENAME, 'id = :id', [], [':id' => $newSubc_id])[0]['num'];
+
+        $expected2 = [0, 1, 0, 1];
+
+        $this->assertSame($expected2, 
+        [$oldCategoryNum, $newCategoryNum, $oldSubCategoryNum, $newSubCategoryNum]);
     }
 
 

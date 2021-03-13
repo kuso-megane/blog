@@ -4,8 +4,6 @@ namespace infra\database\src;
 
 use myapp\myFrameWork\DB\Connection;
 
-use PDO;
-use PDOException;
 
 class ArticleTable
 {
@@ -26,6 +24,7 @@ class ArticleTable
     // TODO: カテゴリ指定があったときの処理
     // TODO: 検索ワードがあったときの処理
     /**
+     * return recent article infos and decide $isLastPage on TRUE or FALSE
      * @param int $maxNum  max num of articles you wanna fetch at a time
      * @param bool &$isLastPage
      * 
@@ -195,4 +194,70 @@ class ArticleTable
 
         return $record;
     }
+
+
+    /**
+     * create new Article and increment the num of Category and SubCategory
+     * @param int $c_id
+     * @param int $subc_id
+     * @param string $title
+     * @param string $thumbnailName
+     * @param string $content
+     * 
+     * @return void
+     * 
+     * if command fails, this returns PDOException
+     */
+    public function create(int $c_id, int $subc_id, string $title, string $thumbnailName, string $content)
+    {
+        $boundValues = [
+            ':c_id' => $c_id, ':subc_id' => $subc_id, ':title' => $title, ':content' => $content, ':thumbnailName' => $thumbnailName
+        ];
+
+        $columns = '0, :c_id, :subc_id, :title, :thumbnailName, :content, default';
+
+        $this->dbh->beginTransaction();
+        $this->dbh->insert($this::TABLENAME, $columns, $boundValues);
+        $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :c_id', [':c_id' => $c_id]);
+        $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :subc_id', [':subc_id' => $subc_id]);
+        $this->dbh->commit();
+    }
+
+
+    /**
+     * update Article and modify the num of Category and SubCategory
+     * @param int $artcl_id
+     * @param int $c_id
+     * @param int $subc_id
+     * @param string $title
+     * @param string $thumbnailName
+     * @param string $content
+     */
+    public function update(int $artcl_id, int $newC_id, int $newSubc_id, string $newTitle, string $newThumbnailName, string $newContent)
+    {
+        $oldArticle = $this->dbh->select('c_id, subc_id', $this::TABLENAME, 'id = :id', [], [':id' => $artcl_id])[0];
+        $oldC_id = $oldArticle['c_id'];
+        $oldSubc_id = $oldArticle['subc_id'];
+
+        $boundValues = [
+            ':id' => $artcl_id, ':newC_id' => $newC_id, ':newSubc_id' => $newSubc_id, ':newTitle' => $newTitle,
+            ':newThumbnailName' => $newThumbnailName, ':newContent' => $newContent
+        ];
+
+        $columns = 'c_id = :newC_id, subc_id = :newSubc_id, title = :newTitle,
+        thumbnailName = :newThumbnailName, content = :newContent';
+
+        $this->dbh->beginTransaction();
+        // 旧カテゴリのnumを1つ減らす
+        $this->dbh->update($this::PARENT1_TABLENAME, 'num = num - 1', 'id = :c_id', [':c_id' => $oldC_id]);
+        $this->dbh->update($this::PARENT2_TABLENAME, 'num = num - 1', 'id = :subc_id', [':subc_id' => $oldSubc_id]);
+
+        $this->dbh->update($this::TABLENAME, $columns, 'id = :id', $boundValues);
+        
+        //新カテゴリのnumを1つ増やす
+        $this->dbh->update($this::PARENT1_TABLENAME, 'num = num + 1', 'id = :c_id', [':c_id' => $newC_id]);
+        $this->dbh->update($this::PARENT2_TABLENAME, 'num = num + 1', 'id = :subc_id', [':subc_id' => $newSubc_id]);
+        $this->dbh->commit();
+    }
+
 }
