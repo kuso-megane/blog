@@ -8,16 +8,17 @@ use myapp\config\AppConfig;
 class Presenter
 {
     /**
-     * @param ArticleLink[] $articleLinks
+     * @param ArticleLink[]|NULL $articleLinks
      * 
      * @return array [
      *      'articleLinks' => [ ['id' => int, 'title' => string], [] ]
      * ]
      */
-    public function present(array $articleLinks):array
+    public function present(?array $articleLinks):array
     {
+        $articleLinks = ($articleLinks != NULL) ? $this->formatForArticleLinks($articleLinks) : [];
         return [
-            'articleLinks' => $this->formatForArticleLinks($articleLinks)
+            'articleLinks' => $articleLinks
         ];
     }
 
