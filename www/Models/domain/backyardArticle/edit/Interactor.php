@@ -41,7 +41,7 @@ class Interactor
             $input = (new Validator)->validate($vars)->toArray();
         }
         catch (ValidationFailException $e) {
-            return (new Presenter)->reportInValidParams($e->getMessage());
+            return (new Presenter)->reportValidationFailure($e->getMessage());
         }
         
 

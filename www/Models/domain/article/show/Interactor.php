@@ -33,7 +33,7 @@ class Interactor
             $input = (new Validator)->validate($vars)->toArray();
         }
         catch (ValidationFailException $e) {
-            return (new Presenter)->reportInValidParams($e->getMessage());
+            return (new Presenter)->reportValidationFailure($e->getMessage());
         }
         
 
@@ -49,7 +49,7 @@ class Interactor
             $mainSidebarData = $container->get(MainSidebarInteractor::class)->interact();
         }
         catch (ValidationFailException $e) {
-            return (new Presenter)->reportInValidParams($e->getMessage());
+            return (new Presenter)->reportValidationFailure($e->getMessage());
         }
         
 
@@ -63,7 +63,7 @@ class Interactor
                 ]);
             }
             catch (ValidationFailException $e) {
-                return (new Presenter)->reportInValidParams($e->getMessage());
+                return (new Presenter)->reportValidationFailure($e->getMessage());
             }
             
         }

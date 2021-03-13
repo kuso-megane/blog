@@ -32,7 +32,7 @@ class Interactor
             $input = (new Validator)->validate($vars)->toArray();
         }
         catch (ValidationFailException $e) {
-            return (new Presenter)->reportInValidParams($e->getMessage());
+            return (new Presenter)->reportValidationFailure($e->getMessage());
         }
 
         $artcl_id = $input['artcl_id'];
@@ -42,7 +42,7 @@ class Interactor
         $thumbnailName = $input['thumbnailName'];
         $content = $input['content'];
 
-        $this->articlePostRepository->postArticle($artcl_id, $c_id, $subc_id, $title, $thumbnailName, $content);
+        $isSuccess = $this->articlePostRepository->postArticle($artcl_id, $c_id, $subc_id, $title, $thumbnailName, $content);
 
 
         return (new Presenter)->reportSuccess();

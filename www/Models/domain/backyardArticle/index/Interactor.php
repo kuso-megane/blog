@@ -26,7 +26,7 @@ class Interactor
             $input = (new Validator)->validate()->toArray();
         }
         catch (ValidationFailException $e) {
-            return (new Presenter)->reportInValidParams($e->getMessage());
+            return (new Presenter)->reportValidationFailure($e->getMessage());
         }
         
         $searched_word = $input['searched_word'];

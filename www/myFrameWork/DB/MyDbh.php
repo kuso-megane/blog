@@ -272,17 +272,12 @@ class MyDbh extends PDO
      * 
      * if you wanna increment $columns like 'num', set this like 'num = num + 1'
      * 
-     * @param array $boundColumns  (e.g. )[':num' => newNum, ':name' => newName]
-     * 
-     * if you wanna bind these manually, this can be empty
-     * 
      * @param string $condition 'id = :id AND num > :num' or 'id = 3, num > 3'
-     * @param array $boundCondition (e.g.) [':id' => int, ':num' => int]
+     * @param array $boundValues (e.g.) [':id' => int, ':num' => int]
      * @param int $executeFlag
      * 
      * if you wanna execute this manually, this must be self::ONLY_PREPARE
      * 
-     *
      * @return PDOStatement|void
      * 
      */

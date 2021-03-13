@@ -39,7 +39,7 @@ class Interactor
             $input = (new Validator)->validate($vars)->toArray();
         }
         catch (ValidationFailException $e) {
-            return (new Presenter)->reportInValidParams($e->getMessage());
+            return (new Presenter)->reportValidationFailure($e->getMessage());
         }
 
         $builder = new \DI\ContainerBuilder();
@@ -51,7 +51,7 @@ class Interactor
             $breadCrumbData = $container->get(BreadCrumbInteractor::class)->interact($vars);
         }
         catch (ValidationFailException $e) {
-            return (new Presenter)->reportInValidParams($e->getMessage());
+            return (new Presenter)->reportValidationFailure($e->getMessage());
         }
         
 
