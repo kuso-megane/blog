@@ -2,7 +2,7 @@
 
 namespace domain\backyardArticle\post\Validator;
 
-use domain\backyard\post\Data\InputData;
+use domain\backyardArticle\post\Data\InputData;
 use TypeError;
 use domain\Exception\ValidationFailException;
 use myapp\myFrameWork\SuperGlobalVars as GVars;
@@ -17,21 +17,21 @@ class Validator
             throw new ValidationFailException('想定外の記事が指定されています。');
         }
 
-        $get = (new GVars)->getGet();
+        $post = (new GVars)->getPost();
 
-        $c_id = ($get['c_id'] != NULL) ? (int) $get['c_id'] : NULL;
+        $c_id = ($post['c_id'] != NULL) ? (int) $post['c_id'] : NULL;
 
         if (!($c_id != NULL && $c_id > 0)) {
             throw new ValidationFailException('想定外のカテゴリが指定されています。');
         }
 
-        $subc_id = ($get['subc_id'] != NULL) ? (int) $get['subc_id'] : NULL;
+        $subc_id = ($post['subc_id'] != NULL) ? (int) $post['subc_id'] : NULL;
 
         if (!($subc_id != NULL && $subc_id > 0)) {
             throw new ValidationFailException('想定外のサブカテゴリが指定されています。');
         }
 
-        $title = $get['title'];
+        $title = $post['title'];
         $len_title = strlen($title);
         if (!($len_title > 0 && $len_title <= 30)) {
             throw new ValidationFailException('タイトルの文字数が不適です。');
@@ -39,7 +39,7 @@ class Validator
 
         //$thumbnailName = 
 
-        $content = $get['content'];
+        $content = $post['content'];
         $len_content = strlen($content);
         if (!($len_content > 0 && $len_content <  65535)) {
             throw new ValidationFailException('記事内容の文字数が不適です。');

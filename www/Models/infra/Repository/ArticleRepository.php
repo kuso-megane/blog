@@ -13,6 +13,7 @@ use domain\search\Data\ArtclInfo;
 use domain\search\RepositoryPort\RecentArtclInfosRepositoryPort;
 use infra\database\src\ArticleTable;
 use myapp\config\AppConfig;
+use PDOException;
 
 class ArticleRepository
 implements
@@ -132,8 +133,22 @@ ArticlePostRepositoryPort
      * @inheritDoc
      */
     public function postArticle(?int $artcl_id, int $c_id, int $subc_id, string $title, ?string $thumbnailName,
-    string $content): void
+    string $content): bool
     {
+        $thumbnailName = ($thumbnailName === NULL) ? AppConfig::DEFAULT_IMG : $thumbnailName;
+
+        try {
+            if ($artcl_id === NULL) {
+                $this->table->create($c_id, $subc_id, $title, $thumbnailName, $content);
+            }
+            else {
+                $this->table->update($artcl_id, $c_id, $subc_id, $title, $thumbnailName, $content);
+            }
+        }
+        catch (PDOException $e) {
+            return FALSE;
+        }
         
+        return TRUE;
     }
 }

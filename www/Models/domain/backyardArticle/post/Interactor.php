@@ -45,7 +45,7 @@ class Interactor
         $isSuccess = $this->articlePostRepository->postArticle($artcl_id, $c_id, $subc_id, $title, $thumbnailName, $content);
 
 
-        return (new Presenter)->reportSuccess();
+        return (new Presenter)->present($isSuccess);
     }
     
 }

@@ -5,6 +5,7 @@ namespace myapp\Controllers;
 use myapp\myFrameWork\Bases\BaseController;
 use domain\backyardArticle\index\Interactor as IndexInteractor;
 use domain\backyardArticle\edit\Interactor as EditInteractor;
+use domain\backyardArticle\post\Interactor as PostInteractor;
 use myapp\config\AppConfig;
 
 class BackyardArticleController extends BaseController
@@ -53,15 +54,19 @@ class BackyardArticleController extends BaseController
         $builder->addDefinitions('/var/www/Models/diconfig.php');
         $container = $builder->build();
 
-        $interactor = $container->get(EditInteractor::class);
+        $interactor = $container->get(PostInteractor::class);
         $exe = $interactor->interact($vars);
 
         if ($exe == AppConfig::INVALID_PARAMS) {
             return FALSE;
         }
-        elseif ($exe == AppConfig::POST_SUCCESS) {
-            //保留
-        }    
+        elseif ($exe == AppConfig::POST_SUCCESS || $exe == AppConfig::POST_FAILURE) {
+            $vm = ['result' => $exe];
+            $this->render($vm, 'backyardArticle', 'post');
+        }
+        else {
+            echo "予想外の事態が発生しました。";
+        }
     }
 
 }

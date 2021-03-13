@@ -9,6 +9,10 @@
         $titleValue = $oldTitle;
         $contentValue = $oldContent;
     }
+
+    if ($artcl_id == NULL) {
+        $artcl_id = '';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +26,7 @@
     <body>
         <h2>記事BY</h2>
         <p><a href="/backyard/article">記事BYトップページへ</a></p>
-        <form action="/backyard/article/post" action="post">
+        <form method="post" action=<?php echo "/backyard/article/post/{$artcl_id}"; ?> >
             <p id="input-c_id">
                 カテゴリ:
                 <select name="c_id" id="c_idSelect" onchange="initSubcOption()">
@@ -56,10 +60,11 @@
             </p>
             <p id="input-content">
                 content:<br>
-                <textarea id="editor" name="content" cols="20" rows="8" placeholder="新しい内容を記入">
+                <textarea id="editor" name="content" cols="20" rows="8">
                     <?php echo $contentValue; ?>
                 </textarea>
             </p>
+
             <input type="submit" value="投稿">
         </form>
 

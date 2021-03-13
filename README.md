@@ -19,7 +19,7 @@
 
 ## Bases\BaseController
 - controllerの基底クラス
-- 継承可能なメソッド```render()```をもっていて、modelからわたってきたデータ```$vm['xxx']```を```$xxx```としてviewsで使えるように加工
+- 継承可能なメソッド```render()```をもっていて、controllerで渡されたデータ```$vm['xxx']```を```$xxx```としてviewsで使えるように加工
 - viewsをrequireする形でrendering
 
 # 参考

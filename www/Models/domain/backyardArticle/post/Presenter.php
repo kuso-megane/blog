@@ -8,16 +8,21 @@ class Presenter
 {
 
     /**
-     * Call when post succeeded
-     * @param string|NULL $message
+     * Call when post finished whether or not it succeeded
+     * @param bool $isSuccess
      * 
-     * @return int AppConfig::POST_SUCCESS
+     * @return int AppConfig::POST_SUCCESS | AppConfig::POST_FAILURE
      */
-    public function reportSuccess(?string $message = 'Post succeeded!'):int 
+    public function present(bool $isSuccess):int 
     {
-        http_response_code(201);
-        echo $message;
-        return AppConfig::POST_SUCCESS;
+        if ($isSuccess === TRUE) {
+            http_response_code(201);
+            return AppConfig::POST_SUCCESS;
+        }
+        elseif ($isSuccess === FALSE) {
+            http_response_code(403);
+            return AppConfig::POST_FAILURE;
+        }
     }
 
 

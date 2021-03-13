@@ -1,6 +1,6 @@
 <?php
 
-namespace domain\backyard\post\Data;
+namespace domain\backyardArticle\post\Data;
 
 class InputData
 {
