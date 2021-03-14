@@ -43,7 +43,8 @@
                 breaks : true
             });
             document.getElementById("article--content").innerHTML 
-            = marked(<?php echo "'" .  $articleContent['content'] . "'"; ?>);
+            = marked(`<?php echo $content = str_replace('`', '\`', $articleContent['content']); ?>`); //記事コンテンツの改行を反映するためバッククォート
         </script>
 
     </body>
+</html>
