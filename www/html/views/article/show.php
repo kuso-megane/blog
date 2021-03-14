@@ -21,7 +21,7 @@
                 <?php require ViewsConfig::COMPONENTS_PATH. 'breadcrumb.php'; ?>
 
                 <div id="article">
-                    <h2 id="article--title"><?php echo $articleContent['title']; ?></h3>  
+                    <h1 id="article--title"><?php echo $articleContent['title']; ?></h3>  
                     <p id="article--updateDate"><?php echo '最終更新日:'. $articleContent['updateDate']; ?></p>
 
                     <div id="article--content">  
@@ -36,14 +36,15 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.7/purify.js"></script>
         <script>
             marked.setOptions({
-                sanitize: true,
-                sanitizer: escape,
                 breaks : true
             });
-            document.getElementById("article--content").innerHTML 
-            = marked(`<?php echo $content = str_replace('`', '\`', $articleContent['content']); ?>`); //記事コンテンツの改行を反映するためバッククォート
+            const md = `<?php echo $content = str_replace('`', '\`', $articleContent['content']); ?>`;
+            const dirty = marked(md);
+            const clean = DOMPurify.sanitize(dirty);
+            document.getElementById("article--content").innerHTML = clean; //記事コンテンツの改行を反映するためバッククォート
         </script>
 
     </body>
