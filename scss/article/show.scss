@@ -38,16 +38,25 @@
                 text-decoration: underline;
             }
         }
+
+        // for marked article
+
+        //  h element
+        h1, h2, h3, h4 {
+            border-bottom: 1px solid #ddd;
+        }
+
+        //  code block
+        pre {
+            background-color: #333333;
+            padding: 1rem;
+            code {
+                color: white;
+            }
+        }
     }
+
+    
 }
 
-// for marked article
 
-//  code block
-pre {
-    background-color: #333333;
-    padding: 1rem;
-    code {
-        color: white;
-    }
-}
