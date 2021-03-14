@@ -103,7 +103,7 @@
             }
 
 
-            function initSubcOption(){
+            const initSubcOption = () => {
                 let select = document.getElementById("subc_idSelect");
 
                 //既存の選択肢を削除
