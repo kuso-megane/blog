@@ -24,8 +24,7 @@
                     <h2 id="article--title"><?php echo $articleContent['title']; ?></h3>  
                     <p id="article--updateDate"><?php echo '最終更新日:'. $articleContent['updateDate']; ?></p>
 
-                    <div id="article--content">
-                        <?php echo $articleContent['content']; ?>
+                    <div id="article--content">  
                     </div>
                 </div>
                 
@@ -35,5 +34,16 @@
             <?php require ViewsConfig::COMPONENTS_PATH. 'main--sidebar.php';?>
             
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script>
+            marked.setOptions({
+                sanitize: true,
+                sanitizer: escape,
+                breaks : true
+            });
+            document.getElementById("article--content").innerHTML 
+            = marked(<?php echo "'" .  $articleContent['content'] . "'"; ?>);
+        </script>
 
     </body>
