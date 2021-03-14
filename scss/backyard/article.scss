@@ -14,3 +14,10 @@ th {
     width: 200px;
 }
 
+
+#input-content {
+
+    &--note {
+        color: red;
+    }
+}

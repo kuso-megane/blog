@@ -40,6 +40,11 @@ class Validator
         //$thumbnailName = 
 
         $content = $post['content'];
+
+        
+        $content = str_replace(["\\"], '', $content);
+
+
         $len_content = strlen($content);
         if (!($len_content > 0 && $len_content <  65535)) {
             throw new ValidationFailException('記事内容の文字数が不適です。');
