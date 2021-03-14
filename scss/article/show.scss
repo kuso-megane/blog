@@ -40,3 +40,14 @@
         }
     }
 }
+
+// for marked article
+
+//  code block
+pre {
+    background-color: #333333;
+    padding: 1rem;
+    code {
+        color: white;
+    }
+}
