@@ -41,10 +41,11 @@
             marked.setOptions({
                 breaks : true
             });
+            //記事コンテンツの改行を反映するためバッククォート
             const md = `<?php echo $content = str_replace('`', '\`', $articleContent['content']); ?>`;
             const dirty = marked(md);
             const clean = DOMPurify.sanitize(dirty);
-            document.getElementById("article--content").innerHTML = clean; //記事コンテンツの改行を反映するためバッククォート
+            document.getElementById("article--content").innerHTML = clean;
         </script>
 
     </body>
