@@ -19,7 +19,7 @@ class Connection
      */
     public function __construct(bool $is_test=FALSE, string $username='root')
     {
-        if ($is_test == TRUE) {
+        if ($is_test === TRUE) {
             $this->dbname = DBConfig::TEST_DB;
         }
         else {
