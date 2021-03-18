@@ -32,6 +32,7 @@ class Validator
         }
 
         $title = $post['title'];
+        $title = htmlspecialchars($title);
         $len_title = strlen($title);
         if (!($len_title > 0 && $len_title <= 30)) {
             throw new ValidationFailException('タイトルの文字数が不適です。');
@@ -41,9 +42,8 @@ class Validator
 
         $content = $post['content'];
 
-        
-        $content = str_replace(["\\"], '', $content);
-
+        //to avoid inner string "srcipt" being recognized as terminal of script of article/show.php
+        $content = str_replace(['<script>', '</script>'], '', $content);
 
         $len_content = strlen($content);
         if (!($len_content > 0 && $len_content <  65535)) {

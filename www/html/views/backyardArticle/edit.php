@@ -60,7 +60,7 @@
             </p>
             <p id="input-content">
                 content:<br>
-                <p id="input-content--note">note: バックスラッシュ(\)はサーバーで自動的に削除されます。</p>
+                <p id="input-content--note">note: スクリプトはサーバーで自動的に削除されます。</p>
                 <textarea id="editor" name="content" cols="20" rows="8"><?php echo $contentValue; ?></textarea>
             </p>
 

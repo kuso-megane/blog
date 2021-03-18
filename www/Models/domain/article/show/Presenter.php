@@ -28,9 +28,14 @@ class Presenter
      */
     public function present(?ArticleContent $article, array $breadCrumbData, array $mainSidebarData):array
     {
-        $data = ($article != NULL) ? $article->toArray() : [];
+        $article = ($article != NULL) ? $article->toArray() : [];
 
-        return ['articleContent' => $data] + $breadCrumbData + $mainSidebarData;
+        $article['content'] = str_replace('\\', '\\\\', $article['content']);
+
+        //article/show.phpでjsのテンプレートエンジンを使うため
+        $article['content'] = str_replace('`', '\`', $article['content']); 
+
+        return ['articleContent' => $article] + $breadCrumbData + $mainSidebarData;
     }
 
 
