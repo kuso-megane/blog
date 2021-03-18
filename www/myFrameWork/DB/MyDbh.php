@@ -154,8 +154,6 @@ class MyDbh extends PDO
      * 
      * limitNum is the num of the records you want.
      * 
-     * Note that $boundCondition is only for $condition.
-     * Others like $options[':orderby'] will be automatically formatted for prepared statement and bound.
      * 
      */
     public function select(string $columns, string $tableName, string $condition = '', array $options = [], array $boundValues = [], int $executeFlag = self::EXECUTE)
