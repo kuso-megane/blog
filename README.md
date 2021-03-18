@@ -16,6 +16,7 @@
 - PDOを拡張したクラス```MyDbh```を通して、DBにアクセスする。
 - ```MyDbh```がselect, count, update, insertなどの基本的なDBアクセスをラッピングしたメソッドをもっている
 - ```(new Connenction($is_test, $username))->connect()```が、```MyDbh```を返す 。
+- ```myapp\Config\DBConfig```で各種設定をする
 
 ## Bases\BaseController
 - controllerの基底クラス
