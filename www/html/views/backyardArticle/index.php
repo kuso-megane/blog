@@ -32,7 +32,7 @@
 
                 <tr>
                     <td><a href=<?php echo "/backyard/article/edit/". $articleLink['id']; ?>>編集ページ</a></td>
-                    <td><?php echo $articleLink['title']; ?></td>
+                    <td><?php echo (htmlspecialchars($articleLink['title'], ENT_QUOTES)); ?></td>
                     <td><a href=<?php echo '/article/'. $articleLink['id']; ?>>リンク</a></td>
                 </tr>
 

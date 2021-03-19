@@ -56,7 +56,7 @@
                 </select>
             </p>
             <p id="input-title">
-                title: <input type="text" name="title" placeholder="新しいタイトルを記入" value=<?php echo $titleValue; ?>>
+                title: <input type="text" name="title" placeholder="新しいタイトルを記入" value=<?php echo (htmlspecialchars($titleValue, ENT_QUOTES)); ?>>
             </p>
             <p id="input-content">
                 content:<br>

@@ -21,7 +21,7 @@
                 <?php require ViewsConfig::COMPONENTS_PATH. 'breadcrumb.php'; ?>
 
                 <div id="article">
-                    <h1 id="article--title"><?php echo $articleContent['title']; ?></h3>  
+                    <h1 id="article--title"><?php echo (htmlspecialchars($articleContent['title'], ENT_QUOTES)); ?></h3>  
                     <p id="article--updateDate"><?php echo '最終更新日:'. $articleContent['updateDate']; ?></p>
 
                     <div id="article--content">  

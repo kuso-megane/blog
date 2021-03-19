@@ -32,7 +32,6 @@ class Validator
         }
 
         $title = $post['title'];
-        $title = htmlspecialchars($title);
         $len_title = strlen($title);
         if (!($len_title > 0 && $len_title <= 30)) {
             throw new ValidationFailException('タイトルの文字数が不適です。');

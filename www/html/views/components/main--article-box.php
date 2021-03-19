@@ -14,7 +14,7 @@
                 </div>
                 <div class="article-main">
                     <p class="article-update-date"><?php echo '最終更新日:' . $artcls['updateDate']; ?></p>
-                    <p class="article-title break-word"><?php echo $artcls['title']; ?></p>
+                    <p class="article-title break-word"><?php echo (htmlspecialchars($artcls['title'], ENT_QUOTES)); ?></p>
                 </div>
             </a>      
         </div>
