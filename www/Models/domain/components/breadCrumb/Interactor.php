@@ -49,15 +49,15 @@ class Interactor
         $searched_c_id = $input['searched_c_id'];
         $searched_subc_id = $input['searched_subc_id'];
 
-        if ($searched_c_id == NULL) {
+        if ($searched_c_id === NULL) {
             $searchedCategory = NULL;
         }
         else {
             $searchedCategory = $this->searchedCategoryRepository->getSearchedCategory($searched_c_id);
         }
 
-        if ($searched_subc_id == NULL) {
-            $searchedCategory = NULL;
+        if ($searched_subc_id === NULL) {
+            $searchedSubCategory = NULL;
         }
         else {
             $searchedSubCategory = $this->searchedSubCategoryRepository->getSearchedSubCategory($searched_subc_id);
