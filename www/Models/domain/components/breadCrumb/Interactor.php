@@ -41,7 +41,8 @@ class Interactor
             $input = (new Validator)->validate($vars)->toArray();
         }
         catch (ValidationFailException $e) {
-            return $e;
+            throw $e;
+            return [];
         } 
         
 
