@@ -32,7 +32,7 @@ class Interactor
      * 
      * @return array|int
      * 
-     * if validation fails, this returns ValidationFailException
+     * if validation fails, this throws ValidationFailException
      */
     public function interact(?array $vars = NULL)
     {
