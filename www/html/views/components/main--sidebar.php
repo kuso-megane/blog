@@ -3,7 +3,7 @@
     <div id="my-profile">
         
         <div id="my-profile--img-container">
-            <img class="img-to-circle" src="/asset/img/myProfile.jpg" alt="プロフィール画像">
+            <img id="my-profile--img" src="/asset/img/myicon.jpg" alt="プロフィール画像">
         </div>
         <h4 id="my-profile--name">クソメガネ</h2>
         <p id="my-profile--txt" class="break-word">
