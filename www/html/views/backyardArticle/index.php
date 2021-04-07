@@ -9,6 +9,7 @@
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title><?php ViewsConfig::TITLE; ?></title>
         <link rel="stylesheet" type="text/css" href=<?php echo ViewsConfig::STYLE_SHEET_URL. "backyard/article.css"; ?>>
+        <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     </head>
     <body>
         <h2>記事BY</h2>
@@ -41,5 +42,6 @@
             </tbody>
         </table>
         
+        <p><a href="/index"><i class="fas fa-home"></i>topページへ</a></p>
     </body>
 </html>
