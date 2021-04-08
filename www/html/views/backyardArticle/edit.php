@@ -65,6 +65,7 @@
             </p>
 
             <input type="submit" value="投稿">
+            <input id="reset-button" type="reset" value="リセット">
         </form>
 
         <!--import simpleMDE-->
@@ -122,6 +123,22 @@
                 }
             }
 
+        </script>
+
+        <!--editorの内容のリセット-->
+        <script>
+            const resetEditor = () => {
+                const oldContent =
+                `<?php 
+                    $contentValue_ = str_replace("\\", "\\\\", $contentValue);
+                    echo str_replace("`", "\`", $contentValue_); 
+                ?>`;
+                const editor = document.getElementById("editor");
+                
+                simplemde.value(oldContent);     
+            }
+            const reset = document.getElementById("reset-button");
+            reset.addEventListener("click", resetEditor);
         </script>
     </body>
 </html>
