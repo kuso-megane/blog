@@ -61,7 +61,7 @@
             <p id="input-content">
                 content:<br>
                 <p id="input-content--note">note: スクリプトはサーバーで自動的に削除されます。</p>
-                <textarea id="editor" name="content" cols="20" rows="8"><?php echo $contentValue; ?></textarea>
+                <textarea id="editor" name="content" cols="20" rows="8"><?php echo htmlspecialchars($contentValue, ENT_QUOTES); ?></textarea>
             </p>
 
             <input type="submit" value="投稿">
