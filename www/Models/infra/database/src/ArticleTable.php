@@ -206,7 +206,7 @@ class ArticleTable
      * 
      * @return void
      * 
-     * if command fails, this returns PDOException
+     * if command fails, this throws PDOException
      */
     public function create(int $c_id, int $subc_id, string $title, string $thumbnailName, string $content)
     {
@@ -232,6 +232,8 @@ class ArticleTable
      * @param string $title
      * @param string $thumbnailName
      * @param string $content
+     * 
+     * if command fails, this throws PDOException
      */
     public function update(int $artcl_id, int $newC_id, int $newSubc_id, string $newTitle, string $newThumbnailName, string $newContent)
     {
