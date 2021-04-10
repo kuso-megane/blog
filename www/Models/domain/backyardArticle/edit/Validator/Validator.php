@@ -17,7 +17,7 @@ class Validator
     {
         $id = (int )$vars['artcl_id']; //NULLやstringの場合は0になる
 
-        if ($id <= 0) {
+        if ($id < 0) {
             throw new ValidationFailException('想定外の記事が指定されています');
         }
 
