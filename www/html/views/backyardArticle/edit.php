@@ -29,7 +29,7 @@
         <form method="post" action=<?php echo "/backyard/article/post/{$artcl_id}"; ?> >
             <p id="input-c_id">
                 カテゴリ:
-                <select name="c_id" id="c_idSelect" onchange="initSubcOption()">
+                <select name="c_id" id="c_idSelect">
 
                     <?php foreach($categoryList as $category): ?>
 
@@ -81,6 +81,8 @@
 
         <!--サブカテゴリ選択肢の動的形成-->
         <script>
+            const c_idSelect = document.getElementById("c_idSelect");
+
             const selectedSubCategoryList = function(selectedC_id) {
 
                 <?php foreach($subCategoryList as $c_id => $subCategories): ?>
@@ -113,7 +115,7 @@
                     select.removeChild(select.firstChild);
                 }
 
-                let selectedC_id = document.getElementById("c_idSelect").value;
+                let selectedC_id = c_idSelect.value;
             
                 for (const subc of selectedSubCategoryList(selectedC_id)) {
                     let option = document.createElement("option");
@@ -122,6 +124,9 @@
                     select.appendChild(option);
                 }
             }
+
+            window.addEventListener("DOMContentLoaded", initSubcOption);
+            c_idSelect.addEventListener("change", initSubcOption);
 
         </script>
 
