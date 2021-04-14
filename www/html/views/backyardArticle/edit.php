@@ -26,10 +26,10 @@
     <body>
         <h2>記事BY</h2>
         <p><a href="/backyard/article">記事BYトップページへ</a></p>
-        <form method="post" action=<?php echo "/backyard/article/post/{$artcl_id}"; ?> >
+        <form id="form" method="post" action=<?php echo "/backyard/article/post/{$artcl_id}"; ?> >
             <p id="input-c_id">
                 カテゴリ:
-                <select name="c_id" id="c_idSelect">
+                <select name="c_id" id="c_idSelect" required>
 
                     <?php foreach($categoryList as $category): ?>
 
@@ -43,7 +43,7 @@
             </p>
             <p id="input-subc_id">
                 サブカテゴリ:
-                <select name="subc_id" id="subc_idSelect">
+                <select name="subc_id" id="subc_idSelect" required>
 
                     <?php foreach($subCategoryList[$oldC_id] as $subCategory): ?>
 
@@ -56,7 +56,8 @@
                 </select>
             </p>
             <p id="input-title">
-                title: <input type="text" name="title" placeholder="新しいタイトルを記入" value=<?php echo (htmlspecialchars($titleValue, ENT_QUOTES)); ?>>
+                title (30文字以内、必須):
+                <input type="text" name="title" placeholder="新しいタイトルを記入" value="<?php echo htmlspecialchars($titleValue, ENT_QUOTES); ?>" minlength="1" maxlength="30" required>
             </p>
             <p id="input-content">
                 content:<br>
@@ -64,7 +65,7 @@
                 <textarea id="editor" name="content" cols="20" rows="8"><?php echo htmlspecialchars($contentValue, ENT_QUOTES); ?></textarea>
             </p>
 
-            <input type="submit" value="投稿">
+            <button id="submit-button" type="submit">投稿</button>
             <input id="reset-button" type="reset" value="リセット">
         </form>
 
@@ -144,6 +145,40 @@
             }
             const reset = document.getElementById("reset-button");
             reset.addEventListener("click", resetEditor);
+        </script>
+
+        <!--vaidation-->
+        <script>
+            const $form = document.getElementById("form");
+            const $submit = document.getElementById("submit-button");
+
+            const submit = (e) => {
+                e.preventDefault();
+                if (window.confirm("本当に投稿しますか")) {
+                    $form.submit();
+                }
+                else {
+                    return;
+                }
+                
+            }
+
+            const validate = (e) => {
+                const $isValid = $form.checkValidity();
+
+                if ($isValid) {
+                    $submit.disabled = false;
+                    return;
+                }
+                else {
+                    $submit.disabled = true;
+                    return;
+                }
+            }
+
+            $form.addEventListener("change", validate);
+            $form.addEventListener("input", validate);
+            $submit.addEventListener("click", submit);
         </script>
     </body>
 </html>

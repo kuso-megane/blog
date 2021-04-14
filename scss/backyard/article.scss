@@ -1,5 +1,15 @@
 @use '../components/article--content';
 
+input, select {
+    &:valid {
+        border: 1px solid green;
+    }
+    &:invalid {
+        border: 5px solid red;
+        
+    }
+}
+
 a {
     color: blue;
     
