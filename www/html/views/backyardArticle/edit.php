@@ -66,7 +66,7 @@
             </p>
 
             <button id="submit-button" type="submit">投稿</button>
-            <input id="reset-button" type="reset" value="リセット">
+            <button id="reset-button" type="reset">リセット</button>
         </form>
 
         <!--import simpleMDE-->
@@ -82,103 +82,122 @@
 
         <!--サブカテゴリ選択肢の動的形成-->
         <script>
-            const c_idSelect = document.getElementById("c_idSelect");
+            {
+                const c_idSelect = document.getElementById("c_idSelect");
 
-            const selectedSubCategoryList = function(selectedC_id) {
+                const selectedSubCategoryList = function(selectedC_id) {
 
-                <?php foreach($subCategoryList as $c_id => $subCategories): ?>
+                    <?php foreach($subCategoryList as $c_id => $subCategories): ?>
 
-                    if (selectedC_id == <?php echo $c_id; ?>) {
-                        let ans = [];
-                        
-                        <?php foreach($subCategories as $subCategory): ?>
+                        if (selectedC_id == <?php echo $c_id; ?>) {
+                            let ans = [];
+                            
+                            <?php foreach($subCategories as $subCategory): ?>
 
-                            ans.push([
-                                <?php echo $subCategory['id']; ?>,
-                                "<?php echo $subCategory['name']; ?>"
-                            ]);
+                                ans.push([
+                                    <?php echo $subCategory['id']; ?>,
+                                    "<?php echo $subCategory['name']; ?>"
+                                ]);
 
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
 
-                        return ans;
+                            return ans;
+                        }
+
+                    <?php endforeach; ?>
+                    
+                }
+
+
+                const initSubcOption = () => {
+                    let select = document.getElementById("subc_idSelect");
+
+                    //既存の選択肢を削除
+                    while (select.firstChild) {
+                        select.removeChild(select.firstChild);
                     }
 
-                <?php endforeach; ?>
+                    let selectedC_id = c_idSelect.value;
                 
-            }
-
-
-            const initSubcOption = () => {
-                let select = document.getElementById("subc_idSelect");
-
-                //既存の選択肢を削除
-                while (select.firstChild) {
-                    select.removeChild(select.firstChild);
+                    for (const subc of selectedSubCategoryList(selectedC_id)) {
+                        let option = document.createElement("option");
+                        option.value = subc[0];
+                        option.text = subc[1];
+                        select.appendChild(option);
+                    }
                 }
 
-                let selectedC_id = c_idSelect.value;
-            
-                for (const subc of selectedSubCategoryList(selectedC_id)) {
-                    let option = document.createElement("option");
-                    option.value = subc[0];
-                    option.text = subc[1];
-                    select.appendChild(option);
-                }
+                window.addEventListener("DOMContentLoaded", initSubcOption);
+                c_idSelect.addEventListener("change", initSubcOption);
             }
-
-            window.addEventListener("DOMContentLoaded", initSubcOption);
-            c_idSelect.addEventListener("change", initSubcOption);
-
         </script>
 
         <!--editorの内容のリセット-->
         <script>
-            const resetEditor = () => {
-                const oldContent =
-                `<?php 
-                    $contentValue_ = str_replace("\\", "\\\\", $contentValue);
-                    echo str_replace("`", "\`", $contentValue_); 
-                ?>`;
-                const editor = document.getElementById("editor");
-                
-                simplemde.value(oldContent);     
+            {
+                const  $form = document.getElementById("form");
+
+                const resetEditor = (e) => {
+                    const oldContent =
+                    `<?php 
+                        $contentValue_ = str_replace("\\", "\\\\", $contentValue);
+                        echo str_replace("`", "\`", $contentValue_); 
+                    ?>`;
+                    const editor = document.getElementById("editor");
+                    
+                    simplemde.value(oldContent);     
+                }
+
+                const reset  = (e) => {
+                    e.preventDefault();
+                    if (window.confirm("リセットしますか")) {
+                        resetEditor();
+                        $form.reset();
+                    }
+                    else {
+                        return
+                    }
+                }
+
+                const $resetButton = document.getElementById("reset-button");
+                $resetButton.addEventListener("click", reset);
             }
-            const reset = document.getElementById("reset-button");
-            reset.addEventListener("click", resetEditor);
         </script>
 
         <!--vaidation-->
         <script>
-            const $form = document.getElementById("form");
-            const $submit = document.getElementById("submit-button");
+            {
+                const $form = document.getElementById("form");
+                const $submitButton = document.getElementById("submit-button");
 
-            const submit = (e) => {
-                e.preventDefault();
-                if (window.confirm("本当に投稿しますか")) {
-                    $form.submit();
+                const submit = (e) => {
+                    e.preventDefault();
+                    if (window.confirm("本当に投稿しますか")) {
+                        $form.submit();
+                    }
+                    else {
+                        return;
+                    }
+                    
                 }
-                else {
-                    return;
+
+                const validate = (e) => {
+                    const $isValid = $form.checkValidity();
+
+                    if ($isValid) {
+                        $submitButton.disabled = false;
+                        return;
+                    }
+                    else {
+                        $submitButton.disabled = true;
+                        return;
+                    }
                 }
-                
+
+                $form.addEventListener("change", validate);
+                $form.addEventListener("input", validate);
+                $submitButton.addEventListener("click", submit);
             }
-
-            const validate = (e) => {
-                const $isValid = $form.checkValidity();
-
-                if ($isValid) {
-                    $submit.disabled = false;
-                    return;
-                }
-                else {
-                    $submit.disabled = true;
-                    return;
-                }
-            }
-
-            $form.addEventListener("change", validate);
-            $form.addEventListener("input", validate);
-            $submit.addEventListener("click", submit);
         </script>
     </body>
 </html>
